@@ -1,0 +1,5 @@
+# Soll-Zustand der reachableAddresses (Traffic Steering).
+# Ein Eintrag pro Zeile: IP, CIDR, FQDN oder *.wildcard.
+# Diese Datei wird vollständig umgesetzt: nicht aufgeführte Einträge
+# werden in Cisco Secure Access entfernt.
+# Leerzeilen und #-Kommentare werden ignoriert.

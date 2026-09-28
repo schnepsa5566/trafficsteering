@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "deny": [
+      "Read(./secrets.env)",
+      "Read(./**/*.env)",
+      "Edit(./secrets.env)",
+      "Bash(cat *secrets.env*)",
+      "Bash(type *secrets.env*)",
+      "Bash(Get-Content *secrets.env*)",
+      "Bash(more *secrets.env*)",
+      "Bash(less *secrets.env*)",
+      "Bash(head *secrets.env*)",
+      "Bash(tail *secrets.env*)",
+      "Bash(grep *secrets.env*)"
+    ]
+  }
+}
