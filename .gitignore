@@ -1,6 +1,7 @@
-# Secrets
-secrets.env
+# Secrets (z.B. secrets.env, server.secrets.env, "secrets copy.env")
 *.env
+*.env.*
+*secrets*
 !secrets.env.example
 
 # Python

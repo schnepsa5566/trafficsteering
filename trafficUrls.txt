@@ -1,5 +1,47 @@
-# Soll-Zustand der reachableAddresses (Traffic Steering).
-# Ein Eintrag pro Zeile: IP, CIDR, FQDN oder *.wildcard.
-# Diese Datei wird vollständig umgesetzt: nicht aufgeführte Einträge
-# werden in Cisco Secure Access entfernt.
+# Soll-Zustand der Internal Domains
+# (Traffic Steering -> Bypass Secure Access).
+# Ein Domain-Eintrag pro Zeile; Subdomains sind implizit enthalten
+# (*.example.com entspricht example.com).
+# Diese Datei wird vollständig umgesetzt: nicht aufgeführte Internal Domains
+# werden in Cisco Secure Access gelöscht - auch manuell angelegte.
 # Leerzeilen und #-Kommentare werden ignoriert.
+srv-anywhere365-prd.database.windows.net
+sv-dev-dwp.onbmc.com
+sv-dev-dwpcatalog.onbmc.com
+sv-dev-is.onbmc.com
+sv-dev-restapi.onbmc.com
+sv-dev-smartit.onbmc.com
+sv-dev.onbmc.com
+sv-dwp.onbmc.com
+sv-dwpcatalog.onbmc.com
+sv-is.onbmc.com
+sv-itom-dev.onbmc.com
+sv-itom-qa.onbmc.com
+sv-itom.onbmc.com
+sv-qa-dwp.onbmc.com
+sv-qa-dwpcatalog.onbmc.com
+sv-qa-is.onbmc.com
+sv-qa-restapi.onbmc.com
+sv-qa-smartit.onbmc.com
+sv-qa.onbmc.com
+sv-restapi.onbmc.com
+sv-rsso-dev.onbmc.com
+sv-rsso-qa.onbmc.com
+sv-rsso.onbmc.com
+sv-smartit.onbmc.com
+sv.onbmc.com
+svd-login.eu.nexthink.cloud
+svd.api.eu.nexthink.cloud
+svd.eu.nexthink.cloud
+web.sagedpw.at
+212409.web.sagedpw.at
+bvaeb.at
+sozvers.at
+svd.eu.nexthink.cloud
+svd-login.eu.nexthink.cloud
+svd.api.eu.nexthink.cloud
+svdgmbh.at
+svs.at
+access-svd.sv-services.at
+access-svs.sv-services.at
+access-bvaeb.sv-services.at

@@ -1,24 +1,37 @@
 #!/usr/bin/env python3
 """
-Gleicht die reachableAddresses (Traffic Steering) einer Cisco Secure Access
-Private Resource mit dem Inhalt von trafficUrls.txt ab.
+Gleicht die Internal Domains (Traffic Steering -> Bypass Secure Access)
+von Cisco Secure Access mit dem Inhalt von trafficUrls.txt ab.
 
-- trafficUrls.txt ist der vollständige Soll-Zustand: fehlende Einträge
-  werden entfernt, neue hinzugefügt.
-- Idempotent: stimmt der Ist-Zustand bereits, wird kein PUT gesendet.
-- Credentials kommen aus Umgebungsvariablen oder aus secrets.env.
+- trafficUrls.txt ist der vollständige Soll-Zustand: nicht aufgeführte
+  Internal Domains werden gelöscht, neue angelegt, abweichende angepasst.
+- Idempotent: stimmt der Ist-Zustand bereits, wird nichts geschrieben.
+- Credentials kommen aus Umgebungsvariablen oder aus secrets.env
+  (andere Datei per --secrets-file).
+
+API: https://api.sse.cisco.com/deployments/v2/internaldomains
+Scopes: deployments.internaldomains:read / :write
 """
 
 import os
 import sys
 import json
+import time
 import argparse
 import requests
 
 
 BASE_URL = "https://api.sse.cisco.com"
 TOKEN_URL = f"{BASE_URL}/auth/v2/token"
-PRIVATE_RESOURCES_URL = f"{BASE_URL}/policies/v2/privateResources"
+INTERNAL_DOMAINS_URL = f"{BASE_URL}/deployments/v2/internaldomains"
+
+# Undokumentierte Liste, die das Portal (GUI) verwendet - nur für --check,
+# ausschließlich lesend.
+PORTAL_DOMAINS_URL = (
+    "https://api.umbrella.com/sse/internal/v3/organizations/"
+    "{org_id}/internaldomains"
+)
+ORG_ID = 8421138
 
 # ------------------------------------------------------------------
 # Konfiguration
@@ -28,9 +41,58 @@ SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 SECRETS_FILE = os.path.join(SCRIPT_DIR, "secrets.env")
 DEFAULT_URLS_FILE = os.path.join(SCRIPT_DIR, "trafficUrls.txt")
 
-# ID des bestehenden Private Resource
-RESOURCE_ID = 123456
+# Gewünschte Einstellungen je Internal Domain ("All Devices").
+# Neue Einträge werden ohne siteIds angelegt und gelten damit für alle Sites.
+DESIRED_SETTINGS = {
+    "includeAllVAs": True,
+    "includeAllMobileDevices": True,
+}
 
+PAGE_LIMIT = 100
+
+# Wiederholungen bei Rate Limit (429) bzw. kurzzeitiger Überlastung
+RETRY_STATUS = (429, 502, 503, 504)
+MAX_RETRIES = 6
+MAX_RETRY_DELAY = 60
+
+# ------------------------------------------------------------------
+# Farbige Ausgabe
+# ------------------------------------------------------------------
+
+GREEN = "32"
+RED = "31"
+YELLOW = "33"
+GREY = "90"
+
+USE_COLOR = False
+DEBUG = False
+
+
+def setup_color(disabled):
+    """ANSI-Farben aktivieren, sofern sinnvoll."""
+
+    global USE_COLOR
+
+    USE_COLOR = (
+        not disabled
+        and "NO_COLOR" not in os.environ
+        and sys.stdout.isatty()
+    )
+
+    if USE_COLOR and os.name == "nt":
+        # Aktiviert die VT-Verarbeitung der Windows-Konsole
+        os.system("")
+
+
+def color(text, code):
+    if not USE_COLOR:
+        return text
+    return f"\033[{code}m{text}\033[0m"
+
+
+# ------------------------------------------------------------------
+# Eingaben
+# ------------------------------------------------------------------
 
 def load_secrets(path):
     """
@@ -63,9 +125,17 @@ def load_secrets(path):
 
 
 def normalize_address(address):
-    """Einträge vergleichbar machen (FQDNs sind case-insensitiv)."""
+    """
+    Einträge vergleichbar machen: FQDNs sind case-insensitiv,
+    Internal Domains haben ein implizites Wildcard (*.x.com == x.com).
+    """
 
-    return address.strip().lower()
+    address = address.strip().lower().rstrip(".")
+
+    if address.startswith("*."):
+        address = address[2:]
+
+    return address
 
 
 def load_desired_addresses(path):
@@ -93,6 +163,44 @@ def load_desired_addresses(path):
     return addresses
 
 
+def compute_diff(current, desired):
+    """
+    Ist- und Soll-Zustand vergleichen (Reihenfolge egal).
+    Liefert (to_add, to_remove, unchanged).
+    """
+
+    current_set = {normalize_address(a) for a in current}
+    desired_set = {normalize_address(a) for a in desired}
+
+    to_add = [a for a in desired if normalize_address(a) not in current_set]
+    to_remove = [a for a in current if normalize_address(a) not in desired_set]
+    unchanged = len(current_set & desired_set)
+
+    return to_add, to_remove, unchanged
+
+
+def settings_mismatch(item):
+    """
+    Liefert eine Beschreibung der Abweichungen von DESIRED_SETTINGS,
+    oder einen leeren String, wenn der Eintrag passt.
+    """
+
+    # siteIds wird bewusst nicht verglichen: das Verhalten der API
+    # (z.B. ob "alle Sites" als Liste aller IDs gemeldet wird) ist
+    # nicht dokumentiert und würde sonst jeden Lauf zu einem Update führen.
+    reasons = [
+        f"{key}={item.get(key)}"
+        for key, value in DESIRED_SETTINGS.items()
+        if item.get(key) != value
+    ]
+
+    return ", ".join(reasons)
+
+
+# ------------------------------------------------------------------
+# Cisco API
+# ------------------------------------------------------------------
+
 def get_access_token(api_key, api_secret):
     """OAuth2 Access Token von Cisco Secure Access holen."""
 
@@ -114,10 +222,385 @@ def get_access_token(api_key, api_secret):
     return token_data["access_token"]
 
 
-def get_private_resource(token, resource_id):
-    """Bestehendes Private Resource laden."""
+def retry_delay(response, attempt):
+    """
+    Wartezeit vor dem nächsten Versuch: Retry-After-Header (Sekunden),
+    sonst exponentielles Backoff (2, 4, 8, ... max. MAX_RETRY_DELAY).
+    """
 
-    url = f"{PRIVATE_RESOURCES_URL}/{resource_id}"
+    header = response.headers.get("Retry-After", "")
+
+    try:
+        delay = float(header)
+    except ValueError:
+        delay = 2 ** (attempt + 1)
+
+    return min(max(delay, 1), MAX_RETRY_DELAY)
+
+
+def print_api_error(response):
+    print(color("\nCisco API Fehler:", RED))
+    print(f"{response.request.method} {response.url}")
+    print(f"HTTP {response.status_code}")
+    print(response.text)
+
+
+def api_request(method, url, token, payload=None, params=None,
+                retry_on=RETRY_STATUS, allowed=(), quiet=False):
+    """
+    Request an die Cisco API senden, JSON-Antwort zurückgeben.
+
+    retry_on: Status-Codes, bei denen automatisch wiederholt wird.
+    allowed:  Status-Codes, die nicht als Fehler gelten (Rückgabe None).
+    quiet:    Fehlerdetails nicht ausgeben (Aufrufer entscheidet selbst).
+    """
+
+    headers = {
+        "Authorization": f"Bearer {token}",
+        "Accept": "application/json",
+    }
+
+    if payload is not None:
+        headers["Content-Type"] = "application/json"
+
+    for attempt in range(MAX_RETRIES + 1):
+        response = requests.request(
+            method,
+            url,
+            headers=headers,
+            json=payload,
+            params=params,
+            timeout=30,
+        )
+
+        if response.status_code not in retry_on or attempt == MAX_RETRIES:
+            break
+
+        delay = retry_delay(response, attempt)
+        print(color(
+            f"  HTTP {response.status_code} - warte {delay:.0f}s "
+            f"(Versuch {attempt + 1}/{MAX_RETRIES})...", GREY
+        ))
+        time.sleep(delay)
+
+    if response.status_code in allowed:
+        return None
+
+    if not response.ok:
+        if not quiet:
+            print_api_error(response)
+        response.raise_for_status()
+
+    if response.status_code == 204 or not response.content:
+        return None
+
+    return response.json()
+
+
+def extract_items(body):
+    """
+    Liste der Einträge aus einer Antwort holen. Laut Doku ist die Antwort
+    ein Array; zur Sicherheit werden auch übliche Hüllen akzeptiert.
+    """
+
+    if body is None:
+        return []
+
+    if isinstance(body, list):
+        return body
+
+    if isinstance(body, dict):
+        for key in ("data", "items", "internalDomains", "results"):
+            if isinstance(body.get(key), list):
+                return body[key]
+
+    raise RuntimeError(
+        f"Unerwartetes Antwortformat der Internal-Domains-API: "
+        f"{type(body).__name__} {str(body)[:200]}"
+    )
+
+
+def list_internal_domains(token):
+    """
+    Alle Internal Domains laden (paginiert).
+
+    Es wird so lange weitergeblättert, bis eine Seite leer ist - nicht
+    nur bis eine Seite weniger als PAGE_LIMIT Einträge hat, denn die API
+    kann weniger pro Seite liefern als angefragt. Liefert die API eine
+    Seite erneut (page-Parameter ignoriert), wird abgebrochen.
+    """
+
+    items = []
+    seen_ids = set()
+    page = 1
+
+    while True:
+        body = api_request(
+            "GET",
+            INTERNAL_DOMAINS_URL,
+            token,
+            params={"page": page, "limit": PAGE_LIMIT},
+        )
+        batch = extract_items(body)
+
+        if DEBUG:
+            print(color(
+                f"  [debug] Seite {page}: {len(batch)} Einträge "
+                f"(Antworttyp {type(body).__name__})", GREY
+            ))
+
+        if not batch:
+            return items
+
+        new = [item for item in batch if item.get("id") not in seen_ids]
+
+        if not new:
+            # Gleiche Einträge wie zuvor: API ignoriert die Pagination.
+            # Die Liste wäre unvollständig -> lieber abbrechen, als
+            # vorhandene Einträge als "fehlt" zu behandeln.
+            raise RuntimeError(
+                f"Internal-Domains-API liefert auf Seite {page} dieselben "
+                f"Einträge wie zuvor - Liste kann nicht vollständig geladen "
+                f"werden ({len(items)} bisher). Abbruch ohne Änderungen."
+            )
+
+        for item in new:
+            seen_ids.add(item.get("id"))
+
+        items.extend(new)
+        page += 1
+
+
+def find_internal_domain(token, domain):
+    """Aktuellen Eintrag zu einer Domain direkt bei Cisco nachschlagen."""
+
+    for item in list_internal_domains(token):
+        if normalize_address(item.get("domain", "")) == normalize_address(domain):
+            return item
+
+    return None
+
+
+def create_internal_domain(token, domain):
+    """
+    Internal Domain anlegen, sofern sie nicht bereits existiert.
+    Liefert True, wenn angelegt, False, wenn sie schon vorhanden war.
+
+    POST ist nicht idempotent: automatisch wiederholt wird nur bei 429
+    (Request wurde nicht verarbeitet). Bei anderen Fehlern (z.B. Konflikt
+    oder 5xx, bei dem der Eintrag trotzdem angelegt worden sein kann)
+    wird bei Cisco nachgesehen, ob die Domain inzwischen existiert.
+    """
+
+    payload = {"domain": domain, **DESIRED_SETTINGS}
+
+    try:
+        api_request(
+            "POST", INTERNAL_DOMAINS_URL, token, payload=payload,
+            retry_on=(429,), quiet=True,
+        )
+        return True
+    except requests.HTTPError as exc:
+        if find_internal_domain(token, domain):
+            print(color(
+                f"  {domain} existiert bereits - wird nicht erneut angelegt.",
+                GREY,
+            ))
+            return False
+        print_api_error(exc.response)
+        raise
+
+
+def update_internal_domain(token, item):
+    """Bestehenden Eintrag auf DESIRED_SETTINGS bringen."""
+
+    payload = {"domain": item["domain"], **DESIRED_SETTINGS}
+
+    if item.get("description"):
+        payload["description"] = item["description"]
+
+    return api_request(
+        "PUT", f"{INTERNAL_DOMAINS_URL}/{item['id']}", token, payload=payload
+    )
+
+
+def delete_internal_domain(token, item):
+    """Löschen; 404 (bereits gelöscht) gilt als Erfolg."""
+
+    return api_request(
+        "DELETE", f"{INTERNAL_DOMAINS_URL}/{item['id']}", token,
+        allowed=(404,),
+    )
+
+
+# ------------------------------------------------------------------
+# Abgleich
+# ------------------------------------------------------------------
+
+def plan_changes(current_items, desired):
+    """
+    Ermittelt die notwendigen Änderungen.
+    Liefert (to_add, to_remove, to_update, unchanged) - to_remove und
+    to_update enthalten die API-Objekte, to_add die Domain-Namen.
+    """
+
+    by_domain = {}
+    for item in current_items:
+        by_domain.setdefault(normalize_address(item.get("domain", "")), []).append(item)
+
+    to_add, removed_names, _ = compute_diff(list(by_domain), desired)
+
+    to_remove = []
+    for name in removed_names:
+        to_remove.extend(by_domain[name])
+
+    to_update = []
+    unchanged = 0
+
+    for name in desired:
+        items = by_domain.get(name)
+        if not items:
+            continue
+
+        # Duplikate derselben Domain: ersten behalten, Rest löschen
+        keep, extra = items[0], items[1:]
+        to_remove.extend(extra)
+
+        if settings_mismatch(keep):
+            to_update.append(keep)
+        else:
+            unchanged += 1
+
+    return to_add, to_remove, to_update, unchanged
+
+
+def plan_signature(to_add, to_remove, to_update):
+    """Vergleichbare Kurzform eines Änderungsplans."""
+
+    return (
+        sorted(to_add),
+        sorted(item.get("id") for item in to_remove),
+        sorted(item.get("id") for item in to_update),
+    )
+
+
+def print_changes(to_add, to_remove, to_update, unchanged):
+    print(color(f"\nUnverändert: {unchanged}", GREY))
+
+    for domain in to_add:
+        print(color(f"  + {domain}", GREEN))
+
+    for item in to_remove:
+        print(color(f"  - {item.get('domain')}", RED))
+
+    for item in to_update:
+        print(color(
+            f"  ~ {item.get('domain')} ({settings_mismatch(item)})", YELLOW
+        ))
+
+    print_summary(to_add, to_remove, to_update)
+
+
+def print_summary(to_add, to_remove, to_update):
+    print(
+        f"\nHinzufügen: {color(str(len(to_add)), GREEN)}  "
+        f"Löschen: {color(str(len(to_remove)), RED)}  "
+        f"Anpassen: {color(str(len(to_update)), YELLOW)}"
+    )
+
+
+def print_status_report(current_items, desired, to_remove, to_update):
+    """
+    Für jede Domain aus der Datei ausgeben, ob sie bei Cisco existiert,
+    danach alle Einträge, die nur bei Cisco existieren.
+    """
+
+    by_domain = {}
+    for item in current_items:
+        by_domain.setdefault(normalize_address(item.get("domain", "")), []).append(item)
+
+    update_ids = {item.get("id") for item in to_update}
+    width = max((len(d) for d in desired), default=0)
+
+    print("\nAbgleich Datei -> Cisco:")
+
+    for domain in desired:
+        items = by_domain.get(domain)
+        name = domain.ljust(width)
+
+        if not items:
+            print(color(f"  + {name}  fehlt           -> wird angelegt", GREEN))
+            continue
+
+        keep = items[0]
+
+        if keep.get("id") in update_ids:
+            print(color(
+                f"  ~ {name}  existiert (id {keep.get('id')}), abweichend: "
+                f"{settings_mismatch(keep)} -> wird angepasst", YELLOW
+            ))
+        else:
+            print(color(
+                f"  = {name}  existiert (id {keep.get('id')})", GREY
+            ))
+
+    if to_remove:
+        print("\nNur bei Cisco bzw. doppelt vorhanden:")
+
+        for item in to_remove:
+            print(color(
+                f"  - {item.get('domain')}  (id {item.get('id')}) "
+                f"-> wird gelöscht", RED
+            ))
+
+
+def find_matches(items, domain):
+    """Exakte und ähnliche Treffer für domain in einer Liste von Einträgen."""
+
+    target = normalize_address(domain)
+    exact, similar = [], []
+
+    for item in items:
+        other = normalize_address(str(item.get("domain") or ""))
+
+        if other == target:
+            exact.append(item)
+        elif other and (target in other or other in target):
+            similar.append(item)
+
+    return exact, similar
+
+
+def print_matches(exact, similar):
+    if exact:
+        for item in exact:
+            print(color("  GEFUNDEN:", GREEN))
+            print(color("    " + json.dumps(item, indent=2).replace("\n", "\n    "), GREEN))
+    else:
+        print(color("  NICHT GEFUNDEN", RED))
+
+    for item in similar:
+        print(color(
+            f"  ähnlich: {item.get('domain')!r} (id {item.get('id')}, "
+            f"domainType {item.get('domainType', '-')})", YELLOW
+        ))
+
+
+def check_domain(token, domain, org_id):
+    """
+    Read-only Diagnose: existiert domain bei Cisco?
+    Prüft die offizielle API und die (undokumentierte) Portal-Liste.
+    """
+
+    print(f"\nPrüfe {domain!r} (normalisiert: {normalize_address(domain)!r})")
+
+    print("\n[1] Offizielle API: " + INTERNAL_DOMAINS_URL)
+    official = list_internal_domains(token)
+    print(f"  {len(official)} Einträge geladen")
+    print_matches(*find_matches(official, domain))
+
+    url = PORTAL_DOMAINS_URL.format(org_id=org_id)
+    print("\n[2] Portal-Liste (GUI, undokumentiert, nur lesend): " + url)
 
     response = requests.get(
         url,
@@ -128,97 +611,60 @@ def get_private_resource(token, resource_id):
         timeout=30,
     )
 
-    response.raise_for_status()
-
-    return response.json()
-
-
-def find_client_access(resource):
-    """Client Access Type des Private Resource suchen."""
-
-    for access_type in resource.get("accessTypes", []):
-        if access_type.get("type") == "client":
-            return access_type
-
-    return None
-
-
-def compute_diff(current, desired):
-    """
-    Ist- und Soll-Zustand vergleichen (Reihenfolge egal).
-    Liefert (to_add, to_remove, unchanged).
-    """
-
-    current_set = {normalize_address(a) for a in current}
-    desired_set = {normalize_address(a) for a in desired}
-
-    to_add = [a for a in desired if normalize_address(a) not in current_set]
-    to_remove = [a for a in current if normalize_address(a) not in desired_set]
-    unchanged = len(current_set & desired_set)
-
-    return to_add, to_remove, unchanged
-
-
-def build_update_payload(resource):
-    """
-    Cisco erwartet beim PUT mindestens:
-      - name
-      - accessTypes
-      - resourceAddresses
-
-    Read-only Felder wie resourceId, createdAt usw.
-    werden daher nicht zurückgesendet.
-    """
-
-    payload = {
-        "name": resource["name"],
-        "accessTypes": resource["accessTypes"],
-        "resourceAddresses": resource["resourceAddresses"],
-    }
-
-    # Optionale Felder übernehmen, sofern vorhanden
-    optional_fields = [
-        "description",
-        "dnsServerId",
-        "certificateId",
-        "resourceGroupIds",
-    ]
-
-    for field in optional_fields:
-        if field in resource and resource[field] is not None:
-            payload[field] = resource[field]
-
-    return payload
-
-
-def put_private_resource(token, resource_id, payload):
-    """Private Resource aktualisieren."""
-
-    url = f"{PRIVATE_RESOURCES_URL}/{resource_id}"
-
-    response = requests.put(
-        url,
-        headers={
-            "Authorization": f"Bearer {token}",
-            "Accept": "application/json",
-            "Content-Type": "application/json",
-        },
-        json=payload,
-        timeout=30,
-    )
-
     if not response.ok:
-        print("\nCisco API Fehler:")
-        print(f"HTTP {response.status_code}")
-        print(response.text)
-        response.raise_for_status()
+        print(color(
+            f"  HTTP {response.status_code} - Portal-Liste mit API-Key nicht "
+            f"abrufbar: {response.text[:300]}", YELLOW
+        ))
+        return
 
-    return response.json()
+    try:
+        portal = extract_items(response.json())
+    except (ValueError, RuntimeError) as exc:
+        print(color(f"  Antwort nicht auswertbar: {exc}", YELLOW))
+        return
+
+    print(f"  {len(portal)} Einträge geladen (ggf. nur erste Seite)")
+
+    types = {}
+    for item in portal:
+        key = item.get("domainType", "-")
+        types[key] = types.get(key, 0) + 1
+    print(f"  domainType-Verteilung: {types}")
+
+    print_matches(*find_matches(portal, domain))
+
+
+def print_debug(current_items, to_add):
+    """Rohdaten zur Fehlersuche: was liefert Cisco tatsächlich?"""
+
+    print(color("\n[debug] Von Cisco gelieferte Einträge (roh):", GREY))
+
+    if current_items:
+        print(color(f"  Felder: {sorted(current_items[0].keys())}", GREY))
+
+    for item in current_items:
+        print(color(
+            f"  id={item.get('id')!r:<12} domain={item.get('domain')!r}", GREY
+        ))
+
+    if not to_add:
+        return
+
+    print(color("\n[debug] Als fehlend erkannt - ähnliche Einträge bei Cisco:", GREY))
+
+    for domain in to_add:
+        similar = []
+        for item in current_items:
+            other = str(item.get("domain") or "").lower().strip()
+            if other and (domain in other or other in domain):
+                similar.append(item.get("domain"))
+        print(color(f"  {domain!r}: {similar or 'keine'}", GREY))
 
 
 def parse_args():
     parser = argparse.ArgumentParser(
-        description="reachableAddresses einer Private Resource mit "
+        description="Internal Domains (Bypass Secure Access) mit "
                     "trafficUrls.txt abgleichen."
     )
     parser.add_argument(
@@ -234,114 +680,182 @@ def parse_args():
         help="Datei mit dem Soll-Zustand (Default: trafficUrls.txt)",
     )
     parser.add_argument(
-        "--resource-id", type=int, default=RESOURCE_ID,
-        help=f"ID des Private Resource (Default: {RESOURCE_ID})",
+        "--secrets-file", metavar="FILE",
+        help="Datei mit den Credentials (Default: secrets.env "
+             "neben dem Script)",
     )
     parser.add_argument(
         "--allow-empty", action="store_true",
-        help="Leere Soll-Liste erlauben (entfernt alle Adressen)",
+        help="Leere Soll-Liste erlauben (löscht alle Internal Domains)",
+    )
+    parser.add_argument(
+        "--no-color", action="store_true",
+        help="Ausgabe ohne Farben",
+    )
+    parser.add_argument(
+        "--debug", action="store_true",
+        help="Rohdaten der Cisco-Antwort ausgeben (Fehlersuche)",
+    )
+    parser.add_argument(
+        "--check", metavar="DOMAIN",
+        help="Nur prüfen, ob DOMAIN bei Cisco existiert (offizielle API "
+             "und Portal-Liste), nichts ändern",
+    )
+    parser.add_argument(
+        "--org-id", type=int, default=ORG_ID,
+        help=f"Organisations-ID für die Portal-Liste bei --check "
+             f"(Default: {ORG_ID})",
     )
     return parser.parse_args()
 
 
 def main():
 
+    global DEBUG
+
     args = parse_args()
+    setup_color(args.no_color)
+    DEBUG = args.debug
 
     try:
-        secrets = load_secrets(SECRETS_FILE)
+        secrets_file = args.secrets_file or SECRETS_FILE
+
+        # Explizit angegebene Datei muss existieren; die Default-Datei
+        # darf fehlen, wenn die Credentials als Umgebungsvariablen kommen.
+        if args.secrets_file and not os.path.isfile(secrets_file):
+            print(color(
+                f"Fehler: Secrets-Datei {secrets_file} nicht gefunden.", RED
+            ))
+            sys.exit(1)
+
+        secrets = load_secrets(secrets_file)
         api_key = secrets.get("CISCO_SECURE_ACCESS_KEY")
         api_secret = secrets.get("CISCO_SECURE_ACCESS_SECRET")
 
         if not api_key or not api_secret:
-            print(
+            print(color(
                 "Fehler: CISCO_SECURE_ACCESS_KEY und "
                 "CISCO_SECURE_ACCESS_SECRET müssen gesetzt sein "
-                "(Umgebungsvariablen oder secrets.env, "
-                "siehe secrets.env.example)."
-            )
+                f"(Umgebungsvariablen oder {secrets_file}, "
+                "siehe secrets.env.example).", RED
+            ))
             sys.exit(1)
+
+        if args.check:
+            print("Hole OAuth Token...")
+            check_domain(
+                get_access_token(api_key, api_secret), args.check, args.org_id
+            )
+            return
 
         desired = load_desired_addresses(args.file)
 
         if not desired and not args.allow_empty:
-            print(
+            print(color(
                 f"Fehler: {args.file} enthält keine Einträge. "
-                "Das würde alle reachableAddresses entfernen. "
-                "Mit --allow-empty erzwingen."
-            )
+                "Das würde alle Internal Domains löschen. "
+                "Mit --allow-empty erzwingen.", RED
+            ))
             sys.exit(1)
 
         print("Hole OAuth Token...")
         token = get_access_token(api_key, api_secret)
 
-        print(f"Lade Private Resource {args.resource_id}...")
-        resource = get_private_resource(token, args.resource_id)
+        print("Lade Internal Domains...")
+        current_items = list_internal_domains(token)
+        print(f"Vorhanden: {len(current_items)}, Soll: {len(desired)}")
 
-        print(f"Resource: {resource.get('name')}")
+        to_add, to_remove, to_update, unchanged = plan_changes(
+            current_items, desired
+        )
 
-        client_access = find_client_access(resource)
+        if DEBUG:
+            print_debug(current_items, to_add)
 
-        if client_access is None:
-            raise RuntimeError(
-                "Das Private Resource besitzt keinen "
-                "'client' Access Type."
-            )
+        if args.dry_run:
+            # Vollständiger Status: jede Domain aus der Datei mit
+            # Ergebnis der Prüfung, ob sie bei Cisco existiert.
+            print_status_report(current_items, desired, to_remove, to_update)
+            print(color(f"\nExistiert bereits: {unchanged + len(to_update)}", GREY))
+            print_summary(to_add, to_remove, to_update)
+        else:
+            print_changes(to_add, to_remove, to_update, unchanged)
 
-        current = client_access.get("reachableAddresses") or []
-        to_add, to_remove, unchanged = compute_diff(current, desired)
-
-        print(f"\nUnverändert: {unchanged}")
-        for address in to_add:
-            print(f"  + {address}")
-        for address in to_remove:
-            print(f"  - {address}")
-
-        if not to_add and not to_remove:
-            print("\nKeine Änderungen notwendig.")
+        if not to_add and not to_remove and not to_update:
+            print(color("\nKeine Änderungen notwendig.", GREEN))
             return
 
         if args.dry_run:
-            print("\nDry-Run: keine Änderungen durchgeführt.")
+            print(color("\nDry-Run: keine Änderungen durchgeführt.", YELLOW))
             return
 
         if not args.yes:
-            answer = input("\nÄnderung wirklich durchführen? [y/N]: ")
+            answer = input("\nÄnderungen wirklich durchführen? [y/N]: ")
 
             if answer.lower() not in ("y", "yes", "j", "ja"):
                 print("Abgebrochen.")
                 return
 
-        client_access["reachableAddresses"] = desired
-        payload = build_update_payload(resource)
+        # Unmittelbar vor dem Schreiben erneut prüfen, was bei Cisco
+        # existiert - seit der ersten Abfrage kann sich etwas geändert haben.
+        print("\nPrüfe aktuellen Stand erneut...")
+        confirmed = plan_signature(to_add, to_remove, to_update)
+        to_add, to_remove, to_update, unchanged = plan_changes(
+            list_internal_domains(token), desired
+        )
 
-        print("\nSende PUT Request...")
+        if not to_add and not to_remove and not to_update:
+            print(color("Keine Änderungen mehr notwendig.", GREEN))
+            return
 
-        result = put_private_resource(token, args.resource_id, payload)
+        if plan_signature(to_add, to_remove, to_update) != confirmed:
+            print(color(
+                "Der Stand bei Cisco hat sich geändert, neue Änderungen:",
+                YELLOW,
+            ))
+            print_changes(to_add, to_remove, to_update, unchanged)
 
-        result_access = find_client_access(result) or {}
-        reported = result_access.get("reachableAddresses") or []
+            if not args.yes:
+                answer = input("\nDiese Änderungen durchführen? [y/N]: ")
 
-        print("\nCisco meldet reachableAddresses:")
-        print(json.dumps(reported, indent=2))
+                if answer.lower() not in ("y", "yes", "j", "ja"):
+                    print("Abgebrochen.")
+                    return
 
-        to_add, to_remove, _ = compute_diff(reported, desired)
+        print()
 
-        if to_add or to_remove:
-            print(
-                "\nWarnung: Cisco meldet einen abweichenden Zustand "
-                "(siehe oben)."
-            )
+        for item in to_remove:
+            delete_internal_domain(token, item)
+            print(color(f"  gelöscht:   {item.get('domain')}", RED))
+
+        for item in to_update:
+            update_internal_domain(token, item)
+            print(color(f"  angepasst:  {item.get('domain')}", YELLOW))
+
+        for domain in to_add:
+            if create_internal_domain(token, domain):
+                print(color(f"  angelegt:   {domain}", GREEN))
+
+        print("\nPrüfe Ergebnis...")
+        to_add, to_remove, to_update, _ = plan_changes(
+            list_internal_domains(token), desired
+        )
+
+        if to_add or to_remove or to_update:
+            print(color(
+                "\nWarnung: Cisco meldet einen abweichenden Zustand:", YELLOW
+            ))
+            print_changes(to_add, to_remove, to_update, 0)
             sys.exit(1)
 
-        print("\nUpdate erfolgreich.")
+        print(color("\nAbgleich erfolgreich.", GREEN))
 
     except requests.HTTPError as exc:
-        print(f"\nHTTP Fehler: {exc}")
+        print(color(f"\nHTTP Fehler: {exc}", RED))
         sys.exit(1)
 
     except Exception as exc:
-        print(f"\nFehler: {exc}")
+        print(color(f"\nFehler: {exc}", RED))
         sys.exit(1)
 
 

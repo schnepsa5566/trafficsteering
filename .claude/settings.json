@@ -1,17 +1,34 @@
 {
   "permissions": {
     "deny": [
-      "Read(./secrets.env)",
+      "Read(./*.env)",
       "Read(./**/*.env)",
-      "Edit(./secrets.env)",
-      "Bash(cat *secrets.env*)",
-      "Bash(type *secrets.env*)",
-      "Bash(Get-Content *secrets.env*)",
-      "Bash(more *secrets.env*)",
-      "Bash(less *secrets.env*)",
-      "Bash(head *secrets.env*)",
-      "Bash(tail *secrets.env*)",
-      "Bash(grep *secrets.env*)"
+      "Read(./**/*secrets*.env)",
+      "Edit(./*.env)",
+      "Edit(./**/*.env)",
+      "Write(./*.env)",
+      "Write(./**/*.env)",
+      "Bash(cat *.env*)",
+      "Bash(type *.env*)",
+      "Bash(Get-Content *.env*)",
+      "Bash(gc *.env*)",
+      "Bash(more *.env*)",
+      "Bash(less *.env*)",
+      "Bash(head *.env*)",
+      "Bash(tail *.env*)",
+      "Bash(grep *.env*)",
+      "Bash(rg *.env*)",
+      "Bash(sed *.env*)",
+      "Bash(awk *.env*)",
+      "Bash(od *.env*)",
+      "Bash(xxd *.env*)",
+      "Bash(strings *.env*)",
+      "Bash(cp *.env*)",
+      "Bash(mv *.env*)",
+      "Bash(git add -f*)",
+      "Bash(git add --force*)",
+      "Bash(git show *.env*)",
+      "Bash(git diff *.env*)"
     ]
   }
 }
