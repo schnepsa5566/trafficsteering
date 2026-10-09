@@ -1,0 +1,465 @@
+# Microsoft-Endpunkte für urlCheck.py
+# Abgeleitet aus microsoftEndpoints.txt (Stand: 2026-10-09).
+#
+# Format wie urlList.txt: eine Adresse pro Zeile, alles ab # ist Kommentar.
+# Umwandlung:
+#   *.domain / *domain  -> Basisdomain (Microsoft empfiehlt, sie mitzuerlauben);
+#                          ob Subdomains erlaubt sind, prüft das nicht.
+#   a.*.domain          -> auskommentiert (Tenant-spezifisch, nicht prüfbar)
+#   IP-Bereiche (CIDR)  -> weggelassen, nur Hinweis (urlCheck prüft keine Netze)
+#   doppelte Hosts      -> auskommentiert mit Hinweis "doppelt"
+#
+# Quellen:
+#   https://endpoints.office.com/endpoints/worldwide?clientrequestid=b10c5ed1-bad1-445f-b386-b919946339a7
+#   https://learn.microsoft.com/microsoft-365/enterprise/urls-and-ip-address-ranges
+#   https://learn.microsoft.com/microsoft-365/copilot/add-copilot-endpoints-allowlist
+#   https://learn.microsoft.com/microsoft-365-copilot/microsoft-365-copilot-requirements
+#   https://learn.microsoft.com/azure/azure-portal/azure-portal-safelist-urls
+#   https://learn.microsoft.com/defender-endpoint/streamlined-device-connectivity-urls-commercial
+#   https://learn.microsoft.com/entra/identity/hybrid/connect/reference-connect-ports
+#   Azure Service Tags (MicrosoftDefenderForEndpoint) via azurespeed.com
+
+
+###############################################################################
+# 1. EXCHANGE ONLINE / OUTLOOK
+###############################################################################
+
+# ID 1 – Optimize, TCP 80/443, UDP 443
+outlook.cloud.microsoft
+outlook.office.com
+outlook.office365.com
+# ID 2 – Allow, POP3/IMAP4/SMTP (TCP 143, 587, 993, 995)
+smtp.office365.com
+# ID 8 – Default
+outlook.com  # aus *.outlook.com
+# autodiscover.*.onmicrosoft.com  # Wildcard in der Mitte (Tenant-spezifisch), nicht prüfbar
+# ID 9 – Allow
+protection.outlook.com  # aus *.protection.outlook.com
+# ID 10 – Allow, TCP 25 (Mail-Zustellung)
+mail.protection.outlook.com  # aus *.mail.protection.outlook.com
+mx.microsoft  # aus *.mx.microsoft
+
+# IP-Bereiche Exchange (ID 1/2)
+#   (27 IP-Bereiche, mit urlCheck nicht prüfbar – siehe microsoftEndpoints.txt)
+# IP-Bereiche Exchange Online Protection (ID 9/10)
+#   (7 IP-Bereiche, mit urlCheck nicht prüfbar – siehe microsoftEndpoints.txt)
+
+
+###############################################################################
+# 2. MICROSOFT TEAMS
+###############################################################################
+
+# ID 12 – Allow, TCP 80/443, UDP 443
+lync.com  # aus *.lync.com
+teams.cloud.microsoft  # aus *.teams.cloud.microsoft
+teams.microsoft.com  # aus *.teams.microsoft.com
+# teams.cloud.microsoft  # doppelt
+# teams.microsoft.com  # doppelt
+# ID 16/17/27/127 – Default
+keydelivery.mediaservices.windows.net  # aus *.keydelivery.mediaservices.windows.net
+streaming.mediaservices.windows.net  # aus *.streaming.mediaservices.windows.net
+aka.ms
+join.secure.skypeassets.com
+mlccdnprod.azureedge.net
+skype.com  # aus *.skype.com
+# ID 19 – Default, optional (Geräte-Updates)
+adl.windows.com
+# Federation mit Skype for Business on-prem (SRV _sipfederationtls._tcp, TCP 5061)
+sipfed.online.lync.com
+
+# IP-Bereiche Teams
+# ID 11 – Optimize, Medien: UDP 3478-3481
+#   (3 IP-Bereiche, mit urlCheck nicht prüfbar – siehe microsoftEndpoints.txt)
+# ID 12 – Allow, Signalisierung TCP 80/443, UDP 443 (zusätzlich zu oben)
+#   (6 IP-Bereiche, mit urlCheck nicht prüfbar – siehe microsoftEndpoints.txt)
+
+
+###############################################################################
+# 3. SHAREPOINT ONLINE / ONEDRIVE
+###############################################################################
+
+# ID 31 – Optimize, TCP 80/443, UDP 443
+sharepoint.com  # aus *.sharepoint.com
+# ID 35/36/37/39 – Default
+wns.windows.com  # aus *.wns.windows.com
+admin.onedrive.com
+officeclient.microsoft.com
+g.live.com
+oneclient.sfx.ms
+sharepointonline.com  # aus *.sharepointonline.com
+spoprod-a.akamaihd.net
+svc.ms  # aus *.svc.ms
+# ID 32 – Default, optional
+storage.live.com
+
+# IP-Bereiche SharePoint/OneDrive (ID 31)
+#   (10 IP-Bereiche, mit urlCheck nicht prüfbar – siehe microsoftEndpoints.txt)
+
+
+###############################################################################
+# 4. MICROSOFT 365 COMMON / OFFICE ONLINE
+###############################################################################
+
+# ID 46 – Allow
+officeapps.live.com  # aus *.officeapps.live.com
+online.office.com  # aus *.online.office.com
+office.live.com
+# ID 184/193 – Default, TCP/UDP 443 (Microsoft empfiehlt die ganze Domain)
+cloud.microsoft  # aus *.cloud.microsoft
+static.microsoft  # aus *.static.microsoft
+usercontent.microsoft  # aus *.usercontent.microsoft
+# ID 147 – Default
+office.com  # aus *.office.com
+www.microsoft365.com
+# ID 47/49/51/53 – Default
+office.net  # aus *.office.net
+onenote.com  # aus *.onenote.com
+cdn.onenote.net  # aus *cdn.onenote.net
+ajax.aspnetcdn.com
+apis.live.net
+# officeapps.live.com  # doppelt
+www.onedrive.com
+# ID 69/70/71 – Default
+aria.microsoft.com  # aus *.aria.microsoft.com
+events.data.microsoft.com  # aus *.events.data.microsoft.com
+o365weve.com  # aus *.o365weve.com
+amp.azure.net
+appsforoffice.microsoft.com
+assets.onestore.ms
+auth.gfx.ms
+c1.microsoft.com
+dgps.support.microsoft.com
+docs.microsoft.com
+msdn.microsoft.com
+platform.linkedin.com
+prod.msocdn.com
+shellprod.msocdn.com
+support.microsoft.com
+technet.microsoft.com
+office365.com  # aus *.office365.com
+# ID 73 – Default (Information Protection / RMS)
+aadrm.com  # aus *.aadrm.com
+azurerms.com  # aus *.azurerms.com
+informationprotection.azure.com  # aus *.informationprotection.azure.com
+ecn.dev.virtualearth.net
+informationprotection.hosting.portal.azure.net
+# ID 79/83/84/86/89/91/92/159/160 – Default
+o15.officeredir.microsoft.com
+officepreviewredir.microsoft.com
+officeredir.microsoft.com
+r.office.microsoft.com
+activation.sls.microsoft.com
+crl.microsoft.com
+office15client.microsoft.com
+go.microsoft.com
+cdn.odc.officeapps.live.com
+cdn.uci.officeapps.live.com
+officecdn.microsoft.com
+otelrules.azureedge.net
+admin.microsoft.com
+# ID 153/156/158 – Default (Power Platform, Activity, Cortana)
+azure-apim.net  # aus *.azure-apim.net
+flow.microsoft.com  # aus *.flow.microsoft.com
+powerapps.com  # aus *.powerapps.com
+powerautomate.com  # aus *.powerautomate.com
+activity.windows.com  # aus *.activity.windows.com
+# activity.windows.com  # doppelt
+cortana.ai  # aus *.cortana.ai
+# ID 125 – Default, Zertifikate / CRL / OCSP
+entrust.net  # aus *.entrust.net
+geotrust.com  # aus *.geotrust.com
+omniroot.com  # aus *.omniroot.com
+public-trust.com  # aus *.public-trust.com
+symcb.com  # aus *.symcb.com
+symcd.com  # aus *.symcd.com
+verisign.com  # aus *.verisign.com
+verisign.net  # aus *.verisign.net
+cacerts.digicert.com
+cert.int-x3.letsencrypt.org
+crl.globalsign.com
+crl.globalsign.net
+crl.identrust.com
+crl3.digicert.com
+crl4.digicert.com
+isrg.trustid.ocsp.identrust.com
+mscrl.microsoft.com
+ocsp.digicert.com
+ocsp.globalsign.com
+ocsp.msocsp.com
+ocsp2.globalsign.com
+ocspx.digicert.com
+oneocsp.microsoft.com
+secure.globalsign.com
+www.digicert.com
+www.microsoft.com
+# Optional (nicht "required") – ID 50/75/78/93/95/96/97/114/117/118/121/122/124/126/152
+microsoft.com  # aus *.microsoft.com
+msocdn.com  # aus *.msocdn.com
+onmicrosoft.com  # aus *.onmicrosoft.com
+dc.services.visualstudio.com
+mem.gfx.ms
+virtualearth.net  # aus *.virtualearth.net
+c.bing.net
+ocos-office365-s2s.msedge.net
+tse1.mm.bing.net
+www.bing.com
+acompli.net  # aus *.acompli.net
+outlookmobile.com  # aus *.outlookmobile.com
+login.windows-ppe.net
+account.live.com
+appex-rf.msn.com  # aus *.appex-rf.msn.com
+appex.bing.com  # aus *.appex.bing.com
+c.bing.com
+c.live.com
+partnerservices.getmicrosoftkey.com
+signup.live.com
+yammer.com  # aus *.yammer.com
+yammerusercontent.com  # aus *.yammerusercontent.com
+assets-yammer.com  # aus *.assets-yammer.com
+www.outlook.com
+eus-www.sway-cdn.com
+eus-www.sway-extensions.com
+wus-www.sway-cdn.com
+wus-www.sway-extensions.com
+sway.com
+www.sway.com
+officespeech.platform.bing.com
+microsoftusercontent.com  # aus *.microsoftusercontent.com
+
+# IP-Bereiche Office Online (ID 46)
+#   (20 IP-Bereiche, mit urlCheck nicht prüfbar – siehe microsoftEndpoints.txt)
+
+
+###############################################################################
+# 5. MICROSOFT ENTRA ID (Azure AD) – Anmeldung, MFA, Graph, Entra Connect
+###############################################################################
+
+# ID 56 – Allow
+auth.microsoft.com  # aus *.auth.microsoft.com
+msftidentity.com  # aus *.msftidentity.com
+msidentity.com  # aus *.msidentity.com
+account.activedirectory.windowsazure.com
+accounts.accesscontrol.windows.net
+adminwebservice.microsoftonline.com
+api.passwordreset.microsoftonline.com
+autologon.microsoftazuread-sso.com
+becws.microsoftonline.com
+ccs.login.microsoftonline.com
+clientconfig.microsoftonline-p.net
+companymanager.microsoftonline.com
+device.login.microsoftonline.com
+graph.microsoft.com
+graph.windows.net
+login-us.microsoftonline.com
+login.microsoft.com
+login.microsoftonline-p.com
+login.microsoftonline.com
+login.windows.net
+logincert.microsoftonline.com
+loginex.microsoftonline.com
+nexus.microsoftonline-p.com
+passwordreset.microsoftonline.com
+provisioningapi.microsoftonline.com
+# ID 59 – Default
+hip.live.com  # aus *.hip.live.com
+microsoftonline-p.com  # aus *.microsoftonline-p.com
+microsoftonline.com  # aus *.microsoftonline.com
+msauth.net  # aus *.msauth.net
+msauthimages.net  # aus *.msauthimages.net
+msecnd.net  # aus *.msecnd.net
+msftauth.net  # aus *.msftauth.net
+msftauthimages.net  # aus *.msftauthimages.net
+phonefactor.net  # aus *.phonefactor.net
+enterpriseregistration.windows.net
+# Login-CDN / Microsoft-Konto (ID 97, Azure-Portal-Auth)
+login.live.com
+aadcdn.msftauth.net  # aus *.aadcdn.msftauth.net
+aadcdn.msftauthimages.net  # aus *.aadcdn.msftauthimages.net
+aadcdn.msauthimages.net  # aus *.aadcdn.msauthimages.net
+logincdn.msftauth.net  # aus *.logincdn.msftauth.net
+logincdn.msauth.net
+aadcdn.microsoftonline-p.com  # aus *.aadcdn.microsoftonline-p.com
+secure.aadcdn.microsoftonline-p.com
+# Entra-Portal / Verwaltung
+aad.azure.com  # aus *.aad.azure.com
+ad.azure.com
+aadconnecthealth.azure.com  # aus *.aadconnecthealth.azure.com
+api.aadrm.com
+api.azrbac.mspim.azure.com
+appmanagement.activedirectory.microsoft.com
+elm.iga.azure.com
+iga.azure.com
+identitygovernance.azure.com
+# informationprotection.azure.com  # doppelt
+mspim.azure.com
+# Entra Connect Sync / Cloud Sync / Provisioning Agent
+windows.net  # aus *.windows.net
+msappproxy.net  # aus *.msappproxy.net
+servicebus.windows.net  # aus *.servicebus.windows.net
+
+# IP-Bereiche Entra ID (ID 56)
+#   (16 IP-Bereiche, mit urlCheck nicht prüfbar – siehe microsoftEndpoints.txt)
+
+
+###############################################################################
+# 6. MICROSOFT COPILOT (früher Microsoft 365 Copilot)
+###############################################################################
+# Setzt die M365-Endpunkte oben voraus (v.a. *.cloud.microsoft, *.office.com).
+# WebSockets (WSS) zu *.office.com, *.cloud.microsoft, copilot.cloud.microsoft
+# müssen ohne störende TLS-Inspection durchgehen.
+
+copilot.cloud.microsoft
+m365.cloud.microsoft
+substrate.office.com
+odc.officeapps.live.com
+privacy.microsoft.com
+# Update- und Konfigurationsdienst der Copilot-App
+msedge.api.cdp.microsoft.com
+config.edge.skype.com
+dl.delivery.mp.microsoft.com  # aus *.dl.delivery.mp.microsoft.com
+do.dsp.mp.microsoft.com  # aus *.do.dsp.mp.microsoft.com
+# Cowork (Frontier) – SSE-Verbindungen, keine TLS-Inspection
+gateway.prod.island.powerapps.com  # aus *.gateway.prod.island.powerapps.com
+
+
+###############################################################################
+# 7. AZURE (Azure-Portal, öffentliche Cloud)
+###############################################################################
+# Die Azure-Dienste selbst (Storage, VMs, App Service ...) haben keine feste
+# FQDN-Liste. IP-basiert über Azure Service Tags (wöchentlich aktualisiert):
+#   https://www.microsoft.com/download/details.aspx?id=56519
+# Für das Portal nötige Service Tags: AzureActiveDirectory,
+# AzureResourceManager, AzureFrontDoor.Frontend, AzureFrontDoor.FirstParty.
+
+# Portal-Framework
+portal.azure.com  # aus *.portal.azure.com
+# portal.azure.com  # doppelt
+hosting.portal.azure.net  # aus *.hosting.portal.azure.net
+hosting-ms.portal.azure.net  # aus *.hosting-ms.portal.azure.net
+reactblade.portal.azure.net  # aus *.reactblade.portal.azure.net
+management.azure.com
+ext.azure.com  # aus *.ext.azure.com
+# graph.windows.net  # doppelt (aus *.graph.windows.net)
+# graph.microsoft.com  # doppelt (aus *.graph.microsoft.com)
+hosting.partners.azure.net
+# Account-Daten
+account.microsoft.com  # aus *.account.microsoft.com
+bmx.azure.com  # aus *.bmx.azure.com
+subscriptionrp.trafficmanager.net  # aus *.subscriptionrp.trafficmanager.net
+signup.azure.com  # aus *.signup.azure.com
+# Allgemeine Azure-Dienste
+asazure.windows.net  # aus *.asazure.windows.net
+# asazure.windows.net  # doppelt
+azconfig.io  # aus *.azconfig.io
+adf.azure.com
+api.loganalytics.io
+applicationinsights.azure.com  # aus *.applicationinsights.azure.com
+appservice.azure.com
+arc.azure.net  # aus *.arc.azure.net
+bastion.azure.com
+batch.azure.com
+catalogapi.azure.com
+catalogartifact.azureedge.net
+changeanalysis.azure.com
+cognitiveservices.azure.com
+config.office.com
+cosmos.azure.com
+database.windows.net  # aus *.database.windows.net
+datalake.azure.net
+dev.azure.com
+dev.azuresynapse.net
+digitaltwins.azure.net
+eventhubs.azure.net
+functions.azure.com
+gallery.azure.com
+help.kusto.windows.net
+kusto.windows.net
+learn.microsoft.com
+logic.azure.com
+marketplacedataprovider.azure.com
+main.prod.marketplacedataprovider.azure.com
+marketplaceemail.azure.com
+media.azure.net
+rest.media.azure.net
+monitor.azure.com
+network.azure.com
+purview.azure.com
+quantum.azure.com
+search.azure.com
+servicebus.azure.net
+# servicebus.windows.net  # doppelt
+shell.azure.com
+ux.console.azure.com
+sphere.azure.net
+azure.status.microsoft
+storage.azure.com
+storage.azure.net
+vault.azure.net
+
+
+###############################################################################
+# 8. MICROSOFT DEFENDER (Defender for Endpoint, XDR-Portal, Defender for Cloud Apps)
+###############################################################################
+
+# Portale (ID 64 – Allow, ID 66 – Default)
+security.microsoft.com
+# security.microsoft.com  # doppelt (aus *.security.microsoft.com)
+api.security.microsoft.com  # aus *.api.security.microsoft.com
+securitycenter.windows.com  # aus *.securitycenter.windows.com
+defender.microsoft.com
+compliance.microsoft.com
+purview.microsoft.com
+protection.office.com
+# protection.office.com  # doppelt (aus *.protection.office.com)
+portal.cloudappsecurity.com  # aus *.portal.cloudappsecurity.com
+static2.sharepointonline.com
+# Defender for Endpoint – Streamlined Connectivity (Core)
+endpoint.security.microsoft.com  # aus *.endpoint.security.microsoft.com
+smartscreen-prod.microsoft.com  # aus *.smartscreen-prod.microsoft.com
+smartscreen.microsoft.com  # aus *.smartscreen.microsoft.com
+checkappexec.microsoft.com  # aus *.checkappexec.microsoft.com
+urs.microsoft.com  # aus *.urs.microsoft.com
+reflector.defender.microsoft.com
+# Updates (Signaturen / Plattform)
+definitionupdates.microsoft.com
+packages.microsoft.com
+msdefender.download.prss.microsoft.com
+update.microsoft.com  # aus *.update.microsoft.com
+delivery.mp.microsoft.com  # aus *.delivery.mp.microsoft.com
+windowsupdate.com  # aus *.windowsupdate.com
+download.windowsupdate.com  # aus *.download.windowsupdate.com
+download.microsoft.com  # aus *.download.microsoft.com
+# Zertifikatsprüfung (TCP 80); www.microsoft.com/pki/*, /pkiops/*
+ctldl.windowsupdate.com
+# Datei-Downloads aus dem Portal, Onboarding-Pakete, Network Scanner
+blob.core.windows.net  # aus *.blob.core.windows.net
+# Ältere Clients (Windows 10 1607–1803) – MAPS & EDR Cyber Data (EU)
+wdcp.microsoft.com  # aus *.wdcp.microsoft.com
+wd.microsoft.com  # aus *.wd.microsoft.com
+wdcpalt.microsoft.com  # aus *.wdcpalt.microsoft.com
+settings-win.data.microsoft.com
+eu-v20.events.data.microsoft.com
+eu.vortex-win.data.microsoft.com
+usseu1northprod.blob.core.windows.net
+wseu1northprod.blob.core.windows.net
+usseu1westprod.blob.core.windows.net
+wseu1westprod.blob.core.windows.net
+automatedirstrprdneu.blob.core.windows.net
+automatedirstrprdweu.blob.core.windows.net
+automatedirstrprdneu3.blob.core.windows.net
+automatedirstrprdweu3.blob.core.windows.net
+# MMA-basierte Clients (Win 7 / 8.1 / 2008 R2) – EU
+winatp-gw-neu.microsoft.com
+winatp-gw-weu.microsoft.com
+winatp-gw-neu3.microsoft.com
+winatp-gw-weu3.microsoft.com
+oms.opinsights.azure.com  # aus *.oms.opinsights.azure.com
+
+# IP-Adressen Security-/Compliance-Portale (ID 64)
+#   (4 IP-Bereiche, mit urlCheck nicht prüfbar – siehe microsoftEndpoints.txt)
+
+# IP-Bereiche Service Tag "MicrosoftDefenderForEndpoint"
+# (zusätzlich wird Service Tag "OneDsCollector" für EDR Cyber Data benötigt)
+#   (32 IP-Bereiche, mit urlCheck nicht prüfbar – siehe microsoftEndpoints.txt)
+
+# Ende

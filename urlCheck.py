@@ -17,13 +17,15 @@ import re
 import sys
 import csv
 import html
+import json
 import time
+import hashlib
 import socket
 import argparse
 import ipaddress
 from datetime import datetime
 from urllib.parse import urlsplit, quote
-from concurrent.futures import ThreadPoolExecutor
+from concurrent.futures import ThreadPoolExecutor, as_completed
 
 # Stellt load_secrets, get_access_token, api_request und die farbige
 # Ausgabe bereit; aktiviert beim Import truststore (TLS-Inspection).
@@ -43,6 +45,11 @@ DEFAULT_OUT_DIR = os.path.join(SCRIPT_DIR, "reports")
 CATEGORIZATION_URL = (
     f"{ts.BASE_URL}/investigate/v2/domains/categorization/{{domain}}?showLabels"
 )
+
+# Activity-Log (alle Typen: dns, proxy, firewall, ...);
+# Scope reports.granularEvents:read
+ACTIVITY_URL = f"{ts.BASE_URL}/reports/v2/activity"
+ACTIVITY_LIMIT = 20
 
 # ------------------------------------------------------------------
 # Erkennung der Blocking Page - bei Bedarf an die eigene (angepasste)
@@ -95,6 +102,12 @@ STATUS_COLORS = {
     STATUS_ERROR: ts.GREY,
 }
 
+# Spalte action der CSV (Verdict aus dem Cisco-Log, Reports API)
+LOG_ALLOWED = "zugelassen"
+LOG_BLOCKED = "geblockt"
+LOG_NO_DATA = "keine Daten"
+LOG_UNAVAILABLE = "nicht verfügbar"
+
 CERT_VALID = "gültig"
 CERT_INVALID = "ungültig"
 CERT_UNCHECKED = "nicht geprüft"
@@ -113,8 +126,8 @@ USER_AGENT = (
 )
 
 
-class CategorizationDenied(Exception):
-    """Investigate API verweigert den Zugriff (Lizenz oder Scope fehlt)."""
+class ApiDenied(Exception):
+    """API verweigert den Zugriff (Lizenz oder Scope fehlt)."""
 
 
 class ApiUnreachable(Exception):
@@ -125,6 +138,10 @@ class ApiUnreachable(Exception):
 # Kategorisierung nach so vielen Fehlschlägen in Folge
 API_NET_RETRIES = 2
 MAX_API_FAILURES = 3
+
+# Mitschrift der Zwischenergebnisse (für --resume), unter <out-dir>/
+JOURNAL_DIR = "journal"
+JOURNAL_PHASES = ("check", "category", "log")
 
 
 # ------------------------------------------------------------------
@@ -187,6 +204,111 @@ def parse_entry(entry):
         is_ip = False
 
     return host, is_ip, urls
+
+
+# ------------------------------------------------------------------
+# Mitschrift (Zwischenergebnisse, --resume)
+# ------------------------------------------------------------------
+
+def file_hash(path):
+    """SHA-256 des Dateiinhalts (hex)."""
+
+    digest = hashlib.sha256()
+
+    with open(path, "rb") as handle:
+        for chunk in iter(lambda: handle.read(65536), b""):
+            digest.update(chunk)
+
+    return digest.hexdigest()
+
+
+class Journal:
+    """
+    Mitschrift aller Zwischenergebnisse als JSON Lines, eine Zeile je
+    Ergebnis. Dateiname = Hash der Quelldatei, d. h. jede Quelldatei hat
+    ihre eigene Mitschrift (parallele Läufe mit verschiedenen Dateien
+    stören sich nicht); eine geänderte Quelldatei findet ihre alte
+    Mitschrift nicht mehr und beginnt von vorne.
+
+    Zeile 1: {"phase": "header", "source": ..., "sha256": ...}
+    danach:  {"phase": "check"|"category"|"log", "key": ..., "value": ...}
+    """
+
+    def __init__(self, out_dir, source, resume):
+        self.digest = file_hash(source)
+        self.path = os.path.join(
+            out_dir, JOURNAL_DIR, f"urlCheck_{self.digest[:16]}.jsonl"
+        )
+        self.done = {phase: {} for phase in JOURNAL_PHASES}
+
+        os.makedirs(os.path.dirname(self.path), exist_ok=True)
+
+        if resume and self._load():
+            counts = ", ".join(
+                f"{len(self.done[p])} {p}" for p in JOURNAL_PHASES
+            )
+            print(ts.color(f"Setze fort aus {self.path} ({counts}).\n", ts.GREY))
+            self.handle = open(self.path, "a", encoding="utf-8")
+            return
+
+        if resume:
+            print(ts.color(
+                f"Keine passende Mitschrift für {os.path.basename(source)} "
+                f"(SHA-256 {self.digest[:16]}) - beginne von vorne.\n", ts.YELLOW
+            ))
+
+        self.handle = open(self.path, "w", encoding="utf-8")
+        self._write({
+            "phase": "header",
+            "source": os.path.abspath(source),
+            "sha256": self.digest,
+            "created": datetime.now().isoformat(timespec="seconds"),
+        })
+
+    def _load(self):
+        """Vorhandene Mitschrift einlesen. False, wenn keine passende da ist."""
+
+        if not os.path.isfile(self.path):
+            return False
+
+        with open(self.path, encoding="utf-8") as handle:
+            lines = handle.read().splitlines()
+
+        records = []
+        for line in lines:
+            try:
+                records.append(json.loads(line))
+            except ValueError:
+                # z. B. letzte Zeile beim Abbruch nur halb geschrieben
+                continue
+
+        if not records or records[0].get("sha256") != self.digest:
+            return False
+
+        for record in records[1:]:
+            phase = record.get("phase")
+            if phase in self.done:
+                self.done[phase][record.get("key")] = record.get("value")
+
+        return True
+
+    def _write(self, record):
+        self.handle.write(json.dumps(record, ensure_ascii=False) + "\n")
+        self.handle.flush()
+
+    def write(self, phase, key, value):
+        self.done[phase][key] = value
+        self._write({"phase": phase, "key": key, "value": value})
+
+    def finish(self):
+        """Lauf vollständig - Mitschrift wird nicht mehr gebraucht."""
+
+        self.handle.close()
+        os.remove(self.path)
+
+    def close(self):
+        if not self.handle.closed:
+            self.handle.close()
 
 
 # ------------------------------------------------------------------
@@ -410,15 +532,16 @@ def fetch(url, options):
     return response, read_body(response), cert
 
 
-def check_entry(entry, options):
-    """Eine Adresse aufrufen und das Ergebnis als dict liefern."""
+def new_result(entry):
+    """Ergebnis-dict eines Eintrags mit Default-Werten."""
 
     host, is_ip, urls = parse_entry(entry)
 
-    result = {
+    return {
         "input": entry,
         "host": host,
         "is_ip": is_ip,
+        "urls": urls,
         "url": urls[0],
         "status": STATUS_ERROR,
         "http": "",
@@ -429,7 +552,17 @@ def check_entry(entry, options):
         "reason": "",
         "category": "",
         "domain_status": "",
+        "log_action": LOG_UNAVAILABLE,
+        "log_rule": "",
+        "log_time": "",
     }
+
+
+def check_entry(entry, options):
+    """Eine Adresse aufrufen und das Ergebnis als dict liefern."""
+
+    result = new_result(entry)
+    host, is_ip, urls = result["host"], result["is_ip"], result["urls"]
 
     if is_ip:
         result["ips"] = [host]
@@ -497,7 +630,7 @@ def save_body(directory, host, body):
 # Kategorisierung (Investigate API)
 # ------------------------------------------------------------------
 
-def api_request_with_retry(url, token):
+def api_request_with_retry(url, token, params=None):
     """
     GET an die API; Netzwerkfehler (Timeout, Verbindungsabbruch) werden
     API_NET_RETRIES-mal wiederholt, danach ApiUnreachable.
@@ -506,7 +639,7 @@ def api_request_with_retry(url, token):
 
     for attempt in range(API_NET_RETRIES + 1):
         try:
-            return ts.api_request("GET", url, token, quiet=True)
+            return ts.api_request("GET", url, token, params=params, quiet=True)
         except requests.HTTPError:
             raise
         except requests.RequestException as exc:
@@ -522,7 +655,7 @@ def api_request_with_retry(url, token):
 def categorize(token, domain):
     """
     Kategorien einer Domain. Liefert (kategorie, domain_status).
-    Wirft CategorizationDenied bei 401/403 und ApiUnreachable, wenn die
+    Wirft ApiDenied bei 401/403 und ApiUnreachable, wenn die
     API auch nach Wiederholungen nicht erreichbar ist.
     """
 
@@ -534,9 +667,7 @@ def categorize(token, domain):
         code = exc.response.status_code
 
         if code in (401, 403):
-            raise CategorizationDenied(
-                f"HTTP {code} {exc.response.text[:200]}"
-            ) from exc
+            raise ApiDenied(f"HTTP {code} {exc.response.text[:200]}") from exc
 
         if code == 404:
             return "unbekannt", ""
@@ -556,65 +687,220 @@ def categorize(token, domain):
     return category, domain_status
 
 
-def categorize_all(token, results):
+def query_per_host(results, lookup, fields, ip_values, denied_values,
+                   api_name, scope, journal, phase):
     """
-    Kategorien für alle Einträge setzen (je Host nur eine Abfrage).
-    Liefert False, wenn die API den Zugriff verweigert.
+    lookup(host) für jeden Host einmal aufrufen und das Ergebnis-Tupel
+    in die Felder 'fields' aller Einträge dieses Hosts schreiben.
 
-    Ist die API nicht erreichbar, steht beim Eintrag "Fehler: ..."; nach
-    MAX_API_FAILURES Fehlschlägen in Folge werden die restlichen
-    Einträge nicht mehr abgefragt.
+    - Hosts aus der Mitschrift (journal, phase) werden nicht erneut
+      abgefragt; neue Ergebnisse ohne Fehler werden mitgeschrieben.
+    - IP-Adressen werden nicht abgefragt, sie bekommen ip_values.
+    - Verweigert die API den Zugriff (ApiDenied), bekommen alle Einträge
+      denied_values; Rückgabe False.
+    - Ist die API nicht erreichbar, steht beim Eintrag "Fehler: ..."; nach
+      MAX_API_FAILURES Fehlschlägen in Folge werden die restlichen Hosts
+      nicht mehr abgefragt.
     """
 
-    cache = {}
+    def assign(result, values):
+        for field, value in zip(fields, values):
+            result[field] = value
+
+    def failed(text):
+        return (text,) + ("",) * (len(fields) - 1)
+
+    cache = {host: tuple(values) for host, values in journal.done[phase].items()}
     failures = 0
 
     for result in results:
         host = result["host"]
 
         if result["is_ip"]:
-            result["category"] = "IP - keine Kategorisierung"
+            assign(result, ip_values)
             continue
 
         if host not in cache:
             if failures >= MAX_API_FAILURES:
-                cache[host] = ("Fehler: API nicht erreichbar - nicht abgefragt", "")
+                cache[host] = failed("Fehler: API nicht erreichbar - nicht abgefragt")
             else:
                 try:
-                    cache[host] = categorize(token, host)
+                    cache[host] = lookup(host)
                     failures = 0
+
+                    # Fehler (z. B. HTTP 500) nicht mitschreiben, damit sie
+                    # bei --resume erneut abgefragt werden
+                    if not cache[host][0].startswith("Fehler"):
+                        journal.write(phase, host, list(cache[host]))
                 except ApiUnreachable as exc:
                     failures += 1
-                    cache[host] = (f"Fehler: {exc}", "")
+                    cache[host] = failed(f"Fehler: {exc}")
 
                     if failures >= MAX_API_FAILURES:
                         print(ts.color(
-                            f"\nInvestigate API {failures}x in Folge nicht "
+                            f"\n{api_name} {failures}x in Folge nicht "
                             "erreichbar - restliche Einträge werden nicht "
                             "abgefragt.", ts.YELLOW
                         ))
-                except CategorizationDenied as exc:
+                except ApiDenied as exc:
                     print(ts.color(
-                        f"\nInvestigate API verweigert den Zugriff ({exc}).\n"
-                        "Der API-Key benötigt den Scope investigate.investigate:read "
-                        "und eine Investigate-Lizenz. Kategorien werden übersprungen.",
+                        f"\n{api_name} verweigert den Zugriff ({exc}).\n"
+                        f"Der API-Key benötigt den Scope {scope} - "
+                        "Abfrage wird übersprungen.",
                         ts.YELLOW,
                     ))
                     for r in results:
-                        r["category"] = r["domain_status"] = ""
+                        assign(r, denied_values)
                     return False
 
-            failed = cache[host][0].startswith("Fehler")
-            print(ts.color(f"  {host}: {cache[host][0]}", ts.YELLOW if failed else ts.GREY))
+            text = " | ".join(v for v in cache[host] if v)
+            color = ts.YELLOW if cache[host][0].startswith("Fehler") else ts.GREY
+            print(ts.color(f"  {host}: {text}", color))
 
-        result["category"], result["domain_status"] = cache[host]
+        assign(result, cache[host])
 
     return True
 
 
+def categorize_all(token, results, journal):
+    """Kategorien für alle Einträge setzen. False, wenn kein Zugriff."""
+
+    return query_per_host(
+        results,
+        lambda host: categorize(token, host),
+        fields=("category", "domain_status"),
+        ip_values=("IP - keine Kategorisierung", ""),
+        denied_values=("", ""),
+        api_name="Investigate API",
+        scope="investigate.investigate:read (und eine Investigate-Lizenz)",
+        journal=journal,
+        phase="category",
+    )
+
+
+def event_time(event):
+    """Zeitstempel eines Events in ms (0, wenn unbekannt)."""
+
+    try:
+        return int(event.get("timestamp") or 0)
+    except (TypeError, ValueError):
+        return 0
+
+
+def event_rule(event):
+    """
+    Regel eines Events: 'Name (ID n)', 'ID n' oder ''.
+
+    Proxy-Events: ID in policy.ruleid (rule.label meist "UNKNOWN").
+    DNS-Events:   policy fehlt, Regel in rule.id / rule.label.
+    """
+
+    policy = event.get("policy") if isinstance(event.get("policy"), dict) else {}
+    rule = event.get("rule") if isinstance(event.get("rule"), dict) else {}
+
+    rule_id = policy.get("ruleid") or rule.get("id")
+    rule_name = rule.get("label")
+
+    if str(rule_name or "").upper() == "UNKNOWN":
+        rule_name = None
+
+    if rule_name and rule_id:
+        return f"{rule_name} (ID {rule_id})"
+    if rule_id:
+        return f"ID {rule_id}"
+    return str(rule_name or "")
+
+
+def evaluate_events(events):
+    """
+    Activity-Events einer Domain auswerten. Liefert (action, regel, zeit).
+
+    Je Typ (dns, proxy, firewall, ...) zählt nur das jüngste Event. Ein
+    DNS-Event "proxied" (an den Proxy übergeben) entscheidet nichts, wenn
+    es ein Proxy-Event gibt. Ist eines der übrigen Events blocked, gilt
+    die Domain als geblockt.
+    """
+
+    latest = {}
+
+    for event in events:
+        if not isinstance(event, dict):
+            continue
+
+        kind = str(event.get("type") or "unbekannt").lower()
+
+        if kind not in latest or event_time(event) > event_time(latest[kind]):
+            latest[kind] = event
+
+    relevant = [
+        event for kind, event in latest.items()
+        if not (str(event.get("verdict", "")).lower() == "proxied"
+                and any("proxy" in k for k in latest if k != kind))
+    ]
+
+    if not relevant:
+        return LOG_NO_DATA, "", ""
+
+    blocked = [e for e in relevant if str(e.get("verdict", "")).lower() == "blocked"]
+    deciding = max(blocked or relevant, key=event_time)
+
+    millis = event_time(deciding)
+    when = (
+        datetime.fromtimestamp(millis / 1000).strftime("%d.%m.%Y %H:%M:%S")
+        if millis else f"{deciding.get('date', '')} {deciding.get('time', '')}".strip()
+    )
+
+    action = LOG_BLOCKED if blocked else LOG_ALLOWED
+    return action, event_rule(deciding), when
+
+
+def lookup_action(token, domain, hours):
+    """
+    Letztes protokolliertes Verdict einer Domain aus der Reports API.
+    Liefert (action, regel, zeit). Wirft ApiDenied bzw. ApiUnreachable.
+    """
+
+    now = int(time.time() * 1000)
+    params = {
+        "from": now - int(hours * 3600 * 1000),
+        "to": now,
+        "limit": ACTIVITY_LIMIT,
+        "domains": domain,
+    }
+
+    try:
+        body = api_request_with_retry(ACTIVITY_URL, token, params)
+    except requests.HTTPError as exc:
+        code = exc.response.status_code
+
+        if code in (401, 403):
+            raise ApiDenied(f"HTTP {code} {exc.response.text[:200]}") from exc
+
+        return f"Fehler: HTTP {code}", "", ""
+
+    events = body.get("data") if isinstance(body, dict) else body
+    return evaluate_events(events or [])
+
+
+def lookup_actions(token, results, hours, journal):
+    """Action aus dem Cisco-Log für alle Einträge setzen. False, wenn kein Zugriff."""
+
+    return query_per_host(
+        results,
+        lambda host: lookup_action(token, host, hours),
+        fields=("log_action", "log_rule", "log_time"),
+        ip_values=(f"{LOG_NO_DATA} (IP)", "", ""),
+        denied_values=(LOG_UNAVAILABLE, "", ""),
+        api_name="Reports API",
+        scope="reports.granularEvents:read",
+        journal=journal,
+        phase="log",
+    )
+
+
 def get_token(args):
     """
-    OAuth Token für die Investigate API, oder None, wenn keine
+    OAuth Token für Investigate und Reports API, oder None, wenn keine
     Credentials vorhanden sind bzw. die Anmeldung fehlschlägt.
     """
 
@@ -631,7 +917,7 @@ def get_token(args):
     if not api_key or not api_secret:
         print(ts.color(
             "Keine Credentials (CISCO_SECURE_ACCESS_KEY/_SECRET) gefunden - "
-            "Kategorisierung wird übersprungen.", ts.YELLOW
+            "API-Abfragen werden übersprungen.", ts.YELLOW
         ))
         return None
 
@@ -640,7 +926,7 @@ def get_token(args):
     except requests.RequestException as exc:
         print(ts.color(
             f"Anmeldung an der Cisco API fehlgeschlagen ({exc}) - "
-            "Kategorisierung wird übersprungen.", ts.YELLOW
+            "API-Abfragen werden übersprungen.", ts.YELLOW
         ))
         return None
 
@@ -666,21 +952,27 @@ def print_result(result):
 
 
 def write_csv(path, results):
-    """CSV mit den Spalten fqdn,kategorie (je Host eine Zeile)."""
+    """
+    CSV mit den Spalten fqdn,kategorie,action,regel,letzter_zugriff
+    (je Host eine Zeile; action aus dem Cisco-Log).
+    """
 
     seen = set()
 
     # utf-8-sig: Excel erkennt die Kodierung (Umlaute)
     with open(path, "w", encoding="utf-8-sig", newline="") as handle:
         writer = csv.writer(handle, delimiter=",")
-        writer.writerow(["fqdn", "kategorie"])
+        writer.writerow(["fqdn", "kategorie", "action", "regel", "letzter_zugriff"])
 
         for result in results:
             if result["host"] in seen:
                 continue
 
             seen.add(result["host"])
-            writer.writerow([result["host"], result["category"]])
+            writer.writerow([
+                result["host"], result["category"], result["log_action"],
+                result["log_rule"], result["log_time"],
+            ])
 
 
 HTML_TEMPLATE = """<!doctype html>
@@ -802,7 +1094,7 @@ def cert_class(cert):
     return ""
 
 
-def write_html(path, results, list_file, with_categories, started):
+def write_html(path, results, list_file, with_categories, with_log, started):
     esc = html.escape
     counts = {s: sum(1 for r in results if r["status"] == s) for s in STATUSES}
 
@@ -822,6 +1114,8 @@ def write_html(path, results, list_file, with_categories, started):
                "IP", "Zertifikat", "Seitentitel"]
     if with_categories:
         columns += ["Kategorie", "Domain-Status"]
+    if with_log:
+        columns.append("Cisco-Log")
     columns.append("Grund / Detail")
 
     headers = "".join(f"<th>{esc(c)}</th>" for c in columns)
@@ -843,6 +1137,9 @@ def write_html(path, results, list_file, with_categories, started):
                 f"<td>{esc(r['category'])}</td>",
                 f"<td>{esc(r['domain_status'])}</td>",
             ]
+        if with_log:
+            log = " · ".join(v for v in (r["log_action"], r["log_rule"], r["log_time"]) if v)
+            cells.append(f"<td>{esc(log)}</td>")
         cells.append(f'<td class="reason">{esc(r["reason"])}</td>')
 
         rows.append(f'<tr data-status="{r["status"]}">{"".join(cells)}</tr>')
@@ -884,11 +1181,18 @@ def parse_args():
     )
     parser.add_argument(
         "--no-categories", action="store_true",
-        help="Keine Kategorisierung über die Investigate API",
+        help="Keine Abfragen an die Cisco API (Kategorie, Cisco-Log) und "
+             "keine CSV",
     )
     parser.add_argument(
         "--categories-only", action="store_true",
-        help="Nur Kategorisierung (CSV), keine Seitenaufrufe",
+        help="Nur API-Abfragen (Kategorie und Action aus dem Cisco-Log) "
+             "und CSV - keine Seitenaufrufe, kein HTML-Report",
+    )
+    parser.add_argument(
+        "--hours", type=float, default=24,
+        help="Zeitraum in Stunden, in dem im Cisco-Log nach Zugriffen "
+             "gesucht wird (Default: 24)",
     )
     parser.add_argument(
         "--workers", type=int, default=10,
@@ -917,6 +1221,12 @@ def parse_args():
         "--save-bodies", action="store_true",
         help="Empfangene Seiten unter <out-dir>/bodies/ speichern "
              "(zum Anpassen der Marker)",
+    )
+    parser.add_argument(
+        "--resume", action="store_true",
+        help="Abgebrochenen Lauf fortsetzen: Ergebnisse aus der Mitschrift "
+             "(<out-dir>/journal/) übernehmen, nur Fehlendes abfragen. "
+             "Wurde die Quelldatei geändert, beginnt der Lauf von vorne.",
     )
     parser.add_argument(
         "--no-color", action="store_true",
@@ -954,32 +1264,73 @@ def main():
     stamp = f"{started:%Y%m%d_%H%M%S}"
     os.makedirs(args.out_dir, exist_ok=True)
 
+    journal = Journal(args.out_dir, args.file, args.resume)
+
+    try:
+        run(args, entries, journal, started, stamp)
+    finally:
+        journal.close()
+
+
+def check_all(entries, args, journal):
+    """
+    Alle Adressen aufrufen; Einträge aus der Mitschrift werden übernommen.
+    Jedes Ergebnis wird sofort mitgeschrieben. Liefert die Ergebnisse in
+    der Reihenfolge der Quelldatei.
+    """
+
+    results = [journal.done["check"].get(entry) for entry in entries]
+    todo = [i for i, result in enumerate(results) if result is None]
+
+    if len(todo) < len(entries):
+        print(f"{len(entries) - len(todo)} Adressen aus der Mitschrift übernommen.")
+
+    print(f"Prüfe {len(todo)} Adressen ({args.workers} parallel)...\n")
+
+    pool = ThreadPoolExecutor(max_workers=max(1, args.workers))
+
+    try:
+        futures = {pool.submit(check_entry, entries[i], args): i for i in todo}
+
+        for future in as_completed(futures):
+            index = futures[future]
+            result = future.result()
+            journal.write("check", entries[index], result)
+            print_result(result)
+            results[index] = result
+    finally:
+        # Bei Abbruch (Strg+C) nicht auf die restlichen Aufrufe warten
+        pool.shutdown(wait=False, cancel_futures=True)
+
+    return results
+
+
+def run(args, entries, journal, started, stamp):
     if args.categories_only:
-        results = []
-        for entry in entries:
-            host, is_ip, urls = parse_entry(entry)
-            results.append({"input": entry, "host": host, "is_ip": is_ip,
-                            "category": "", "domain_status": ""})
+        # Nur API-Abfragen, keine Seitenaufrufe
+        results = [new_result(entry) for entry in entries]
     else:
-        print(f"Prüfe {len(entries)} Adressen ({args.workers} parallel)...\n")
+        results = check_all(entries, args, journal)
 
-        with ThreadPoolExecutor(max_workers=max(1, args.workers)) as pool:
-            results = []
-            for result in pool.map(lambda e: check_entry(e, args), entries):
-                print_result(result)
-                results.append(result)
-
-    with_categories = False
+    with_categories = with_log = False
 
     if not args.no_categories:
-        print("\nKategorisierung über die Investigate API...")
+        print("\nAnmeldung an der Cisco API...")
         token = get_token(args)
 
         if token:
-            with_categories = categorize_all(token, results)
+            print("\nKategorisierung (Investigate API)...")
+            with_categories = categorize_all(token, results, journal)
 
-        if args.categories_only and not with_categories:
-            sys.exit(1)
+            print(f"\nAction aus dem Cisco-Log (Reports API, letzte {args.hours:g} h)...")
+            with_log = lookup_actions(token, results, args.hours, journal)
+
+            if with_log and not args.categories_only:
+                print(ts.color(
+                    "  Hinweis: Die Seitenaufrufe dieses Laufs erscheinen erst nach "
+                    "einigen Minuten im Cisco-Log - für aktuelle Werte später "
+                    "mit --categories-only wiederholen.", ts.GREY
+                ))
 
     print()
 
@@ -989,20 +1340,34 @@ def main():
             f"{s.title()}: {ts.color(str(counts[s]), STATUS_COLORS[s])}"
             for s in STATUSES
         ))
+        print()
 
         html_path = os.path.join(args.out_dir, f"urlCheck_{stamp}.html")
-        write_html(html_path, results, args.file, with_categories, started)
-        print(f"\nHTML-Report: {html_path}")
+        write_html(html_path, results, args.file, with_categories, with_log, started)
+        print(f"HTML-Report: {html_path}")
 
-    if with_categories:
+    if not args.no_categories:
         csv_path = os.path.join(args.out_dir, f"categories_{stamp}.csv")
         write_csv(csv_path, results)
         print(f"CSV:         {csv_path}")
+
+    failed = sum(
+        1 for r in results
+        if r["category"].startswith("Fehler") or r["log_action"].startswith("Fehler")
+    )
+
+    if failed:
+        print(ts.color(
+            f"\n{failed} Einträge mit API-Fehler - mit --resume werden nur "
+            f"diese erneut abgefragt (Mitschrift: {journal.path}).", ts.YELLOW
+        ))
+    else:
+        journal.finish()
 
 
 if __name__ == "__main__":
     try:
         main()
     except KeyboardInterrupt:
-        print("\nAbgebrochen.")
+        print("\nAbgebrochen - fortsetzen mit --resume.")
         sys.exit(1)

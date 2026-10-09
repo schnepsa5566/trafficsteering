@@ -264,7 +264,7 @@ erkannte Domain ähnliche Einträge bei Cisco.
 | `HTTP 401` beim Token                                         | API-Key/Secret falsch oder abgelaufen                                             |
 | `HTTP 403`                                                    | API-Key fehlt der Scope `deployments.internaldomains:read` bzw. `:write`          |
 | `… liefert auf Seite N dieselben Einträge wie zuvor`          | API ignoriert die Pagination – Abbruch ohne Änderungen, später erneut versuchen  |
-| `HTTP 429 - warte …s`                                         | Rate Limit – das Script wartet und wiederholt automatisch (bis zu 6 Versuche)    |
+| `HTTP 429 - warte …s`                                         | Rate Limit (Cisco: 14/min, 350/30 min pro Key) – das Script wartet 60, 120, 240, dann je 300 s und wiederholt, insgesamt bis zu 30 min |
 
 ---
 
@@ -272,14 +272,22 @@ erkannte Domain ähnliche Einträge bei Cisco.
 
 `urlCheck.py` ruft jede Adresse aus `urlList.txt` auf und prüft, ob echter
 Content oder eine Seite von Cisco Secure Access zurückkommt. Ergebnis ist ein
-HTML-Report. Zusätzlich wird je FQDN die Cisco-Kategorie über die
-**Investigate API** abgefragt und als CSV (`fqdn,kategorie`) ausgegeben.
+HTML-Report. Zusätzlich werden je FQDN über die Cisco API abgefragt und als
+CSV (`fqdn,kategorie,action,regel,letzter_zugriff`) ausgegeben:
+
+- die Kategorie über die **Investigate API**,
+- ob Cisco die Domain zulässt oder blockt, aus dem **Cisco-Log** (Reports API,
+  Activity Search): das zuletzt protokollierte Verdict samt Regel.
 
 Das Script nutzt dieselben Credentials-Mechanismen wie `trafficSteering.py`
-(`secrets.env`, `--secrets-file`, Umgebungsvariablen). Für die
-Kategorisierung braucht der API-Key den Scope `investigate.investigate:read`.
-Fehlen Credentials oder Scope, wird nur der HTML-Report ohne Kategorien
-erstellt.
+(`secrets.env`, `--secrets-file`, Umgebungsvariablen). Der API-Key braucht die
+Scopes `investigate.investigate:read` (Kategorie) und
+`reports.granularEvents:read` (Action). Fehlt ein Scope oder ist die API nicht
+erreichbar, steht in der betroffenen Spalte `nicht verfügbar` bzw.
+`Fehler: …`; Report und CSV werden trotzdem erstellt.
+
+> Die Secrets-Datei muss zur Organisation gehören, über die die Clients
+> surfen – sonst findet die Reports API keine Zugriffe (`keine Daten`).
 
 ### Die Datei urlList.txt
 
@@ -291,10 +299,12 @@ erstellt.
 ### Aufruf
 
 ```
-python urlCheck.py                         # Report + Kategorien (CSV)
-python urlCheck.py --no-categories         # nur Report
-python urlCheck.py --categories-only       # nur CSV, keine Seitenaufrufe
+python urlCheck.py                         # Seitenaufrufe + Report + CSV
+python urlCheck.py --no-categories         # nur Seitenaufrufe + Report, keine API
+python urlCheck.py --categories-only       # nur API-Abfragen + CSV, keine Seitenaufrufe
+python urlCheck.py --categories-only --hours 168   # Cisco-Log der letzten 7 Tage
 python urlCheck.py --file andere.txt --secrets-file svd.secrets.env
+python urlCheck.py --resume                # abgebrochenen Lauf fortsetzen
 ```
 
 Report und CSV landen in `reports/` (nicht im Git):
@@ -303,21 +313,79 @@ Report und CSV landen in `reports/` (nicht im Git):
 - `reports/categories_JJJJMMTT_HHMMSS.csv` – Trenner `,`, UTF-8 mit BOM
   (Excel), mehrere Kategorien je Domain mit `; ` getrennt.
 
+### Mitschrift und Fortsetzen (--resume)
+
+Jedes Zwischenergebnis wird sofort in eine Mitschrift geschrieben:
+Seitenaufrufe, Kategorien und Cisco-Log-Einträge.
+
+- Datei: `reports/journal/urlCheck_<hash>.jsonl`. `<hash>` sind die ersten
+  16 Zeichen des SHA-256 des **Inhalts** der Quelldatei. Jede Adressliste
+  hat damit ihre eigene Mitschrift, und Läufe mit verschiedenen Listen
+  können parallel laufen. Zwei gleichzeitige Läufe mit **derselben** Liste
+  schreiben allerdings in dieselbe Datei und sollten vermieden werden.
+- `--resume` liest die Mitschrift ein, übernimmt die vorhandenen Ergebnisse
+  und fragt nur noch Fehlendes ab.
+- Wurde die Quelldatei geändert, passt der Hash nicht mehr. Der Lauf
+  beginnt dann von vorne. Die alte Mitschrift bleibt liegen und kann
+  gelöscht werden.
+- Ohne `--resume` wird eine vorhandene Mitschrift derselben Liste
+  überschrieben.
+- API-Abfragen mit Fehler (z. B. `HTTP 429` nach 30 Minuten Wartezeit,
+  API nicht erreichbar) werden nicht mitgeschrieben. Ein Lauf mit
+  `--resume` fragt genau diese Einträge erneut ab.
+- Nach einem vollständigen Lauf ohne API-Fehler wird die Mitschrift
+  gelöscht.
+- Ergebnisse aus der Mitschrift werden unverändert übernommen. Das gilt
+  auch für die Cisco-Log-Werte; sie entsprechen also dem Zeitpunkt der
+  ursprünglichen Abfrage.
+
+### Action aus dem Cisco-Log
+
+Cisco Secure Access hat kein API-Endpoint, das eine Policy für eine Domain
+„testet“. Die Spalte `action` stammt deshalb aus dem Activity-Log
+(`GET /reports/v2/activity?domains=<fqdn>`): Gesucht wird im Zeitraum
+`--hours` (Default 24 h), je Typ (DNS, Proxy, Firewall …) zählt das jüngste
+Event. Ist eines davon `blocked`, gilt die Domain als geblockt.
+
+| action            | Bedeutung                                                     |
+|-------------------|---------------------------------------------------------------|
+| `zugelassen`      | letzter protokollierter Zugriff wurde erlaubt                 |
+| `geblockt`        | letzter protokollierter Zugriff wurde blockiert               |
+| `keine Daten`     | kein Zugriff auf die Domain im Zeitraum protokolliert         |
+| `keine Daten (IP)`| IP-Adressen werden nicht abgefragt                            |
+| `nicht verfügbar` | Scope `reports.granularEvents:read` fehlt bzw. keine Credentials |
+| `Fehler: …`       | API nicht erreichbar                                          |
+
+`regel` enthält Name und/oder ID der auslösenden Regel (z. B.
+`Webfilter_SVS (ID 2838182)`), `letzter_zugriff` den Zeitpunkt des Events.
+
+Grenzen:
+
+- Es gibt nur ein Ergebnis, wenn die Domain im Zeitraum tatsächlich
+  aufgerufen wurde – von irgendeinem Client der Organisation.
+- Neue Zugriffe erscheinen erst nach einigen Minuten im Log. Die
+  Seitenaufrufe eines normalen Laufs sind daher meist noch nicht enthalten;
+  für aktuelle Werte später `--categories-only` laufen lassen.
+- Das Ergebnis des direkten Seitenaufrufs (Spalte *Ergebnis* im HTML-Report)
+  und das Cisco-Log (Spalte *Cisco-Log*) stehen im Report nebeneinander.
+
 ### Parameter
 
 | Parameter               | Bedeutung                                                                      |
 |-------------------------|--------------------------------------------------------------------------------|
 | `--file DATEI`          | Adressliste (Default: `urlList.txt` neben dem Script)                          |
 | `--out-dir DIR`         | Zielverzeichnis für Report und CSV (Default: `reports/`)                       |
-| `--secrets-file DATEI`  | Credentials für die Investigate API (Default: `secrets.env`)                   |
-| `--no-categories`       | Keine Kategorisierung                                                          |
-| `--categories-only`     | Nur Kategorisierung (CSV), keine Seitenaufrufe                                 |
+| `--secrets-file DATEI`  | Credentials für die Cisco API (Default: `secrets.env`)                         |
+| `--no-categories`       | Keine API-Abfragen (Kategorie, Cisco-Log) und keine CSV                        |
+| `--categories-only`     | Nur API-Abfragen und CSV – keine Seitenaufrufe, kein HTML-Report               |
+| `--hours N`             | Zeitraum für die Suche im Cisco-Log in Stunden (Default: 24)                   |
 | `--workers N`           | Parallele Seitenaufrufe (Default: 10)                                          |
 | `--timeout SEK`         | Timeout je Seitenaufruf (Default: 15)                                          |
 | `--proxy URL`           | Expliziter Proxy (Default: `HTTP_PROXY`/`HTTPS_PROXY` aus der Umgebung)        |
 | `--insecure`            | TLS-Zertifikate gar nicht prüfen (Spalte *Zertifikat*: `nicht geprüft`)        |
 | `--marker TEXT`         | Zusätzlicher Text, der eine Seite als Block Page kennzeichnet (mehrfach)       |
 | `--save-bodies`         | Empfangene Seiten unter `<out-dir>/bodies/` speichern (zum Anpassen der Marker)|
+| `--resume`              | Abgebrochenen Lauf aus der Mitschrift fortsetzen (siehe oben)                  |
 | `--no-color`            | Ausgabe ohne Farben                                                            |
 
 ### Ergebnisse

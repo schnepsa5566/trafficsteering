@@ -68,6 +68,15 @@ RETRY_STATUS = (429, 502, 503, 504)
 MAX_RETRIES = 6
 MAX_RETRY_DELAY = 60
 
+# Rate Limits laut Cisco (Deployments/Admin, pro API-Key):
+# 5/Sekunde, 14/Minute, 350/30 Minuten. Ein Retry-After-Header ist nicht
+# dokumentiert. Bei 429 daher mindestens eine Minute warten (Minutenfenster
+# läuft ab), dann steigend bis RATE_LIMIT_MAX_DELAY, insgesamt so lange,
+# dass auch das 30-Minuten-Fenster sicher abgelaufen ist.
+RATE_LIMIT_DELAY = 60
+RATE_LIMIT_MAX_DELAY = 300
+RATE_LIMIT_MAX_WAIT = 30 * 60
+
 # ------------------------------------------------------------------
 # Farbige Ausgabe
 # ------------------------------------------------------------------
@@ -251,6 +260,22 @@ def retry_delay(response, attempt):
     return min(max(delay, 1), MAX_RETRY_DELAY)
 
 
+def rate_limit_delay(response, attempt):
+    """
+    Wartezeit nach HTTP 429: 60, 120, 240, 300, 300, ... Sekunden.
+    Ein längerer Retry-After-Header hat Vorrang.
+    """
+
+    delay = min(RATE_LIMIT_DELAY * 2 ** attempt, RATE_LIMIT_MAX_DELAY)
+
+    try:
+        delay = max(delay, float(response.headers.get("Retry-After", "")))
+    except ValueError:
+        pass
+
+    return delay
+
+
 def print_api_error(response):
     print(color("\nCisco API Fehler:", RED))
     print(f"{response.request.method} {response.url}")
@@ -276,7 +301,11 @@ def api_request(method, url, token, payload=None, params=None,
     if payload is not None:
         headers["Content-Type"] = "application/json"
 
-    for attempt in range(MAX_RETRIES + 1):
+    error_attempt = 0
+    rate_attempt = 0
+    rate_waited = 0
+
+    while True:
         response = requests.request(
             method,
             url,
@@ -286,13 +315,30 @@ def api_request(method, url, token, payload=None, params=None,
             timeout=30,
         )
 
-        if response.status_code not in retry_on or attempt == MAX_RETRIES:
+        status = response.status_code
+
+        if status not in retry_on:
             break
 
-        delay = retry_delay(response, attempt)
+        if status == 429:
+            if rate_waited >= RATE_LIMIT_MAX_WAIT:
+                break
+
+            delay = rate_limit_delay(response, rate_attempt)
+            rate_attempt += 1
+            rate_waited += delay
+            progress = (f"Rate Limit, bisher {rate_waited / 60:.0f} "
+                        f"von max. {RATE_LIMIT_MAX_WAIT / 60:.0f} min")
+        else:
+            if error_attempt == MAX_RETRIES:
+                break
+
+            delay = retry_delay(response, error_attempt)
+            error_attempt += 1
+            progress = f"Versuch {error_attempt}/{MAX_RETRIES}"
+
         print(color(
-            f"  HTTP {response.status_code} - warte {delay:.0f}s "
-            f"(Versuch {attempt + 1}/{MAX_RETRIES})...", GREY
+            f"  HTTP {status} - warte {delay:.0f}s ({progress})...", GREY
         ))
         time.sleep(delay)
 
