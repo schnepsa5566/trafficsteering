@@ -18,7 +18,20 @@ import sys
 import json
 import time
 import argparse
+import warnings
+
+# requests warnt bei chardet >= 6 (von reportlab installiert) - harmlos
+warnings.filterwarnings("ignore", message=".*doesn't match a supported version.*")
 import requests
+
+# TLS-Zertifikate gegen den Betriebssystem-Speicher (Windows-Zertifikatsspeicher)
+# prüfen statt gegen certifi - nötig hinter TLS-Inspection (Firmen-Root-CA).
+try:
+    import truststore
+    truststore.inject_into_ssl()
+except ImportError:
+    print("Hinweis: 'truststore' nicht installiert - verwende certifi-Bundle "
+          "(pip install truststore)", file=sys.stderr)
 
 
 BASE_URL = "https://api.sse.cisco.com"
