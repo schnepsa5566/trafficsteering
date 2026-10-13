@@ -1,0 +1,72 @@
+<#
+.SYNOPSIS
+    Prueft den Client und liefert "OK" oder "Nicht OK" (Exitcode 0 bzw. 1).
+
+.DESCRIPTION
+    OK, wenn alle Punkte zutreffen:
+      * Zertifikat mit dem Thumbprint im User- oder Maschinenstore vorhanden
+      * alle Cisco Secure Client Dienste vorhanden
+      * Proxy-Zustand entspricht der Erwartung (Standard: kein Proxy gesetzt)
+
+    Mit -Verbose werden die Einzelergebnisse ausgegeben.
+
+.PARAMETER ProxyErwartet
+    Wenn angegeben, muss ein Proxy gesetzt sein. Ohne den Schalter darf keiner gesetzt sein.
+#>
+[CmdletBinding()]
+param(
+    [string]$Thumbprint = '2548469f35b63d098d50791815bdea25013c559c',
+    [switch]$ProxyErwartet
+)
+
+$services = @(
+    'csc_vpnagent',       # Cisco Secure Client - AnyConnect VPN Agent
+    'csc_te_agent',       # Cisco Secure Client - ThousandEyes Endpoint Agent
+    'csc_umbrellaagent',  # Cisco Secure Client - Umbrella Agent
+    'csc_swgagent'        # Cisco Secure Client - Umbrella SWG Agent
+)
+
+$ok = $true
+
+# --- Zertifikat ---
+$thumb = ($Thumbprint -replace '[^0-9a-fA-F]', '').ToUpper()
+$cert = Get-ChildItem -Path Cert:\CurrentUser, Cert:\LocalMachine -Recurse -ErrorAction SilentlyContinue |
+    Where-Object { $_.Thumbprint -eq $thumb } |
+    Select-Object -First 1
+if ($cert) {
+    Write-Verbose "Zertifikat: gefunden ($($cert.PSParentPath -replace '^.*::', ''))"
+} else {
+    Write-Verbose "Zertifikat: FEHLT ($thumb)"
+    $ok = $false
+}
+
+# --- Dienste ---
+foreach ($name in $services) {
+    $svc = Get-Service -Name $name -ErrorAction SilentlyContinue
+    if ($svc) {
+        Write-Verbose "Dienst $name`: vorhanden ($($svc.Status))"
+    } else {
+        Write-Verbose "Dienst $name`: FEHLT"
+        $ok = $false
+    }
+}
+
+# --- Proxy ---
+$inet = Get-ItemProperty -Path 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Internet Settings' -ErrorAction SilentlyContinue
+$proxyGesetzt = ($inet.ProxyEnable -eq 1 -and $inet.ProxyServer) -or [bool]$inet.AutoConfigURL
+if ($proxyGesetzt) {
+    Write-Verbose "Proxy: gesetzt (Server='$($inet.ProxyServer)' PAC='$($inet.AutoConfigURL)')"
+} else {
+    Write-Verbose 'Proxy: nicht gesetzt'
+}
+if ($proxyGesetzt -ne [bool]$ProxyErwartet) {
+    $ok = $false
+}
+
+if ($ok) {
+    'OK'
+    exit 0
+} else {
+    'Nicht OK'
+    exit 1
+}
