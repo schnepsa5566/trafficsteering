@@ -305,6 +305,7 @@ python urlCheck.py --categories-only       # nur API-Abfragen + CSV, keine Seite
 python urlCheck.py --categories-only --hours 168   # Cisco-Log der letzten 7 Tage
 python urlCheck.py --file andere.txt --secrets-file svd.secrets.env
 python urlCheck.py --resume                # abgebrochenen Lauf fortsetzen
+python urlCheck.py --s-base reports/s_base.tsv     # Ergebnis mit S-Base vergleichen
 ```
 
 Report und CSV landen in `reports/` (nicht im Git):
@@ -339,6 +340,26 @@ Seitenaufrufe, Kategorien und Cisco-Log-Einträge.
   auch für die Cisco-Log-Werte; sie entsprechen also dem Zeitpunkt der
   ursprünglichen Abfrage.
 
+### Cache der API-Antworten (--no-cache)
+
+Die Antworten der Cisco API (Kategorie und Cisco-Log) werden lokal
+gespeichert und 4 Stunden lang wiederverwendet – auch über verschiedene
+Adresslisten und Läufe hinweg. Die Seitenaufrufe selbst werden nie gecacht.
+
+- Datei: `reports/cache/api_cache.jsonl` (bzw. `<out-dir>/cache/`).
+  Abgelaufene Einträge werden beim nächsten Start entfernt; die Datei kann
+  jederzeit gelöscht werden.
+- Die Gültigkeit steht als Konstante `CACHE_TTL_HOURS` oben im Script.
+- `--no-cache` schaltet den Cache ab: alles wird neu abgefragt, nichts
+  gelesen oder gespeichert.
+- Cisco-Log-Einträge gelten je Organisation (Credentials) und je `--hours`;
+  ein Wechsel der Secrets-Datei oder des Zeitraums fragt neu ab.
+- Fehler (`Fehler: …`) werden nicht gespeichert.
+- Auch `keine Daten` aus dem Cisco-Log bleibt 4 Stunden im Cache. Wer kurz
+  nach einem Lauf die frischen Log-Werte braucht, ruft
+  `--categories-only --no-cache` auf.
+- Die Konsole meldet am Ende, wie viele Antworten aus dem Cache kamen.
+
 ### Action aus dem Cisco-Log
 
 Cisco Secure Access hat kein API-Endpoint, das eine Policy für eine Domain
@@ -365,15 +386,44 @@ Grenzen:
   aufgerufen wurde – von irgendeinem Client der Organisation.
 - Neue Zugriffe erscheinen erst nach einigen Minuten im Log. Die
   Seitenaufrufe eines normalen Laufs sind daher meist noch nicht enthalten;
-  für aktuelle Werte später `--categories-only` laufen lassen.
+  für aktuelle Werte später `--categories-only --no-cache` laufen lassen.
 - Das Ergebnis des direkten Seitenaufrufs (Spalte *Ergebnis* im HTML-Report)
   und das Cisco-Log (Spalte *Cisco-Log*) stehen im Report nebeneinander.
+
+### Vergleich mit S-Base (--s-base)
+
+Mit `--s-base DATEI` wird das Ergebnis jedes Seitenaufrufs mit der Action aus
+einem S-Base-Export verglichen.
+
+- Format: Tabulator-getrennt, erste Zeile ist die Kopfzeile. Spalte 0 enthält
+  die Action (z. B. `accept`, `deny`), Spalte 1 die Applikationskategorie,
+  Spalte 2 und/oder 3 die Adresse (`dstname`, `hostname`). Die Spalten und
+  die Zuordnung der Actions stehen als Konstanten oben im Script
+  (`SBASE_*_COLUMN(S)`, `SBASE_ALLOW_ACTIONS`, `SBASE_BLOCK_ACTIONS`).
+- Zugeordnet wird über den Host der Adresse (ohne Groß-/Kleinschreibung).
+  Kommt ein Host in mehreren Zeilen vor, werden die Actions gezählt, z. B.
+  `accept (11x) · Web.Client`.
+- `OK` entspricht zugelassen, `BLOCKIERT` und `WARNUNG` entsprechen geblockt.
+
+| Vergleich            | Bedeutung                                                              |
+|----------------------|------------------------------------------------------------------------|
+| `Gleich`             | Seitenaufruf und S-Base stimmen überein                                |
+| `Abweichung`         | Ergebnis <> S-Base, oder der Host ist in S-Base zugelassen **und** geblockt |
+| `Nicht vergleichbar` | Ergebnis `FEHLER` (Ziel nicht erreicht) oder Action in S-Base nicht wertbar |
+| `Nicht in S-Base`    | Host kommt im Export nicht vor                                         |
+
+Der HTML-Report bekommt die Spalten *S-Base* und *Vergleich* sowie eine zweite
+Zählerreihe; ein Klick auf z. B. *Abweichung* filtert die Tabelle. Der Filter
+wirkt zusammen mit dem Ergebnis-Filter (z. B. *Blockiert* + *Abweichung*).
+Die CSV enthält zusätzlich die Spalten `ergebnis,s_base,vergleich`.
+`--s-base` braucht die Seitenaufrufe und geht nicht mit `--categories-only`.
 
 ### Parameter
 
 | Parameter               | Bedeutung                                                                      |
 |-------------------------|--------------------------------------------------------------------------------|
 | `--file DATEI`          | Adressliste (Default: `urlList.txt` neben dem Script)                          |
+| `--s-base DATEI`        | S-Base-Export (TSV) für den Vergleich mit dem Ergebnis (siehe oben)            |
 | `--out-dir DIR`         | Zielverzeichnis für Report und CSV (Default: `reports/`)                       |
 | `--secrets-file DATEI`  | Credentials für die Cisco API (Default: `secrets.env`)                         |
 | `--no-categories`       | Keine API-Abfragen (Kategorie, Cisco-Log) und keine CSV                        |
@@ -386,6 +436,7 @@ Grenzen:
 | `--marker TEXT`         | Zusätzlicher Text, der eine Seite als Block Page kennzeichnet (mehrfach)       |
 | `--save-bodies`         | Empfangene Seiten unter `<out-dir>/bodies/` speichern (zum Anpassen der Marker)|
 | `--resume`              | Abgebrochenen Lauf aus der Mitschrift fortsetzen (siehe oben)                  |
+| `--no-cache`            | Cache der API-Antworten nicht verwenden (siehe oben)                           |
 | `--no-color`            | Ausgabe ohne Farben                                                            |
 
 ### Ergebnisse

@@ -8,6 +8,9 @@ Optional wird je FQDN die Kategorisierung über die Secure Access
 Investigate API abgefragt und zusätzlich als CSV (fqdn,kategorie)
 ausgegeben.
 
+Mit --s-base wird das Ergebnis je Adresse mit der Action aus einem
+S-Base-Export (TSV) verglichen; Abweichungen sind im Report filterbar.
+
 API:   https://api.sse.cisco.com/investigate/v2/domains/categorization/{domain}
 Scope: investigate.investigate:read
 """
@@ -108,6 +111,34 @@ LOG_BLOCKED = "geblockt"
 LOG_NO_DATA = "keine Daten"
 LOG_UNAVAILABLE = "nicht verfügbar"
 
+# S-Base-Export (TSV mit Kopfzeile): Spalten 0-basiert. Die Adresse steht
+# in Spalte 2 und/oder 3 (dstname, hostname).
+SBASE_ACTION_COLUMN = 0
+SBASE_APPCAT_COLUMN = 1
+SBASE_HOST_COLUMNS = (2, 3)
+
+# Actions des S-Base-Exports; alle anderen Werte (z. B. ip-conn, dns)
+# sagen nichts über zugelassen/geblockt aus.
+SBASE_ALLOW_ACTIONS = (
+    "accept", "allow", "passthrough", "close", "timeout",
+    "client-rst", "server-rst",
+)
+SBASE_BLOCK_ACTIONS = (
+    "deny", "block", "blocked", "drop", "dropped", "reject", "reset",
+)
+
+# Vergleich Ergebnis des Seitenaufrufs <-> S-Base (Schlüssel = Filter im Report)
+CMP_EQUAL = "gleich"
+CMP_DIFF = "abweichung"
+CMP_NA = "nicht-vergleichbar"
+CMP_MISSING = "nicht-in-s-base"
+CMP_LABELS = {
+    CMP_EQUAL: "Gleich",
+    CMP_DIFF: "Abweichung",
+    CMP_NA: "Nicht vergleichbar",
+    CMP_MISSING: "Nicht in S-Base",
+}
+
 CERT_VALID = "gültig"
 CERT_INVALID = "ungültig"
 CERT_UNCHECKED = "nicht geprüft"
@@ -142,6 +173,11 @@ MAX_API_FAILURES = 3
 # Mitschrift der Zwischenergebnisse (für --resume), unter <out-dir>/
 JOURNAL_DIR = "journal"
 JOURNAL_PHASES = ("check", "category", "log")
+
+# Lokaler Cache der API-Antworten (Kategorie, Cisco-Log), unter <out-dir>/
+CACHE_DIR = "cache"
+CACHE_FILE = "api_cache.jsonl"
+CACHE_TTL_HOURS = 4
 
 
 # ------------------------------------------------------------------
@@ -308,6 +344,100 @@ class Journal:
 
     def close(self):
         if not self.handle.closed:
+            self.handle.close()
+
+
+# ------------------------------------------------------------------
+# Cache der API-Antworten
+# ------------------------------------------------------------------
+
+class ApiCache:
+    """
+    Ergebnisse der API-Abfragen lokal auf der Platte, gültig für
+    CACHE_TTL_HOURS. Anders als die Mitschrift gilt der Cache über Läufe
+    und Quelldateien hinweg.
+
+    JSON Lines, eine Zeile je Ergebnis: {"key": ..., "time": ..., "value": [...]}.
+    Beim Start werden abgelaufene Einträge entfernt. Fehler ("Fehler: ...")
+    werden nicht gespeichert.
+    """
+
+    def __init__(self, out_dir, enabled=True):
+        self.enabled = enabled
+        self.path = os.path.join(out_dir, CACHE_DIR, CACHE_FILE)
+        self.entries = {}
+        self.hits = 0
+        self.handle = None
+
+        if not enabled:
+            return
+
+        os.makedirs(os.path.dirname(self.path), exist_ok=True)
+        self._load()
+
+        # Nur die gültigen Einträge behalten (Datei wächst sonst endlos)
+        temp = self.path + ".tmp"
+        with open(temp, "w", encoding="utf-8") as handle:
+            for key, (stamp, value) in self.entries.items():
+                handle.write(self._line(key, stamp, value))
+        os.replace(temp, self.path)
+
+        self.handle = open(self.path, "a", encoding="utf-8")
+
+    @staticmethod
+    def _line(key, stamp, value):
+        record = {"key": key, "time": stamp, "value": list(value)}
+        return json.dumps(record, ensure_ascii=False) + "\n"
+
+    @staticmethod
+    def _valid(stamp):
+        return 0 <= time.time() - stamp < CACHE_TTL_HOURS * 3600
+
+    def _load(self):
+        if not os.path.isfile(self.path):
+            return
+
+        with open(self.path, encoding="utf-8") as handle:
+            for line in handle:
+                try:
+                    record = json.loads(line)
+                    key, stamp = record["key"], float(record["time"])
+                    value = list(record["value"])
+                except (ValueError, KeyError, TypeError):
+                    # z. B. letzte Zeile beim Abbruch nur halb geschrieben
+                    continue
+
+                if self._valid(stamp):
+                    self.entries[key] = (stamp, value)
+
+    def fetch(self, key, lookup):
+        """
+        Ergebnis-Tupel zu 'key' (Liste von Texten) aus dem Cache, sonst
+        lookup() aufrufen und das Ergebnis speichern.
+        """
+
+        if not self.enabled:
+            return lookup()
+
+        key = "|".join(key)
+        entry = self.entries.get(key)
+
+        if entry and self._valid(entry[0]):
+            self.hits += 1
+            return tuple(entry[1])
+
+        value = lookup()
+
+        if not str(value[0]).startswith("Fehler"):
+            stamp = time.time()
+            self.entries[key] = (stamp, list(value))
+            self.handle.write(self._line(key, stamp, value))
+            self.handle.flush()
+
+        return value
+
+    def close(self):
+        if self.handle and not self.handle.closed:
             self.handle.close()
 
 
@@ -555,6 +685,8 @@ def new_result(entry):
         "log_action": LOG_UNAVAILABLE,
         "log_rule": "",
         "log_time": "",
+        "sbase": "",
+        "sbase_cmp": "",
     }
 
 
@@ -762,12 +894,14 @@ def query_per_host(results, lookup, fields, ip_values, denied_values,
     return True
 
 
-def categorize_all(token, results, journal):
+def categorize_all(token, results, journal, cache):
     """Kategorien für alle Einträge setzen. False, wenn kein Zugriff."""
 
     return query_per_host(
         results,
-        lambda host: categorize(token, host),
+        lambda host: cache.fetch(
+            ("category", host), lambda: categorize(token, host)
+        ),
         fields=("category", "domain_status"),
         ip_values=("IP - keine Kategorisierung", ""),
         denied_values=("", ""),
@@ -882,12 +1016,19 @@ def lookup_action(token, domain, hours):
     return evaluate_events(events or [])
 
 
-def lookup_actions(token, results, hours, journal):
-    """Action aus dem Cisco-Log für alle Einträge setzen. False, wenn kein Zugriff."""
+def lookup_actions(token, results, hours, journal, cache, org):
+    """
+    Action aus dem Cisco-Log für alle Einträge setzen. False, wenn kein
+    Zugriff. Das Log gehört zur Organisation: 'org' (aus get_token) trennt
+    die Cache-Einträge verschiedener Credentials.
+    """
 
     return query_per_host(
         results,
-        lambda host: lookup_action(token, host, hours),
+        lambda host: cache.fetch(
+            ("log", org, f"{hours:g}", host),
+            lambda: lookup_action(token, host, hours),
+        ),
         fields=("log_action", "log_rule", "log_time"),
         ip_values=(f"{LOG_NO_DATA} (IP)", "", ""),
         denied_values=(LOG_UNAVAILABLE, "", ""),
@@ -900,8 +1041,9 @@ def lookup_actions(token, results, hours, journal):
 
 def get_token(args):
     """
-    OAuth Token für Investigate und Reports API, oder None, wenn keine
-    Credentials vorhanden sind bzw. die Anmeldung fehlschlägt.
+    OAuth Token für Investigate und Reports API und eine Kennung der
+    Organisation (Hash des API-Keys, für den Cache). Token ist None, wenn
+    keine Credentials vorhanden sind bzw. die Anmeldung fehlschlägt.
     """
 
     secrets_file = args.secrets_file or ts.SECRETS_FILE
@@ -919,16 +1061,111 @@ def get_token(args):
             "Keine Credentials (CISCO_SECURE_ACCESS_KEY/_SECRET) gefunden - "
             "API-Abfragen werden übersprungen.", ts.YELLOW
         ))
-        return None
+        return None, ""
+
+    org = hashlib.sha256(api_key.encode("utf-8")).hexdigest()[:12]
 
     try:
-        return ts.get_access_token(api_key, api_secret)
+        return ts.get_access_token(api_key, api_secret), org
     except requests.RequestException as exc:
         print(ts.color(
             f"Anmeldung an der Cisco API fehlgeschlagen ({exc}) - "
             "API-Abfragen werden übersprungen.", ts.YELLOW
         ))
-        return None
+        return None, ""
+
+
+# ------------------------------------------------------------------
+# Vergleich mit S-Base
+# ------------------------------------------------------------------
+
+def load_s_base(path):
+    """
+    S-Base-Export lesen (TSV, erste Zeile = Kopfzeile). Liefert
+    {host: {"actions": {action: anzahl}, "appcats": [...]}}; eine Zeile
+    zählt für jede Adresse aus SBASE_HOST_COLUMNS.
+    """
+
+    hosts = {}
+
+    def cell(row, index):
+        return row[index].strip() if index < len(row) else ""
+
+    with open(path, encoding="utf-8-sig", errors="replace", newline="") as handle:
+        reader = csv.reader(handle, delimiter="\t")
+        next(reader, None)
+
+        for row in reader:
+            action = cell(row, SBASE_ACTION_COLUMN).lower()
+            appcat = cell(row, SBASE_APPCAT_COLUMN)
+
+            for host in {ts.normalize_address(cell(row, i)) for i in SBASE_HOST_COLUMNS}:
+                if not host:
+                    continue
+
+                entry = hosts.setdefault(host, {"actions": {}, "appcats": []})
+                entry["actions"][action] = entry["actions"].get(action, 0) + 1
+
+                if appcat and appcat not in entry["appcats"]:
+                    entry["appcats"].append(appcat)
+
+    return hosts
+
+
+def s_base_verdict(actions):
+    """LOG_ALLOWED, LOG_BLOCKED, 'gemischt' oder '' (keine wertbare Action)."""
+
+    allowed = any(a in SBASE_ALLOW_ACTIONS for a in actions)
+    blocked = any(a in SBASE_BLOCK_ACTIONS for a in actions)
+
+    if allowed and blocked:
+        return "gemischt"
+    if allowed:
+        return LOG_ALLOWED
+    if blocked:
+        return LOG_BLOCKED
+    return ""
+
+
+def compare_s_base(results, s_base):
+    """
+    Felder 'sbase' (Text für den Report) und 'sbase_cmp' (CMP_*) setzen.
+
+    OK entspricht zugelassen, BLOCKIERT und WARNUNG entsprechen geblockt.
+    FEHLER (Ziel nicht erreicht) ist nicht vergleichbar. Kommt eine Adresse
+    in S-Base sowohl zugelassen als auch geblockt vor, gilt das als
+    Abweichung.
+    """
+
+    expected = {
+        STATUS_OK: LOG_ALLOWED,
+        STATUS_BLOCKED: LOG_BLOCKED,
+        STATUS_WARN: LOG_BLOCKED,
+    }
+
+    for result in results:
+        entry = s_base.get(result["host"])
+
+        if not entry:
+            result["sbase"] = ""
+            result["sbase_cmp"] = CMP_MISSING
+            continue
+
+        actions = sorted(entry["actions"].items(), key=lambda item: -item[1])
+        text = ", ".join(f"{action or '(leer)'} ({count}x)" for action, count in actions)
+
+        if entry["appcats"]:
+            text += " · " + ", ".join(entry["appcats"])
+
+        verdict = s_base_verdict(entry["actions"])
+        result["sbase"] = text
+
+        if not verdict or result["status"] not in expected:
+            result["sbase_cmp"] = CMP_NA
+        elif verdict == expected[result["status"]]:
+            result["sbase_cmp"] = CMP_EQUAL
+        else:
+            result["sbase_cmp"] = CMP_DIFF
 
 
 # ------------------------------------------------------------------
@@ -951,28 +1188,41 @@ def print_result(result):
     print(ts.color(line, STATUS_COLORS[result["status"]]))
 
 
-def write_csv(path, results):
+def write_csv(path, results, with_s_base=False):
     """
     CSV mit den Spalten fqdn,kategorie,action,regel,letzter_zugriff
-    (je Host eine Zeile; action aus dem Cisco-Log).
+    (je Host eine Zeile; action aus dem Cisco-Log). Mit S-Base-Vergleich
+    zusätzlich ergebnis,s_base,vergleich.
     """
 
     seen = set()
+    header = ["fqdn", "kategorie", "action", "regel", "letzter_zugriff"]
+
+    if with_s_base:
+        header += ["ergebnis", "s_base", "vergleich"]
 
     # utf-8-sig: Excel erkennt die Kodierung (Umlaute)
     with open(path, "w", encoding="utf-8-sig", newline="") as handle:
         writer = csv.writer(handle, delimiter=",")
-        writer.writerow(["fqdn", "kategorie", "action", "regel", "letzter_zugriff"])
+        writer.writerow(header)
 
         for result in results:
             if result["host"] in seen:
                 continue
 
             seen.add(result["host"])
-            writer.writerow([
+            row = [
                 result["host"], result["category"], result["log_action"],
                 result["log_rule"], result["log_time"],
-            ])
+            ]
+
+            if with_s_base:
+                row += [
+                    result["status"], result["sbase"],
+                    CMP_LABELS[result["sbase_cmp"]],
+                ]
+
+            writer.writerow(row)
 
 
 HTML_TEMPLATE = """<!doctype html>
@@ -1009,6 +1259,7 @@ h1 { font-size: 22px; margin: 0 0 4px; }
 .card { background: var(--panel); border: 1px solid var(--border); border-radius: 8px;
   padding: 12px 18px; min-width: 130px; cursor: pointer; user-select: none; }
 .card.active { outline: 2px solid var(--text); }
+.cards-title { color: var(--muted); margin: 0 0 6px; }
 .card .num { font-size: 26px; font-weight: 600; }
 .card .lbl { color: var(--muted); }
 .wrap { overflow-x: auto; background: var(--panel); border: 1px solid var(--border);
@@ -1031,6 +1282,12 @@ td.cert-bad { color: var(--blocked); min-width: 200px; }
 .s-FEHLER { color: var(--error); background: var(--error-bg); }
 .n-OK { color: var(--ok); } .n-BLOCKIERT { color: var(--blocked); }
 .n-WARNUNG { color: var(--warn); } .n-FEHLER { color: var(--error); }
+.c-gleich { color: var(--ok); background: var(--ok-bg); }
+.c-abweichung { color: var(--blocked); background: var(--blocked-bg); }
+.c-nicht-vergleichbar, .c-nicht-in-s-base { color: var(--error); background: var(--error-bg); }
+.m-gleich { color: var(--ok); } .m-abweichung { color: var(--blocked); }
+.m-nicht-vergleichbar, .m-nicht-in-s-base { color: var(--error); }
+tr[data-sbase="abweichung"] td:first-child { box-shadow: inset 3px 0 0 var(--blocked); }
 </style>
 </head>
 <body>
@@ -1039,6 +1296,7 @@ td.cert-bad { color: var(--blocked); min-width: 200px; }
 <div class="cards">
 {cards}
 </div>
+{sbase_cards}
 <div class="wrap">
 <table id="results">
 <thead><tr>{headers}</tr></thead>
@@ -1052,14 +1310,17 @@ td.cert-bad { color: var(--blocked); min-width: 200px; }
   var table = document.getElementById("results");
   var tbody = table.tBodies[0];
   var cards = document.querySelectorAll(".card");
-  var filter = "";
+  // Je Gruppe (status, sbase) ein aktiver Filter; beide wirken zusammen.
+  var filters = {};
 
   cards.forEach(function (card) {
     card.addEventListener("click", function () {
-      filter = filter === card.dataset.status ? "" : card.dataset.status;
-      cards.forEach(function (c) { c.classList.toggle("active", c.dataset.status === filter && filter !== ""); });
+      var group = card.dataset.filter, value = card.dataset.value;
+      filters[group] = filters[group] === value ? "" : value;
+      cards.forEach(function (c) { c.classList.toggle("active", filters[c.dataset.filter] === c.dataset.value); });
       Array.prototype.forEach.call(tbody.rows, function (row) {
-        row.style.display = !filter || row.dataset.status === filter ? "" : "none";
+        var show = Object.keys(filters).every(function (g) { return !filters[g] || row.dataset[g] === filters[g]; });
+        row.style.display = show ? "" : "none";
       });
     });
   });
@@ -1094,7 +1355,8 @@ def cert_class(cert):
     return ""
 
 
-def write_html(path, results, list_file, with_categories, with_log, started):
+def write_html(path, results, list_file, with_categories, with_log, started,
+               s_base_file=None):
     esc = html.escape
     counts = {s: sum(1 for r in results if r["status"] == s) for s in STATUSES}
 
@@ -1104,14 +1366,37 @@ def write_html(path, results, list_file, with_categories, with_log, started):
         f"{len(results)} Einträge"
     )
 
+    if s_base_file:
+        meta += f" &middot; S-Base: {esc(os.path.basename(s_base_file))}"
+
     cards = "\n".join(
-        f'<div class="card" data-status="{s}">'
+        f'<div class="card" data-filter="status" data-value="{s}">'
         f'<div class="num n-{s}">{counts[s]}</div><div class="lbl">{s.title()}</div></div>'
         for s in STATUSES
     )
 
-    columns = ["Eingabe", "Ergebnis", "HTTP", "Aufgerufene URL", "Finale URL",
-               "IP", "Zertifikat", "Seitentitel"]
+    sbase_cards = ""
+    if s_base_file:
+        cmp_counts = {
+            c: sum(1 for r in results if r["sbase_cmp"] == c) for c in CMP_LABELS
+        }
+        sbase_cards = (
+            '<div class="cards-title">Vergleich Ergebnis &harr; S-Base</div>\n'
+            '<div class="cards">\n'
+            + "\n".join(
+                f'<div class="card" data-filter="sbase" data-value="{c}">'
+                f'<div class="num m-{c}">{cmp_counts[c]}</div>'
+                f'<div class="lbl">{label}</div></div>'
+                for c, label in CMP_LABELS.items()
+            )
+            + "\n</div>"
+        )
+
+    columns = ["Eingabe", "Ergebnis"]
+    if s_base_file:
+        columns += ["S-Base", "Vergleich"]
+    columns += ["HTTP", "Aufgerufene URL", "Finale URL",
+                "IP", "Zertifikat", "Seitentitel"]
     if with_categories:
         columns += ["Kategorie", "Domain-Status"]
     if with_log:
@@ -1125,6 +1410,14 @@ def write_html(path, results, list_file, with_categories, with_log, started):
         cells = [
             f"<td>{esc(r['input'])}</td>",
             f'<td><span class="badge s-{r["status"]}">{r["status"]}</span></td>',
+        ]
+        if s_base_file:
+            cells += [
+                f"<td>{esc(r['sbase'])}</td>",
+                f'<td><span class="badge c-{r["sbase_cmp"]}">'
+                f'{CMP_LABELS[r["sbase_cmp"]]}</span></td>',
+            ]
+        cells += [
             f"<td>{esc(str(r['http']))}</td>",
             f'<td class="url">{esc(r["url"])}</td>',
             f'<td class="url">{esc(r["final_url"])}</td>',
@@ -1142,12 +1435,16 @@ def write_html(path, results, list_file, with_categories, with_log, started):
             cells.append(f"<td>{esc(log)}</td>")
         cells.append(f'<td class="reason">{esc(r["reason"])}</td>')
 
-        rows.append(f'<tr data-status="{r["status"]}">{"".join(cells)}</tr>')
+        rows.append(
+            f'<tr data-status="{r["status"]}" data-sbase="{r["sbase_cmp"]}">'
+            f'{"".join(cells)}</tr>'
+        )
 
     page = (
         HTML_TEMPLATE
         .replace("{meta}", meta)
         .replace("{cards}", cards)
+        .replace("{sbase_cards}", sbase_cards)
         .replace("{headers}", headers)
         .replace("{rows}", "\n".join(rows))
     )
@@ -1178,6 +1475,12 @@ def parse_args():
         "--secrets-file", metavar="FILE",
         help="Datei mit den Credentials für die Investigate API "
              "(Default: secrets.env neben dem Script)",
+    )
+    parser.add_argument(
+        "--s-base", metavar="FILE",
+        help="S-Base-Export (TSV mit Kopfzeile, Adresse in Spalte 2 und/oder "
+             "3, 0-basiert): Ergebnis je Adresse mit der Action aus S-Base "
+             "vergleichen und Abweichungen im Report markieren",
     )
     parser.add_argument(
         "--no-categories", action="store_true",
@@ -1229,6 +1532,12 @@ def parse_args():
              "Wurde die Quelldatei geändert, beginnt der Lauf von vorne.",
     )
     parser.add_argument(
+        "--no-cache", action="store_true",
+        help="Cache der API-Antworten (<out-dir>/cache/, gültig "
+             f"{CACHE_TTL_HOURS} h) nicht verwenden: alles neu abfragen, "
+             "nichts speichern",
+    )
+    parser.add_argument(
         "--no-color", action="store_true",
         help="Ausgabe ohne Farben",
     )
@@ -1237,6 +1546,9 @@ def parse_args():
 
     if args.no_categories and args.categories_only:
         parser.error("--no-categories und --categories-only schließen sich aus")
+
+    if args.s_base and args.categories_only:
+        parser.error("--s-base braucht die Seitenaufrufe (nicht mit --categories-only)")
 
     return args
 
@@ -1252,6 +1564,10 @@ def main():
 
     if not os.path.isfile(args.file):
         print(ts.color(f"Fehler: {args.file} nicht gefunden.", ts.RED))
+        sys.exit(1)
+
+    if args.s_base and not os.path.isfile(args.s_base):
+        print(ts.color(f"Fehler: {args.s_base} nicht gefunden.", ts.RED))
         sys.exit(1)
 
     entries = load_entries(args.file)
@@ -1316,21 +1632,51 @@ def run(args, entries, journal, started, stamp):
 
     if not args.no_categories:
         print("\nAnmeldung an der Cisco API...")
-        token = get_token(args)
+        token, org = get_token(args)
 
         if token:
-            print("\nKategorisierung (Investigate API)...")
-            with_categories = categorize_all(token, results, journal)
+            cache = ApiCache(args.out_dir, not args.no_cache)
 
-            print(f"\nAction aus dem Cisco-Log (Reports API, letzte {args.hours:g} h)...")
-            with_log = lookup_actions(token, results, args.hours, journal)
+            try:
+                print("\nKategorisierung (Investigate API)...")
+                with_categories = categorize_all(token, results, journal, cache)
+
+                print(f"\nAction aus dem Cisco-Log (Reports API, letzte {args.hours:g} h)...")
+                with_log = lookup_actions(
+                    token, results, args.hours, journal, cache, org
+                )
+            finally:
+                cache.close()
+
+            if cache.hits:
+                print(ts.color(
+                    f"  {cache.hits} API-Antworten aus dem Cache "
+                    f"(max. {CACHE_TTL_HOURS} h alt, {cache.path}) - "
+                    "mit --no-cache neu abfragen.", ts.GREY
+                ))
 
             if with_log and not args.categories_only:
                 print(ts.color(
                     "  Hinweis: Die Seitenaufrufe dieses Laufs erscheinen erst nach "
                     "einigen Minuten im Cisco-Log - für aktuelle Werte später "
-                    "mit --categories-only wiederholen.", ts.GREY
+                    "mit --categories-only --no-cache wiederholen.", ts.GREY
                 ))
+
+    if args.s_base:
+        print(f"\nVergleich mit S-Base ({os.path.basename(args.s_base)})...")
+        compare_s_base(results, load_s_base(args.s_base))
+
+        for r in results:
+            if r["sbase_cmp"] == CMP_DIFF:
+                print(ts.color(
+                    f"  {CMP_LABELS[CMP_DIFF]}: {r['input']}  "
+                    f"{r['status']} <> {r['sbase']}", ts.YELLOW
+                ))
+
+        print("  " + "  ".join(
+            f"{label}: {sum(1 for r in results if r['sbase_cmp'] == c)}"
+            for c, label in CMP_LABELS.items()
+        ))
 
     print()
 
@@ -1343,12 +1689,13 @@ def run(args, entries, journal, started, stamp):
         print()
 
         html_path = os.path.join(args.out_dir, f"urlCheck_{stamp}.html")
-        write_html(html_path, results, args.file, with_categories, with_log, started)
+        write_html(html_path, results, args.file, with_categories, with_log,
+                   started, args.s_base)
         print(f"HTML-Report: {html_path}")
 
     if not args.no_categories:
         csv_path = os.path.join(args.out_dir, f"categories_{stamp}.csv")
-        write_csv(csv_path, results)
+        write_csv(csv_path, results, bool(args.s_base))
         print(f"CSV:         {csv_path}")
 
     failed = sum(

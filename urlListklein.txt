@@ -1,0 +1,101 @@
+# Adressen für urlCheck.py
+# Eine Adresse pro Zeile: FQDN, IP-Adresse oder vollständige URL.
+# Leerzeilen und alles ab # werden ignoriert.
+
+# www.example.com
+# www.cisco.com
+# 1.1.1.1
+# https://www.wikipedia.org/wiki/Main_Page
+
+# Cisco-Testdomains (Security-Kategorie Phishing bzw. Malware;
+# ob sie blockiert werden, hängt von der Security-Policy ab)
+
+# internetbadguys.com
+# examplemalwaredomain.com
+
+ogads-pa.clients6.google.com
+www.ris.bka.gv.at
+content-autofill.googleapis.com
+ep1.adtrafficquality.google
+beachfront-match.dotomi.com
+merino.services.mozilla.com
+push.services.mozilla.com
+update.googleapis.com
+ep2.adtrafficquality.google
+mozilla-ohttp.fastly-edge.com
+stats.manz.at
+3e3378af7cd0.a62927d9.eu-west-1.token.awswaf.com
+detectportal.firefox.com
+matomo.oiat.at
+play.google.com
+content-signature-2.cdn.mozilla.net
+s.yieldmrm.com
+www.googletagmanager.com
+webtools.europa.eu
+safebrowsing.googleapis.com
+www.watchlist-internet.at
+www.googleadservices.com
+unpkg.com
+dl.google.com
+ads.mozilla.org
+aus5.mozilla.org
+ciscobinary.openh264.org
+android.clients.google.com
+wetter.orf.at
+imagesrv.adition.com
+clients2.googleusercontent.com
+soph-assets.orf.at
+challenges.cloudflare.com
+track.celtra.com
+collector.orf.at
+location.services.mozilla.com
+prod.ohttp-gateway.prod.webservices.mozgcp.net
+classify-client.services.mozilla.com
+normandy.cdn.mozilla.net
+firefox.settings.services.mozilla.com
+firefox-settings-attachments.cdn.mozilla.net
+assets.ad4m.at
+www.google.com
+clientservices.googleapis.com
+rs.ad4m.at
+www.flashscore.at
+spdt.vol.at
+us-u.openx.net
+s.seedtag.com
+mtalk.google.com
+jsconfig.adsafeprotected.com
+clients2.google.com
+as.ad4m.at
+encrypted-tbn1.gstatic.com
+accounts.google.com
+gum.criteo.com
+google-bidout-d.openx.net
+encrypted-tbn2.gstatic.com
+ad4m.at
+sslwidget.criteo.com
+2e094599-243a-47a1-9c8c-d318a0dec54a.edge.permutive.app
+id5-sync.com
+fw.adsafeprotected.com
+chatgpt.com
+api.sparkasse.at
+sync.bidmatic.io
+mv.outbrainimg.com
+api.permutive.app
+api.permutive.com
+cdn.jsdelivr.net
+audioapi.orf.at
+dt.adsafeprotected.com
+static.cleverpush.com
+oa.openxcdn.net
+radiobilder.orf.at
+28.flashscore.ninja
+cdn.id5-sync.com
+pub.doubleverify.com
+image6.pubmatic.com
+cdn.permutive.app
+vtrk.dv.tech
+client-side-metrics.fr3.eu.criteo.net
+rtb.openx.net
+api.id5-sync.com
+match.adsrvr.org
+media0.giphy.com
