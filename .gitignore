@@ -8,5 +8,3 @@
 __pycache__/
 *.pyc
 
-# Reports von urlCheck.py
-reports/

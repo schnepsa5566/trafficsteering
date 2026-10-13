@@ -1,0 +1,309 @@
+﻿fqdn,kategorie,action,regel,letzter_zugriff,ergebnis,s_base,vergleich
+outlook.cloud.microsoft,Webmail; Organization Email; Web-based Email,keine Daten,,,OK,,Nicht in S-Base
+outlook.office.com,Webmail; Organization Email; Web-based Email,keine Daten,,,OK,,Nicht in S-Base
+outlook.office365.com,Webmail; Organization Email; Web-based Email,keine Daten,,,OK,,Nicht in S-Base
+smtp.office365.com,Webmail; Organization Email; Web-based Email,keine Daten,,,OK,,Nicht in S-Base
+outlook.com,Webmail; Web-based Email,keine Daten,,,OK,,Nicht in S-Base
+protection.outlook.com,Infrastructure,keine Daten,,,FEHLER,,Nicht in S-Base
+mail.protection.outlook.com,Infrastructure,keine Daten,,,FEHLER,,Nicht in S-Base
+mx.microsoft,unkategorisiert,keine Daten,,,FEHLER,,Nicht in S-Base
+lync.com,Online Meetings,keine Daten,,,OK,,Nicht in S-Base
+teams.cloud.microsoft,Online Meetings,keine Daten,,,OK,,Nicht in S-Base
+teams.microsoft.com,Online Meetings,keine Daten,,,OK,,Nicht in S-Base
+keydelivery.mediaservices.windows.net,Streaming Video,keine Daten,,,FEHLER,,Nicht in S-Base
+streaming.mediaservices.windows.net,Streaming Video,keine Daten,,,FEHLER,,Nicht in S-Base
+aka.ms,Software/Technology; Computers and Internet,keine Daten,,,OK,,Nicht in S-Base
+join.secure.skypeassets.com,Internet Telephony,keine Daten,,,FEHLER,,Nicht in S-Base
+mlccdnprod.azureedge.net,Infrastructure,keine Daten,,,FEHLER,,Nicht in S-Base
+skype.com,Internet Telephony,keine Daten,,,OK,,Nicht in S-Base
+adl.windows.com,Software/Technology; Computers and Internet,keine Daten,,,OK,,Nicht in S-Base
+sipfed.online.lync.com,Online Meetings,keine Daten,,,FEHLER,,Nicht in S-Base
+sharepoint.com,SaaS and B2B,keine Daten,,,OK,,Nicht in S-Base
+wns.windows.com,Software/Technology; Computers and Internet,keine Daten,,,FEHLER,,Nicht in S-Base
+admin.onedrive.com,File Storage; Online Storage and Backup,keine Daten,,,OK,,Nicht in S-Base
+officeclient.microsoft.com,Software/Technology; Computers and Internet,keine Daten,,,OK,,Nicht in S-Base
+g.live.com,Search Engines; Search Engines and Portals,keine Daten,,,OK,,Nicht in S-Base
+oneclient.sfx.ms,Infrastructure,keine Daten,,,OK,,Nicht in S-Base
+sharepointonline.com,Software/Technology; Computers and Internet,keine Daten,,,FEHLER,,Nicht in S-Base
+spoprod-a.akamaihd.net,Infrastructure,keine Daten,,,OK,,Nicht in S-Base
+svc.ms,Infrastructure,keine Daten,,,FEHLER,,Nicht in S-Base
+storage.live.com,File Storage; Online Storage and Backup,keine Daten,,,OK,,Nicht in S-Base
+officeapps.live.com,Search Engines; Software/Technology; Computers and Internet; Search Engines and Portals,keine Daten,,,OK,,Nicht in S-Base
+online.office.com,Software/Technology; Computers and Internet,keine Daten,,,FEHLER,,Nicht in S-Base
+office.live.com,SaaS and B2B,keine Daten,,,OK,,Nicht in S-Base
+cloud.microsoft,Software/Technology; Computers and Internet,keine Daten,,,OK,,Nicht in S-Base
+static.microsoft,Infrastructure,keine Daten,,,FEHLER,,Nicht in S-Base
+usercontent.microsoft,Infrastructure,keine Daten,,,FEHLER,,Nicht in S-Base
+office.com,Software/Technology; Computers and Internet,keine Daten,,,OK,,Nicht in S-Base
+www.microsoft365.com,Software/Technology; Computers and Internet,keine Daten,,,OK,,Nicht in S-Base
+office.net,SaaS and B2B,keine Daten,,,FEHLER,,Nicht in S-Base
+onenote.com,Online Document Sharing and Collaboration,keine Daten,,,BLOCKIERT,,Nicht in S-Base
+cdn.onenote.net,Software/Technology; Computers and Internet,keine Daten,,,OK,,Nicht in S-Base
+ajax.aspnetcdn.com,Software/Technology; Computers and Internet,keine Daten,,,OK,,Nicht in S-Base
+apis.live.net,Search Engines; Search Engines and Portals,keine Daten,,,OK,,Nicht in S-Base
+www.onedrive.com,File Storage; Online Storage and Backup,keine Daten,,,OK,,Nicht in S-Base
+aria.microsoft.com,Software/Technology; Computers and Internet,keine Daten,,,FEHLER,,Nicht in S-Base
+events.data.microsoft.com,Software/Technology; Computers and Internet,keine Daten,,,OK,,Nicht in S-Base
+o365weve.com,Infrastructure,keine Daten,,,FEHLER,,Nicht in S-Base
+amp.azure.net,Software/Technology; Computers and Internet,keine Daten,,,OK,,Nicht in S-Base
+appsforoffice.microsoft.com,Software/Technology; Computers and Internet,keine Daten,,,OK,,Nicht in S-Base
+assets.onestore.ms,Software/Technology; Computers and Internet,keine Daten,,,FEHLER,,Nicht in S-Base
+auth.gfx.ms,Infrastructure,keine Daten,,,OK,,Nicht in S-Base
+c1.microsoft.com,Software/Technology; Computers and Internet,keine Daten,,,OK,,Nicht in S-Base
+dgps.support.microsoft.com,Software/Technology; Computers and Internet,keine Daten,,,OK,,Nicht in S-Base
+docs.microsoft.com,Software/Technology; Computers and Internet,keine Daten,,,OK,,Nicht in S-Base
+msdn.microsoft.com,Software/Technology; Computers and Internet,keine Daten,,,OK,,Nicht in S-Base
+platform.linkedin.com,Professional Networking,keine Daten,,,OK,,Nicht in S-Base
+prod.msocdn.com,Infrastructure,keine Daten,,,FEHLER,,Nicht in S-Base
+shellprod.msocdn.com,Infrastructure,keine Daten,,,OK,,Nicht in S-Base
+support.microsoft.com,Software/Technology; Computers and Internet,keine Daten,,,OK,,Nicht in S-Base
+technet.microsoft.com,Software/Technology; Computers and Internet,keine Daten,,,OK,,Nicht in S-Base
+office365.com,Online Document Sharing and Collaboration,keine Daten,,,OK,,Nicht in S-Base
+aadrm.com,SaaS and B2B,keine Daten,,,FEHLER,,Nicht in S-Base
+azurerms.com,Software/Technology; Computers and Internet,keine Daten,,,FEHLER,,Nicht in S-Base
+informationprotection.azure.com,Software/Technology; Computers and Internet,keine Daten,,,FEHLER,,Nicht in S-Base
+ecn.dev.virtualearth.net,Research/Reference; Reference,keine Daten,,,OK,,Nicht in S-Base
+informationprotection.hosting.portal.azure.net,Software/Technology; Computers and Internet,keine Daten,,,OK,,Nicht in S-Base
+o15.officeredir.microsoft.com,SaaS and B2B,keine Daten,,,OK,,Nicht in S-Base
+officepreviewredir.microsoft.com,Software/Technology; Computers and Internet,keine Daten,,,OK,,Nicht in S-Base
+officeredir.microsoft.com,SaaS and B2B,keine Daten,,,OK,,Nicht in S-Base
+r.office.microsoft.com,SaaS and B2B,keine Daten,,,OK,,Nicht in S-Base
+activation.sls.microsoft.com,Software/Technology; Computers and Internet,keine Daten,,,OK,,Nicht in S-Base
+crl.microsoft.com,Software/Technology; Computers and Internet,keine Daten,,,OK,,Nicht in S-Base
+office15client.microsoft.com,Software/Technology; Computers and Internet,keine Daten,,,OK,,Nicht in S-Base
+go.microsoft.com,Software/Technology; Computers and Internet,keine Daten,,,OK,,Nicht in S-Base
+cdn.odc.officeapps.live.com,Software/Technology; Computers and Internet,keine Daten,,,OK,,Nicht in S-Base
+cdn.uci.officeapps.live.com,Search Engines; Software/Technology; Computers and Internet; Search Engines and Portals,keine Daten,,,OK,,Nicht in S-Base
+officecdn.microsoft.com,Software/Technology; Computers and Internet,keine Daten,,,OK,,Nicht in S-Base
+otelrules.azureedge.net,Infrastructure,keine Daten,,,OK,,Nicht in S-Base
+admin.microsoft.com,Software/Technology; Computers and Internet,keine Daten,,,OK,,Nicht in S-Base
+azure-apim.net,Cloud and Data Centers,keine Daten,,,FEHLER,,Nicht in S-Base
+flow.microsoft.com,Software/Technology; Computers and Internet,keine Daten,,,OK,,Nicht in S-Base
+powerapps.com,Software/Technology; Computers and Internet,keine Daten,,,OK,,Nicht in S-Base
+powerautomate.com,Software/Technology; Computers and Internet,keine Daten,,,OK,,Nicht in S-Base
+activity.windows.com,Software/Technology; Computers and Internet,keine Daten,,,OK,,Nicht in S-Base
+cortana.ai,Software/Technology; Computers and Internet,keine Daten,,,FEHLER,,Nicht in S-Base
+entrust.net,Business Services; Business and Industry,keine Daten,,,OK,,Nicht in S-Base
+geotrust.com,Computer Security,keine Daten,,,OK,,Nicht in S-Base
+omniroot.com,Business Services; Business and Industry,keine Daten,,,FEHLER,,Nicht in S-Base
+public-trust.com,Business Services; Business and Industry,keine Daten,,,FEHLER,,Nicht in S-Base
+symcb.com,Computer Security,keine Daten,,,FEHLER,,Nicht in S-Base
+symcd.com,Computer Security,keine Daten,,,FEHLER,,Nicht in S-Base
+verisign.com,Computer Security,keine Daten,,,OK,,Nicht in S-Base
+verisign.net,Business Services; Business and Industry,keine Daten,,,OK,,Nicht in S-Base
+cacerts.digicert.com,Computer Security,keine Daten,,,OK,,Nicht in S-Base
+cert.int-x3.letsencrypt.org,Software/Technology; Computers and Internet,keine Daten,,,OK,,Nicht in S-Base
+crl.globalsign.com,Computer Security,keine Daten,,,OK,,Nicht in S-Base
+crl.globalsign.net,Business Services; Business and Industry,keine Daten,,,OK,,Nicht in S-Base
+crl.identrust.com,Business Services; Business and Industry,keine Daten,,,OK,,Nicht in S-Base
+crl3.digicert.com,Computer Security,keine Daten,,,OK,,Nicht in S-Base
+crl4.digicert.com,Computer Security,keine Daten,,,OK,,Nicht in S-Base
+isrg.trustid.ocsp.identrust.com,Business Services; Business and Industry,keine Daten,,,FEHLER,,Nicht in S-Base
+mscrl.microsoft.com,Software/Technology; Computers and Internet,keine Daten,,,OK,,Nicht in S-Base
+ocsp.digicert.com,Computer Security,keine Daten,,,OK,,Nicht in S-Base
+ocsp.globalsign.com,Computer Security,keine Daten,,,FEHLER,,Nicht in S-Base
+ocsp.msocsp.com,Computer Security,keine Daten,,,FEHLER,,Nicht in S-Base
+ocsp2.globalsign.com,Computer Security,keine Daten,,,FEHLER,,Nicht in S-Base
+ocspx.digicert.com,Computer Security,keine Daten,,,OK,,Nicht in S-Base
+oneocsp.microsoft.com,Software/Technology; Computers and Internet,keine Daten,,,OK,,Nicht in S-Base
+secure.globalsign.com,Computer Security,keine Daten,,,OK,,Nicht in S-Base
+www.digicert.com,Computer Security,keine Daten,,,OK,,Nicht in S-Base
+www.microsoft.com,Software/Technology; Computers and Internet,keine Daten,,,OK,,Nicht in S-Base
+microsoft.com,Software/Technology; Computers and Internet,keine Daten,,,OK,,Nicht in S-Base
+msocdn.com,Infrastructure,keine Daten,,,FEHLER,,Nicht in S-Base
+onmicrosoft.com,Organization Email,keine Daten,,,FEHLER,,Nicht in S-Base
+dc.services.visualstudio.com,Software/Technology; Computers and Internet,keine Daten,,,OK,,Nicht in S-Base
+mem.gfx.ms,Infrastructure,keine Daten,,,OK,,Nicht in S-Base
+virtualearth.net,Research/Reference; Reference,keine Daten,,,OK,,Nicht in S-Base
+c.bing.net,Search Engines; Search Engines and Portals,keine Daten,,,FEHLER,,Nicht in S-Base
+ocos-office365-s2s.msedge.net,Infrastructure,keine Daten,,,OK,,Nicht in S-Base
+tse1.mm.bing.net,Search Engines; Search Engines and Portals,keine Daten,,,OK,,Nicht in S-Base
+www.bing.com,Search Engines; Search Engines and Portals,keine Daten,,,OK,,Nicht in S-Base
+acompli.net,Infrastructure,keine Daten,,,FEHLER,,Nicht in S-Base
+outlookmobile.com,Software/Technology; Computers and Internet,keine Daten,,,FEHLER,,Nicht in S-Base
+login.windows-ppe.net,Software/Technology; Computers and Internet,keine Daten,,,OK,,Nicht in S-Base
+account.live.com,Software/Technology; Computers and Internet,keine Daten,,,OK,,Nicht in S-Base
+appex-rf.msn.com,Search Engines; Search Engines and Portals,keine Daten,,,OK,,Nicht in S-Base
+appex.bing.com,Search Engines; Search Engines and Portals,keine Daten,,,OK,,Nicht in S-Base
+c.bing.com,Search Engines; Search Engines and Portals,keine Daten,,,OK,,Nicht in S-Base
+c.live.com,Search Engines; Search Engines and Portals,keine Daten,,,OK,,Nicht in S-Base
+partnerservices.getmicrosoftkey.com,Software/Technology; Computers and Internet,keine Daten,,,OK,,Nicht in S-Base
+signup.live.com,Search Engines; Search Engines and Portals,keine Daten,,,OK,,Nicht in S-Base
+yammer.com,Online Meetings,keine Daten,,,OK,,Nicht in S-Base
+yammerusercontent.com,Infrastructure,keine Daten,,,FEHLER,,Nicht in S-Base
+assets-yammer.com,Infrastructure,keine Daten,,,FEHLER,,Nicht in S-Base
+www.outlook.com,Webmail; Web-based Email,keine Daten,,,OK,,Nicht in S-Base
+eus-www.sway-cdn.com,Infrastructure,keine Daten,,,OK,,Nicht in S-Base
+eus-www.sway-extensions.com,SaaS and B2B,keine Daten,,,OK,,Nicht in S-Base
+wus-www.sway-cdn.com,Infrastructure,keine Daten,,,OK,,Nicht in S-Base
+wus-www.sway-extensions.com,SaaS and B2B,keine Daten,,,OK,,Nicht in S-Base
+sway.com,SaaS and B2B,keine Daten,,,OK,,Nicht in S-Base
+www.sway.com,SaaS and B2B,keine Daten,,,OK,,Nicht in S-Base
+officespeech.platform.bing.com,Search Engines; Search Engines and Portals,keine Daten,,,OK,,Nicht in S-Base
+microsoftusercontent.com,Software/Technology; Computers and Internet,keine Daten,,,FEHLER,,Nicht in S-Base
+auth.microsoft.com,Software/Technology; Computers and Internet,keine Daten,,,FEHLER,,Nicht in S-Base
+msftidentity.com,Software/Technology; Computers and Internet,keine Daten,,,FEHLER,,Nicht in S-Base
+msidentity.com,Infrastructure,keine Daten,,,FEHLER,,Nicht in S-Base
+account.activedirectory.windowsazure.com,Software/Technology; Computers and Internet,keine Daten,,,OK,,Nicht in S-Base
+accounts.accesscontrol.windows.net,Software/Technology; Computers and Internet,keine Daten,,,OK,,Nicht in S-Base
+adminwebservice.microsoftonline.com,SaaS and B2B,keine Daten,,,OK,,Nicht in S-Base
+api.passwordreset.microsoftonline.com,SaaS and B2B,keine Daten,,,OK,,Nicht in S-Base
+autologon.microsoftazuread-sso.com,Software/Technology; Computers and Internet,keine Daten,,,OK,,Nicht in S-Base
+becws.microsoftonline.com,SaaS and B2B,keine Daten,,,FEHLER,,Nicht in S-Base
+ccs.login.microsoftonline.com,Software/Technology; Computers and Internet,keine Daten,,,OK,,Nicht in S-Base
+clientconfig.microsoftonline-p.net,Business Services; Business and Industry,keine Daten,,,OK,,Nicht in S-Base
+companymanager.microsoftonline.com,SaaS and B2B,keine Daten,,,OK,,Nicht in S-Base
+device.login.microsoftonline.com,SaaS and B2B,keine Daten,,,OK,,Nicht in S-Base
+graph.microsoft.com,Software/Technology; Computers and Internet,keine Daten,,,OK,,Nicht in S-Base
+graph.windows.net,Software/Technology; Computers and Internet,keine Daten,,,OK,,Nicht in S-Base
+login-us.microsoftonline.com,SaaS and B2B,keine Daten,,,OK,,Nicht in S-Base
+login.microsoft.com,Software/Technology; Computers and Internet,keine Daten,,,OK,,Nicht in S-Base
+login.microsoftonline-p.com,Business Services; Business and Industry,keine Daten,,,OK,,Nicht in S-Base
+login.microsoftonline.com,SaaS and B2B,keine Daten,,,OK,,Nicht in S-Base
+login.windows.net,Software/Technology; Computers and Internet,keine Daten,,,OK,,Nicht in S-Base
+logincert.microsoftonline.com,SaaS and B2B,keine Daten,,,OK,,Nicht in S-Base
+loginex.microsoftonline.com,SaaS and B2B,keine Daten,,,OK,,Nicht in S-Base
+nexus.microsoftonline-p.com,Business Services; Business and Industry,keine Daten,,,OK,,Nicht in S-Base
+passwordreset.microsoftonline.com,SaaS and B2B,keine Daten,,,OK,,Nicht in S-Base
+provisioningapi.microsoftonline.com,SaaS and B2B,keine Daten,,,FEHLER,,Nicht in S-Base
+hip.live.com,Infrastructure,keine Daten,,,OK,,Nicht in S-Base
+microsoftonline-p.com,Business Services; Business and Industry,keine Daten,,,FEHLER,,Nicht in S-Base
+microsoftonline.com,SaaS and B2B,keine Daten,,,FEHLER,,Nicht in S-Base
+msauth.net,Business Services; Business and Industry,keine Daten,,,FEHLER,,Nicht in S-Base
+msauthimages.net,Infrastructure,keine Daten,,,FEHLER,,Nicht in S-Base
+msecnd.net,Software/Technology; Computers and Internet,keine Daten,,,FEHLER,,Nicht in S-Base
+msftauth.net,Software/Technology; Computers and Internet,keine Daten,,,FEHLER,,Nicht in S-Base
+msftauthimages.net,Infrastructure,keine Daten,,,FEHLER,,Nicht in S-Base
+phonefactor.net,Software/Technology; Computers and Internet,keine Daten,,,OK,,Nicht in S-Base
+enterpriseregistration.windows.net,Software/Technology; Computers and Internet,keine Daten,,,OK,,Nicht in S-Base
+login.live.com,Search Engines; Search Engines and Portals,keine Daten,,,OK,,Nicht in S-Base
+aadcdn.msftauth.net,Software/Technology; Computers and Internet,keine Daten,,,OK,,Nicht in S-Base
+aadcdn.msftauthimages.net,Infrastructure,keine Daten,,,OK,,Nicht in S-Base
+aadcdn.msauthimages.net,Infrastructure,keine Daten,,,OK,,Nicht in S-Base
+logincdn.msftauth.net,Software/Technology; Computers and Internet,keine Daten,,,OK,,Nicht in S-Base
+logincdn.msauth.net,Business Services; Business and Industry,keine Daten,,,OK,,Nicht in S-Base
+aadcdn.microsoftonline-p.com,Business Services; Business and Industry,keine Daten,,,FEHLER,,Nicht in S-Base
+secure.aadcdn.microsoftonline-p.com,Business Services; Business and Industry,keine Daten,,,OK,,Nicht in S-Base
+aad.azure.com,Software/Technology; Computers and Internet,keine Daten,,,FEHLER,,Nicht in S-Base
+ad.azure.com,Software/Technology; Computers and Internet,keine Daten,,,FEHLER,,Nicht in S-Base
+aadconnecthealth.azure.com,Software/Technology; Computers and Internet,keine Daten,,,FEHLER,,Nicht in S-Base
+api.aadrm.com,SaaS and B2B,keine Daten,,,OK,,Nicht in S-Base
+api.azrbac.mspim.azure.com,Software/Technology; Computers and Internet,keine Daten,,,OK,,Nicht in S-Base
+appmanagement.activedirectory.microsoft.com,Software/Technology; Computers and Internet,keine Daten,,,OK,,Nicht in S-Base
+elm.iga.azure.com,Software/Technology; Computers and Internet,keine Daten,,,OK,,Nicht in S-Base
+iga.azure.com,Software/Technology; Computers and Internet,keine Daten,,,FEHLER,,Nicht in S-Base
+identitygovernance.azure.com,Software/Technology; Computers and Internet,keine Daten,,,FEHLER,,Nicht in S-Base
+mspim.azure.com,Software/Technology; Computers and Internet,keine Daten,,,FEHLER,,Nicht in S-Base
+windows.net,Software/Technology; Computers and Internet,keine Daten,,,FEHLER,,Nicht in S-Base
+msappproxy.net,SaaS and B2B,keine Daten,,,FEHLER,,Nicht in S-Base
+servicebus.windows.net,Software/Technology; Computers and Internet,keine Daten,,,FEHLER,,Nicht in S-Base
+copilot.cloud.microsoft,Generative AI,keine Daten,,,OK,,Nicht in S-Base
+m365.cloud.microsoft,Software/Technology; Computers and Internet; Generative AI,keine Daten,,,OK,,Nicht in S-Base
+substrate.office.com,Software/Technology; Computers and Internet,keine Daten,,,OK,,Nicht in S-Base
+odc.officeapps.live.com,Software/Technology; Computers and Internet,keine Daten,,,OK,,Nicht in S-Base
+privacy.microsoft.com,Software/Technology; Computers and Internet,keine Daten,,,OK,,Nicht in S-Base
+msedge.api.cdp.microsoft.com,Software/Technology; Computers and Internet,keine Daten,,,OK,,Nicht in S-Base
+config.edge.skype.com,Internet Telephony,keine Daten,,,OK,,Nicht in S-Base
+dl.delivery.mp.microsoft.com,Software Updates,keine Daten,,,OK,,Nicht in S-Base
+do.dsp.mp.microsoft.com,Software/Technology; Computers and Internet,keine Daten,,,FEHLER,,Nicht in S-Base
+gateway.prod.island.powerapps.com,Software/Technology; Computers and Internet,keine Daten,,,FEHLER,,Nicht in S-Base
+portal.azure.com,Cloud and Data Centers,keine Daten,,,OK,,Nicht in S-Base
+hosting.portal.azure.net,Software/Technology; Computers and Internet,keine Daten,,,OK,,Nicht in S-Base
+hosting-ms.portal.azure.net,Software/Technology; Computers and Internet,keine Daten,,,OK,,Nicht in S-Base
+reactblade.portal.azure.net,Software/Technology; Computers and Internet,keine Daten,,,OK,,Nicht in S-Base
+management.azure.com,Software/Technology; Computers and Internet,keine Daten,,,OK,,Nicht in S-Base
+ext.azure.com,Software/Technology; Computers and Internet,keine Daten,,,FEHLER,,Nicht in S-Base
+hosting.partners.azure.net,Software/Technology; Computers and Internet,keine Daten,,,OK,,Nicht in S-Base
+account.microsoft.com,Software/Technology; Computers and Internet,keine Daten,,,OK,,Nicht in S-Base
+bmx.azure.com,Software/Technology; Computers and Internet,keine Daten,,,FEHLER,,Nicht in S-Base
+subscriptionrp.trafficmanager.net,Business Services; Business and Industry,keine Daten,,,OK,,Nicht in S-Base
+signup.azure.com,Software/Technology; Computers and Internet,keine Daten,,,OK,,Nicht in S-Base
+asazure.windows.net,Software/Technology; Computers and Internet,keine Daten,,,FEHLER,,Nicht in S-Base
+azconfig.io,Infrastructure,keine Daten,,,FEHLER,,Nicht in S-Base
+adf.azure.com,Software/Technology; Computers and Internet,keine Daten,,,OK,,Nicht in S-Base
+api.loganalytics.io,Software/Technology; Computers and Internet,keine Daten,,,OK,,Nicht in S-Base
+applicationinsights.azure.com,Software/Technology; Computers and Internet,keine Daten,,,FEHLER,,Nicht in S-Base
+appservice.azure.com,Software/Technology; Computers and Internet,keine Daten,,,FEHLER,,Nicht in S-Base
+arc.azure.net,Software/Technology; Computers and Internet,keine Daten,,,FEHLER,,Nicht in S-Base
+bastion.azure.com,Software/Technology; Computers and Internet,keine Daten,,,FEHLER,,Nicht in S-Base
+batch.azure.com,Software/Technology; Computers and Internet,keine Daten,,,FEHLER,,Nicht in S-Base
+catalogapi.azure.com,Software/Technology; Computers and Internet,keine Daten,,,OK,,Nicht in S-Base
+catalogartifact.azureedge.net,Software/Technology; Computers and Internet,keine Daten,,,OK,,Nicht in S-Base
+changeanalysis.azure.com,Software/Technology; Computers and Internet,keine Daten,,,FEHLER,,Nicht in S-Base
+cognitiveservices.azure.com,Software/Technology; Computers and Internet,keine Daten,,,FEHLER,,Nicht in S-Base
+config.office.com,Software/Technology; Computers and Internet,keine Daten,,,OK,,Nicht in S-Base
+cosmos.azure.com,Software/Technology; Computers and Internet,keine Daten,,,OK,,Nicht in S-Base
+database.windows.net,Software/Technology; Computers and Internet,keine Daten,,,FEHLER,,Nicht in S-Base
+datalake.azure.net,Software/Technology; Computers and Internet,keine Daten,,,FEHLER,,Nicht in S-Base
+dev.azure.com,Software/Technology; Computers and Internet,keine Daten,,,OK,,Nicht in S-Base
+dev.azuresynapse.net,Cloud and Data Centers,keine Daten,,,FEHLER,,Nicht in S-Base
+digitaltwins.azure.net,Software/Technology; Computers and Internet,keine Daten,,,FEHLER,,Nicht in S-Base
+eventhubs.azure.net,Software/Technology; Computers and Internet,keine Daten,,,FEHLER,,Nicht in S-Base
+functions.azure.com,Software/Technology; Computers and Internet,keine Daten,,,OK,,Nicht in S-Base
+gallery.azure.com,Software/Technology; Computers and Internet,keine Daten,,,FEHLER,,Nicht in S-Base
+help.kusto.windows.net,Software/Technology; Computers and Internet,keine Daten,,,OK,,Nicht in S-Base
+kusto.windows.net,Software/Technology; Computers and Internet,keine Daten,,,FEHLER,,Nicht in S-Base
+learn.microsoft.com,Software/Technology; Computers and Internet,keine Daten,,,OK,,Nicht in S-Base
+logic.azure.com,Software/Technology; Computers and Internet,keine Daten,,,FEHLER,,Nicht in S-Base
+marketplacedataprovider.azure.com,Software/Technology; Computers and Internet,keine Daten,,,FEHLER,,Nicht in S-Base
+main.prod.marketplacedataprovider.azure.com,Software/Technology; Computers and Internet,keine Daten,,,OK,,Nicht in S-Base
+marketplaceemail.azure.com,Software/Technology; Computers and Internet,keine Daten,,,FEHLER,,Nicht in S-Base
+media.azure.net,Software/Technology; Computers and Internet,keine Daten,,,FEHLER,,Nicht in S-Base
+rest.media.azure.net,Software/Technology; Computers and Internet,keine Daten,,,FEHLER,,Nicht in S-Base
+monitor.azure.com,Software/Technology; Computers and Internet,keine Daten,,,FEHLER,,Nicht in S-Base
+network.azure.com,Software/Technology; Computers and Internet,keine Daten,,,FEHLER,,Nicht in S-Base
+purview.azure.com,Software/Technology; Computers and Internet,keine Daten,,,FEHLER,,Nicht in S-Base
+quantum.azure.com,Software/Technology; Computers and Internet,keine Daten,,,FEHLER,,Nicht in S-Base
+search.azure.com,Software/Technology; Computers and Internet,keine Daten,,,FEHLER,,Nicht in S-Base
+servicebus.azure.net,Software/Technology; Computers and Internet,keine Daten,,,FEHLER,,Nicht in S-Base
+shell.azure.com,Software/Technology; Computers and Internet,keine Daten,,,OK,,Nicht in S-Base
+ux.console.azure.com,Software/Technology; Computers and Internet,keine Daten,,,OK,,Nicht in S-Base
+sphere.azure.net,Software/Technology; Computers and Internet,keine Daten,,,FEHLER,,Nicht in S-Base
+azure.status.microsoft,Software/Technology; Computers and Internet,keine Daten,,,OK,,Nicht in S-Base
+storage.azure.com,Software/Technology; Computers and Internet,keine Daten,,,FEHLER,,Nicht in S-Base
+storage.azure.net,Software/Technology; Computers and Internet,keine Daten,,,FEHLER,,Nicht in S-Base
+vault.azure.net,Software/Technology; Computers and Internet,keine Daten,,,FEHLER,,Nicht in S-Base
+security.microsoft.com,Software/Technology; Computers and Internet,keine Daten,,,OK,,Nicht in S-Base
+api.security.microsoft.com,Software/Technology; Computers and Internet,keine Daten,,,OK,,Nicht in S-Base
+securitycenter.windows.com,Software/Technology; Computers and Internet,keine Daten,,,OK,,Nicht in S-Base
+defender.microsoft.com,Software/Technology; Computers and Internet,keine Daten,,,OK,,Nicht in S-Base
+compliance.microsoft.com,Software/Technology; Computers and Internet,keine Daten,,,OK,,Nicht in S-Base
+purview.microsoft.com,Software/Technology; Computers and Internet,keine Daten,,,OK,,Nicht in S-Base
+protection.office.com,Software/Technology; Computers and Internet,keine Daten,,,OK,,Nicht in S-Base
+portal.cloudappsecurity.com,Computer Security,keine Daten,,,OK,,Nicht in S-Base
+static2.sharepointonline.com,Software/Technology; Computers and Internet,keine Daten,,,OK,,Nicht in S-Base
+endpoint.security.microsoft.com,Software/Technology; Computers and Internet,keine Daten,,,FEHLER,,Nicht in S-Base
+smartscreen-prod.microsoft.com,Software/Technology; Computers and Internet,keine Daten,,,OK,,Nicht in S-Base
+smartscreen.microsoft.com,Software/Technology; Computers and Internet,keine Daten,,,OK,,Nicht in S-Base
+checkappexec.microsoft.com,Software/Technology; Computers and Internet,keine Daten,,,OK,,Nicht in S-Base
+urs.microsoft.com,Software/Technology; Computers and Internet,keine Daten,,,OK,,Nicht in S-Base
+reflector.defender.microsoft.com,Software/Technology; Computers and Internet,keine Daten,,,FEHLER,,Nicht in S-Base
+definitionupdates.microsoft.com,Software Updates,keine Daten,,,OK,,Nicht in S-Base
+packages.microsoft.com,Software/Technology; Computers and Internet,keine Daten,,,OK,,Nicht in S-Base
+msdefender.download.prss.microsoft.com,Software Updates,keine Daten,,,OK,,Nicht in S-Base
+update.microsoft.com,Software Updates,keine Daten,,,OK,,Nicht in S-Base
+delivery.mp.microsoft.com,Software Updates,keine Daten,,,FEHLER,,Nicht in S-Base
+windowsupdate.com,Software Updates,keine Daten,,,FEHLER,,Nicht in S-Base
+download.windowsupdate.com,Software Updates,keine Daten,,,OK,accept (1x) · Update,Gleich
+download.microsoft.com,Software Updates,keine Daten,,,OK,,Nicht in S-Base
+ctldl.windowsupdate.com,Software Updates,keine Daten,,,OK,,Nicht in S-Base
+blob.core.windows.net,Infrastructure,keine Daten,,,FEHLER,,Nicht in S-Base
+wdcp.microsoft.com,Software Updates,keine Daten,,,OK,,Nicht in S-Base
+wd.microsoft.com,Software/Technology; Computers and Internet,keine Daten,,,FEHLER,,Nicht in S-Base
+wdcpalt.microsoft.com,Software Updates,keine Daten,,,OK,,Nicht in S-Base
+settings-win.data.microsoft.com,Software/Technology; Computers and Internet,keine Daten,,,OK,,Nicht in S-Base
+eu-v20.events.data.microsoft.com,Software/Technology; Computers and Internet,keine Daten,,,OK,,Nicht in S-Base
+eu.vortex-win.data.microsoft.com,Software/Technology; Computers and Internet,keine Daten,,,OK,,Nicht in S-Base
+usseu1northprod.blob.core.windows.net,Software/Technology; Computers and Internet,keine Daten,,,OK,,Nicht in S-Base
+wseu1northprod.blob.core.windows.net,Software/Technology; Computers and Internet,keine Daten,,,OK,,Nicht in S-Base
+usseu1westprod.blob.core.windows.net,Software/Technology; Computers and Internet,keine Daten,,,OK,,Nicht in S-Base
+wseu1westprod.blob.core.windows.net,Software/Technology; Computers and Internet,keine Daten,,,OK,,Nicht in S-Base
+automatedirstrprdneu.blob.core.windows.net,Software/Technology; Computers and Internet,keine Daten,,,OK,,Nicht in S-Base
+automatedirstrprdweu.blob.core.windows.net,Software/Technology; Computers and Internet,keine Daten,,,OK,,Nicht in S-Base
+automatedirstrprdneu3.blob.core.windows.net,Software/Technology; Computers and Internet,keine Daten,,,OK,,Nicht in S-Base
+automatedirstrprdweu3.blob.core.windows.net,Software/Technology; Computers and Internet,keine Daten,,,OK,,Nicht in S-Base
+winatp-gw-neu.microsoft.com,Software/Technology; Computers and Internet,keine Daten,,,OK,,Nicht in S-Base
+winatp-gw-weu.microsoft.com,Software/Technology; Computers and Internet,keine Daten,,,OK,,Nicht in S-Base
+winatp-gw-neu3.microsoft.com,Software/Technology; Computers and Internet,keine Daten,,,OK,,Nicht in S-Base
+winatp-gw-weu3.microsoft.com,Software/Technology; Computers and Internet,keine Daten,,,OK,,Nicht in S-Base
+oms.opinsights.azure.com,Software/Technology; Computers and Internet,keine Daten,,,FEHLER,,Nicht in S-Base

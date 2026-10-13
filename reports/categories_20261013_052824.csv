@@ -1,0 +1,87 @@
+﻿fqdn,kategorie,action,regel,letzter_zugriff,ergebnis,s_base,vergleich
+ogads-pa.clients6.google.com,Search Engines; Search Engines and Portals,keine Daten,,,OK,accept (215x) · General.Interest,Gleich
+www.ris.bka.gv.at,Government; Government and Law,keine Daten,,,OK,accept (11x) · Web.Client,Gleich
+content-autofill.googleapis.com,Search Engines; Search Engines and Portals,keine Daten,,,OK,accept (259x) · General.Interest,Gleich
+ep1.adtrafficquality.google,Advertisements,keine Daten,,,OK,accept (297x) · Web.Client,Gleich
+beachfront-match.dotomi.com,Business Services; Business and Industry,keine Daten,,,OK,accept (1x) · Web.Client,Gleich
+merino.services.mozilla.com,Software/Technology; Computers and Internet,keine Daten,,,OK,accept (3031x) · Web.Client,Gleich
+push.services.mozilla.com,Software/Technology; Computers and Internet,keine Daten,,,OK,accept (1025x) · Network.Service,Gleich
+update.googleapis.com,Software/Technology; Computers and Internet,keine Daten,,,OK,accept (322x) · General.Interest,Gleich
+ep2.adtrafficquality.google,Advertisements,keine Daten,,,OK,accept (222x) · Web.Client,Gleich
+mozilla-ohttp.fastly-edge.com,Infrastructure,keine Daten,,,OK,accept (1670x) · Web.Client,Gleich
+stats.manz.at,Business Services; Business and Industry,keine Daten,,,OK,accept (19x) · Network.Service,Gleich
+3e3378af7cd0.a62927d9.eu-west-1.token.awswaf.com,Infrastructure,keine Daten,,,OK,accept (2x) · Web.Client,Gleich
+detectportal.firefox.com,Infrastructure,keine Daten,,,OK,accept (970x) · Web.Client,Gleich
+matomo.oiat.at,Business Services; Business and Industry,keine Daten,,,OK,accept (92x) · Web.Client,Gleich
+play.google.com,Software/Technology; Computers and Internet,keine Daten,,,OK,accept (226x) · General.Interest,Gleich
+content-signature-2.cdn.mozilla.net,Software/Technology; Computers and Internet,keine Daten,,,OK,accept (194x) · Web.Client,Gleich
+s.yieldmrm.com,Business Services; Business and Industry,keine Daten,,,OK,accept (5x) · Web.Client,Gleich
+www.googletagmanager.com,Software/Technology; Computers and Internet,keine Daten,,,OK,accept (146x) · Business,Gleich
+webtools.europa.eu,Government; Government and Law,keine Daten,,,OK,accept (1x) · Web.Client,Gleich
+safebrowsing.googleapis.com,Search Engines; Search Engines and Portals,keine Daten,,,OK,accept (378x) · General.Interest,Gleich
+www.watchlist-internet.at,Forums/Message boards; Online Communities,keine Daten,,,BLOCKIERT,accept (170x) · Web.Client,Abweichung
+www.googleadservices.com,Advertisements,keine Daten,,,OK,accept (133x) · General.Interest,Gleich
+unpkg.com,Software/Technology; Computers and Internet,keine Daten,,,OK,accept (4x) · Web.Client,Gleich
+dl.google.com,Software Updates,keine Daten,,,OK,accept (19x) · General.Interest,Gleich
+ads.mozilla.org,Software/Technology; Computers and Internet,keine Daten,,,OK,accept (783x) · Web.Client,Gleich
+aus5.mozilla.org,Software/Technology; Computers and Internet,keine Daten,,,OK,accept (65x) · Update,Gleich
+ciscobinary.openh264.org,Software/Technology; Computers and Internet,keine Daten,,,OK,accept (39x) · Web.Client,Gleich
+android.clients.google.com,Search Engines; Search Engines and Portals,keine Daten,,,OK,accept (238x) · General.Interest,Gleich
+wetter.orf.at,Research/Reference; Reference,keine Daten,,,OK,accept (12x) · Web.Client,Gleich
+imagesrv.adition.com,Business Services; Business and Industry,keine Daten,,,OK,"accept (52x) · Web.Client, General.Interest",Gleich
+clients2.googleusercontent.com,Infrastructure,keine Daten,,,OK,accept (200x) · General.Interest,Gleich
+soph-assets.orf.at,News/Media; News,keine Daten,,,OK,accept (12x) · Web.Client,Gleich
+challenges.cloudflare.com,Software/Technology; Computers and Internet,keine Daten,,,OK,accept (7x) · Web.Client,Gleich
+track.celtra.com,Business Services; Business and Industry,keine Daten,,,OK,accept (7x) · Web.Client,Gleich
+collector.orf.at,News/Media; News,keine Daten,,,OK,accept (3x) · Web.Client,Gleich
+location.services.mozilla.com,Software/Technology; Computers and Internet,keine Daten,,,OK,accept (46x) · Web.Client,Gleich
+prod.ohttp-gateway.prod.webservices.mozgcp.net,Infrastructure,keine Daten,,,OK,accept (109x) · Web.Client,Gleich
+classify-client.services.mozilla.com,Software/Technology; Computers and Internet,keine Daten,,,OK,accept (73x) · Web.Client,Gleich
+normandy.cdn.mozilla.net,Software/Technology; Computers and Internet,keine Daten,,,OK,accept (71x) · Web.Client,Gleich
+firefox.settings.services.mozilla.com,Software/Technology; Computers and Internet,keine Daten,,,OK,accept (590x) · Web.Client,Gleich
+firefox-settings-attachments.cdn.mozilla.net,Software/Technology; Computers and Internet,keine Daten,,,OK,accept (112x) · Web.Client,Gleich
+assets.ad4m.at,Advertisements,keine Daten,,,OK,accept (2x) · Web.Client,Gleich
+www.google.com,Search Engines; Search Engines and Portals,keine Daten,,,OK,accept (458x) · General.Interest,Gleich
+clientservices.googleapis.com,Search Engines; Search Engines and Portals,keine Daten,,,OK,accept (175x) · General.Interest,Gleich
+rs.ad4m.at,Advertisements,keine Daten,,,OK,accept (2x) · Web.Client,Gleich
+www.flashscore.at,Sports; Sports and Recreation,keine Daten,,,OK,accept (2x) · Web.Client,Gleich
+spdt.vol.at,News/Media; News,keine Daten,,,OK,accept (4x) · Web.Client,Gleich
+us-u.openx.net,Advertisements,keine Daten,,,OK,accept (4x) · Web.Client,Gleich
+s.seedtag.com,Business Services; Business and Industry,keine Daten,,,OK,accept (6x) · Web.Client,Gleich
+mtalk.google.com,Chat; Chat and Instant Messaging,keine Daten,,,FEHLER,accept (391x) · Collaboration,Nicht vergleichbar
+jsconfig.adsafeprotected.com,Advertisements,keine Daten,,,OK,accept (51x) · Web.Client,Gleich
+clients2.google.com,Search Engines; Search Engines and Portals,keine Daten,,,OK,accept (121x) · General.Interest,Gleich
+as.ad4m.at,Advertisements,keine Daten,,,OK,accept (2x) · Web.Client,Gleich
+encrypted-tbn1.gstatic.com,Infrastructure,keine Daten,,,OK,accept (103x) · General.Interest,Gleich
+accounts.google.com,Search Engines; Search Engines and Portals,keine Daten,,,OK,"accept (113x) · General.Interest, Network.Service",Gleich
+gum.criteo.com,Business Services; Business and Industry,keine Daten,,,OK,accept (74x) · Web.Client,Gleich
+google-bidout-d.openx.net,Advertisements,keine Daten,,,OK,accept (4x) · Web.Client,Gleich
+encrypted-tbn2.gstatic.com,Infrastructure,keine Daten,,,OK,accept (79x) · General.Interest,Gleich
+ad4m.at,Advertisements,keine Daten,,,OK,accept (4x) · Web.Client,Gleich
+sslwidget.criteo.com,Business Services; Business and Industry,keine Daten,,,OK,accept (27x) · Web.Client,Gleich
+2e094599-243a-47a1-9c8c-d318a0dec54a.edge.permutive.app,Infrastructure,keine Daten,,,OK,accept (2x) · Web.Client,Gleich
+id5-sync.com,Infrastructure,keine Daten,,,OK,accept (21x) · Web.Client,Gleich
+fw.adsafeprotected.com,Advertisements,keine Daten,,,OK,accept (13x) · Web.Client,Gleich
+chatgpt.com,Generative AI,keine Daten,,,OK,accept (14x) · GenAI,Gleich
+api.sparkasse.at,Financial Institutions; Finance,keine Daten,,,FEHLER,accept (23x) · Network.Service,Nicht vergleichbar
+sync.bidmatic.io,SaaS and B2B,keine Daten,,,FEHLER,accept (2x) · Web.Client,Nicht vergleichbar
+mv.outbrainimg.com,Infrastructure,keine Daten,,,OK,accept (1x) · Web.Client,Gleich
+api.permutive.app,Infrastructure,keine Daten,,,OK,accept (4x) · Web.Client,Gleich
+api.permutive.com,Business Services; Business and Industry,keine Daten,,,OK,accept (2x) · Web.Client,Gleich
+cdn.jsdelivr.net,Infrastructure,keine Daten,,,OK,accept (27x) · Web.Client,Gleich
+audioapi.orf.at,News/Media; News,keine Daten,,,OK,accept (67x) · Web.Client,Gleich
+dt.adsafeprotected.com,Advertisements,keine Daten,,,OK,accept (114x) · Web.Client,Gleich
+static.cleverpush.com,Software/Technology; Computers and Internet,keine Daten,,,OK,accept (6x) · Web.Client,Gleich
+oa.openxcdn.net,Business Services; Business and Industry,keine Daten,,,OK,accept (4x) · Web.Client,Gleich
+radiobilder.orf.at,News/Media; News,keine Daten,,,OK,accept (23x) · Web.Client,Gleich
+28.flashscore.ninja,Advertisements,keine Daten,,,OK,accept (1x) · Web.Client,Gleich
+cdn.id5-sync.com,Infrastructure,keine Daten,,,OK,accept (11x) · Web.Client,Gleich
+pub.doubleverify.com,Business Services; Business and Industry,keine Daten,,,OK,accept (4x) · Web.Client,Gleich
+image6.pubmatic.com,Business Services; Business and Industry,keine Daten,,,OK,accept (7x) · Web.Client,Gleich
+cdn.permutive.app,Infrastructure,keine Daten,,,OK,accept (2x) · Web.Client,Gleich
+vtrk.dv.tech,Software/Technology; Computers and Internet,keine Daten,,,OK,accept (3x) · Web.Client,Gleich
+client-side-metrics.fr3.eu.criteo.net,Business Services; Business and Industry,keine Daten,,,OK,accept (21x) · Web.Client,Gleich
+rtb.openx.net,Advertisements,keine Daten,,,OK,accept (16x) · Web.Client,Gleich
+api.id5-sync.com,Infrastructure,keine Daten,,,OK,accept (10x) · Web.Client,Gleich
+match.adsrvr.org,Advertisements,keine Daten,,,OK,accept (22x) · Web.Client,Gleich
+media0.giphy.com,Visual Search Engines; Photo Search and Images,keine Daten,,,OK,"accept (41x) · Web.Client, General.Interest",Gleich

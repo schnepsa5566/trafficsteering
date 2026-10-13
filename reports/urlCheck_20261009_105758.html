@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>URL-Check Report</title>
+<style>
+:root {
+  --bg: #f6f7f9; --panel: #ffffff; --text: #1d2330; --muted: #5f6b7a;
+  --border: #dde2e8; --head: #eef1f5;
+  --ok: #1a7f37; --ok-bg: #dcf5e3;
+  --blocked: #b42318; --blocked-bg: #fde4e1;
+  --warn: #9a6700; --warn-bg: #fff3c4;
+  --error: #57606a; --error-bg: #e9ecef;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #12151b; --panel: #1b2029; --text: #e3e7ee; --muted: #9aa5b4;
+    --border: #2c3442; --head: #232a35;
+    --ok: #6fdd8b; --ok-bg: #133d22;
+    --blocked: #ff8a80; --blocked-bg: #4a1714;
+    --warn: #f2cc60; --warn-bg: #3d3110;
+    --error: #b6bfca; --error-bg: #2c333d;
+  }
+}
+* { box-sizing: border-box; }
+body { margin: 0; padding: 24px 16px; background: var(--bg); color: var(--text);
+  font: 14px/1.45 "Segoe UI", system-ui, sans-serif; }
+h1 { font-size: 22px; margin: 0 0 4px; }
+.meta { color: var(--muted); margin-bottom: 20px; }
+.cards { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 20px; }
+.card { background: var(--panel); border: 1px solid var(--border); border-radius: 8px;
+  padding: 12px 18px; min-width: 130px; cursor: pointer; user-select: none; }
+.card.active { outline: 2px solid var(--text); }
+.card .num { font-size: 26px; font-weight: 600; }
+.card .lbl { color: var(--muted); }
+.wrap { overflow-x: auto; background: var(--panel); border: 1px solid var(--border);
+  border-radius: 8px; }
+table { border-collapse: collapse; width: 100%; }
+th, td { padding: 8px 10px; border-bottom: 1px solid var(--border); text-align: left;
+  vertical-align: top; }
+th { background: var(--head); cursor: pointer; white-space: nowrap; position: sticky; top: 0; }
+th.sorted::after { content: " \25B4"; }
+th.sorted.desc::after { content: " \25BE"; }
+td.url { word-break: break-all; min-width: 180px; }
+td.reason { color: var(--muted); min-width: 220px; }
+.badge { display: inline-block; padding: 2px 8px; border-radius: 10px; font-weight: 600;
+  font-size: 12px; white-space: nowrap; }
+.s-OK { color: var(--ok); background: var(--ok-bg); }
+.s-BLOCKIERT { color: var(--blocked); background: var(--blocked-bg); }
+.s-WARNUNG { color: var(--warn); background: var(--warn-bg); }
+.s-FEHLER { color: var(--error); background: var(--error-bg); }
+.n-OK { color: var(--ok); } .n-BLOCKIERT { color: var(--blocked); }
+.n-WARNUNG { color: var(--warn); } .n-FEHLER { color: var(--error); }
+</style>
+</head>
+<body>
+<h1>URL-Check Report</h1>
+<div class="meta">Erstellt am 09.10.2026 10:57:58 &middot; Quelle: urlList.txt &middot; 12 Einträge</div>
+<div class="cards">
+<div class="card" data-status="OK"><div class="num n-OK">11</div><div class="lbl">Ok</div></div>
+<div class="card" data-status="BLOCKIERT"><div class="num n-BLOCKIERT">1</div><div class="lbl">Blockiert</div></div>
+<div class="card" data-status="WARNUNG"><div class="num n-WARNUNG">0</div><div class="lbl">Warnung</div></div>
+<div class="card" data-status="FEHLER"><div class="num n-FEHLER">0</div><div class="lbl">Fehler</div></div>
+</div>
+<div class="wrap">
+<table id="results">
+<thead><tr><th>Eingabe</th><th>Ergebnis</th><th>HTTP</th><th>Aufgerufene URL</th><th>Finale URL</th><th>IP</th><th>Seitentitel</th><th>Kategorie</th><th>Domain-Status</th><th>Grund / Detail</th></tr></thead>
+<tbody>
+<tr data-status="OK"><td>internetbadguys.com</td><td><span class="badge s-OK">OK</span></td><td>200</td><td class="url">https://internetbadguys.com/</td><td class="url">https://internetbadguys.com/</td><td>146.112.59.12</td><td>InternetBadGuys.com</td><td>Computer Security; Phishing</td><td>bösartig</td><td class="reason"></td></tr>
+<tr data-status="BLOCKIERT"><td>examplemalwaredomain.com</td><td><span class="badge s-BLOCKIERT">BLOCKIERT</span></td><td>200</td><td class="url">https://examplemalwaredomain.com/</td><td class="url">https://malware.block.sse.cisco.com/swg?server=swg-nginx-proxy-https-6968f97879-6pnmm.sigproxy.prod_aws_eu-central-1_1_0n&amp;v=eyJhbGciOiAiSFM1MTIiLCAia2lkIjogIjE1NjM1NTk3OTYifQ.eyJidHlwZSI6ICIiLCAib3JnIjogODM4ODczMCwgIm9pZCI6IDE0MTczNzQ4NjIsICJiaWQiOiAxNTA2OTk1MiwgInByZiI6IDEyMDgzMjY0LCAidCI6ICI4MDAwMDAwMDAwMDAwMDAwMDAwMjlGMDAwMDAwMDAwMDAwMDAwMCIsICJiYyI6ICI0MDAwMDAwMDAwMDAwMDAwMCIsICJ1cmwiOiAiaHR0cHM6Ly9leGFtcGxlbWFsd2FyZWRvbWFpbi5jb20vIiwgImZ0YyI6ICIiLCAiZm5hbWVzIjogIiIsICJicGlkIjogMCwgInJ1bGVpZCI6IDI0MzIxMzd9.QIUULDte38-CnAARjE2SioczHqLB4YhbIMIZ8H2kr8q0YIPUxes3jC58dFrkIvtLlUGmezsRYEkWHUlXNDsrZQ</td><td>146.112.59.12</td><td>Site Blocked</td><td>Computer Security; Malware</td><td>bösartig</td><td class="reason">Weiterleitung auf malware.block.sse.cisco.com; Block Type: security, Regel: For all Internet access (ID 2432137)</td></tr>
+<tr data-status="OK"><td>www.hofbraeu-am-steinertor.at</td><td><span class="badge s-OK">OK</span></td><td>200</td><td class="url">https://www.hofbraeu-am-steinertor.at/</td><td class="url">https://www.hofbraeu-am-steinertor.at/</td><td>185.88.212.37</td><td>Hofbräu Startseite | Hofbräu am Steinertor - Krems</td><td>Dining and Drinking</td><td>unbestimmt</td><td class="reason"></td></tr>
+<tr data-status="OK"><td>js.hs-scripts.com</td><td><span class="badge s-OK">OK</span></td><td>404</td><td class="url">https://js.hs-scripts.com/</td><td class="url">https://js.hs-scripts.com/</td><td>104.16.139.209, 104.16.137.209, 104.16.138.209, 104.16.140.209, 104.16.141.209</td><td>Error 404 Not Found</td><td>Business Services; Business and Industry</td><td>unbestimmt</td><td class="reason"></td></tr>
+<tr data-status="OK"><td>dck7nrao.media.greenvideo.io</td><td><span class="badge s-OK">OK</span></td><td>403</td><td class="url">https://dck7nrao.media.greenvideo.io/</td><td class="url">https://dck7nrao.media.greenvideo.io/</td><td>99.84.91.86, 99.84.91.126, 99.84.91.52, 99.84.91.115</td><td></td><td>Business Services; Business and Industry</td><td>unbestimmt</td><td class="reason"></td></tr>
+<tr data-status="OK"><td>www.ventilator-profis.de</td><td><span class="badge s-OK">OK</span></td><td>200</td><td class="url">https://www.ventilator-profis.de/</td><td class="url">https://www.ventilator-profis.de/</td><td>93.185.98.126</td><td>Große auswahl, niedriger Preis, Mengenrabatt, verkauf von Klimaanlagen, Ventilatoren, Heizungen uvm., mit Beratung und langer Tradition seit 1997</td><td>Ecommerce/Shopping; Shopping</td><td>unbestimmt</td><td class="reason"></td></tr>
+<tr data-status="OK"><td>d3k81ch9hvuctc.cloudfront.net</td><td><span class="badge s-OK">OK</span></td><td>403</td><td class="url">https://d3k81ch9hvuctc.cloudfront.net/</td><td class="url">https://d3k81ch9hvuctc.cloudfront.net/</td><td>3.161.119.22, 3.161.119.88, 3.161.119.101, 3.161.119.110</td><td></td><td>Infrastructure</td><td>unbestimmt</td><td class="reason"></td></tr>
+<tr data-status="OK"><td>www.hypotirol.com</td><td><span class="badge s-OK">OK</span></td><td>200</td><td class="url">https://www.hypotirol.com/</td><td class="url">https://www.hypotirol.com/</td><td>3.165.206.8, 3.165.206.11, 3.165.206.126, 3.165.206.92</td><td>Home | Hypo Tirol</td><td>Financial Institutions; Finance</td><td>unbestimmt</td><td class="reason"></td></tr>
+<tr data-status="OK"><td>req.adx.ws</td><td><span class="badge s-OK">OK</span></td><td>200</td><td class="url">https://req.adx.ws/</td><td class="url">https://adx.ws/</td><td>116.203.166.60</td><td>Sevio | Ad Serving Domain</td><td>Advertisements</td><td>unbestimmt</td><td class="reason"></td></tr>
+<tr data-status="OK"><td>ex.ingage.tech</td><td><span class="badge s-OK">OK</span></td><td>404</td><td class="url">https://ex.ingage.tech/</td><td class="url">https://ex.ingage.tech/</td><td>212.95.38.74</td><td></td><td>Business Services; Business and Industry</td><td>unbestimmt</td><td class="reason"></td></tr>
+<tr data-status="OK"><td>assets.hypotirol.com</td><td><span class="badge s-OK">OK</span></td><td>403</td><td class="url">https://assets.hypotirol.com/</td><td class="url">https://assets.hypotirol.com/</td><td>99.84.91.128, 99.84.91.85, 99.84.91.129, 99.84.91.115</td><td></td><td>Financial Institutions; Finance</td><td>unbestimmt</td><td class="reason"></td></tr>
+<tr data-status="OK"><td>fonts.bunny.net</td><td><span class="badge s-OK">OK</span></td><td>200</td><td class="url">https://fonts.bunny.net/</td><td class="url">https://fonts.bunny.net/</td><td>185.24.11.19</td><td>Bunny Fonts | Explore Faster &amp; GDPR friendly Fonts</td><td>SaaS and B2B</td><td>unbestimmt</td><td class="reason"></td></tr>
+</tbody>
+</table>
+</div>
+<script>
+(function () {
+  var table = document.getElementById("results");
+  var tbody = table.tBodies[0];
+  var cards = document.querySelectorAll(".card");
+  var filter = "";
+
+  cards.forEach(function (card) {
+    card.addEventListener("click", function () {
+      filter = filter === card.dataset.status ? "" : card.dataset.status;
+      cards.forEach(function (c) { c.classList.toggle("active", c.dataset.status === filter && filter !== ""); });
+      Array.prototype.forEach.call(tbody.rows, function (row) {
+        row.style.display = !filter || row.dataset.status === filter ? "" : "none";
+      });
+    });
+  });
+
+  Array.prototype.forEach.call(table.tHead.rows[0].cells, function (th, index) {
+    th.addEventListener("click", function () {
+      var desc = th.classList.contains("sorted") && !th.classList.contains("desc");
+      Array.prototype.forEach.call(table.tHead.rows[0].cells, function (c) { c.classList.remove("sorted", "desc"); });
+      th.classList.add("sorted");
+      if (desc) th.classList.add("desc");
+      var rows = Array.prototype.slice.call(tbody.rows);
+      rows.sort(function (a, b) {
+        var x = a.cells[index].textContent, y = b.cells[index].textContent;
+        var r = x.localeCompare(y, "de", { numeric: true });
+        return desc ? -r : r;
+      });
+      rows.forEach(function (row) { tbody.appendChild(row); });
+    });
+  });
+})();
+</script>
+</body>
+</html>

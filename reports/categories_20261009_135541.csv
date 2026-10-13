@@ -1,0 +1,16 @@
+﻿fqdn,kategorie,action,regel,letzter_zugriff
+ogads-pa.clients6.google.com,Search Engines; Search Engines and Portals,zugelassen,No-SSL-Intercept (ID 2832734),09.10.2026 13:42:07
+www.ris.bka.gv.at,Government; Government and Law,zugelassen,Kein User verify notwendig (ID 2832730),09.10.2026 13:42:07
+content-autofill.googleapis.com,Search Engines; Search Engines and Portals,zugelassen,Kein User verify notwendig (ID 2832730),09.10.2026 13:42:07
+ep1.adtrafficquality.google,Advertisements,zugelassen,ID 2816285,09.10.2026 13:42:08
+beachfront-match.dotomi.com,Business Services; Business and Industry,zugelassen,ID 2816285,09.10.2026 13:42:08
+merino.services.mozilla.com,Software/Technology; Computers and Internet,zugelassen,ID 2816285,09.10.2026 13:42:08
+push.services.mozilla.com,Software/Technology; Computers and Internet,zugelassen,ID 2816285,09.10.2026 13:42:08
+update.googleapis.com,Software/Technology; Computers and Internet,zugelassen,Kein User verify notwendig (ID 2832730),09.10.2026 13:42:07
+ep2.adtrafficquality.google,Advertisements,zugelassen,ID 2816285,09.10.2026 13:42:08
+mozilla-ohttp.fastly-edge.com,Infrastructure,zugelassen,ID 2816285,09.10.2026 13:42:08
+stats.manz.at,Business Services; Business and Industry,zugelassen,ID 2832734,09.10.2026 13:42:08
+3e3378af7cd0.a62927d9.eu-west-1.token.awswaf.com,Infrastructure,zugelassen,All Internet access (ID 2816285),09.10.2026 13:42:08
+detectportal.firefox.com,Infrastructure,zugelassen,keine SAML-Authentication fuer den Browser-Start (ID 2818260),09.10.2026 13:42:08
+matomo.oiat.at,Business Services; Business and Industry,zugelassen,All Internet access (ID 2816285),09.10.2026 13:42:08
+play.google.com,Software/Technology; Computers and Internet,zugelassen,No-SSL-Intercept (ID 2832734),09.10.2026 13:42:08
