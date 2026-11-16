@@ -1239,6 +1239,8 @@ HTML_TEMPLATE = """<!doctype html>
   --blocked: #b42318; --blocked-bg: #fde4e1;
   --warn: #9a6700; --warn-bg: #fff3c4;
   --error: #57606a; --error-bg: #e9ecef;
+  --api-bg: #fff1e0; --api-head: #ffe0bd;
+  --online-bg: #e8f3ff; --online-head: #d2e7ff;
 }
 @media (prefers-color-scheme: dark) {
   :root {
@@ -1248,6 +1250,8 @@ HTML_TEMPLATE = """<!doctype html>
     --blocked: #ff8a80; --blocked-bg: #4a1714;
     --warn: #f2cc60; --warn-bg: #3d3110;
     --error: #b6bfca; --error-bg: #2c333d;
+    --api-bg: #2e2316; --api-head: #45321b;
+    --online-bg: #16243a; --online-head: #1f3452;
   }
 }
 * { box-sizing: border-box; }
@@ -1287,6 +1291,11 @@ td.cert-bad { color: var(--blocked); min-width: 200px; }
 .c-nicht-vergleichbar, .c-nicht-in-s-base { color: var(--error); background: var(--error-bg); }
 .m-gleich { color: var(--ok); } .m-abweichung { color: var(--blocked); }
 .m-nicht-vergleichbar, .m-nicht-in-s-base { color: var(--error); }
+td.src-api, .legend.src-api { background: var(--api-bg); }
+th.src-api { background: var(--api-head); }
+td.src-online, .legend.src-online { background: var(--online-bg); }
+th.src-online { background: var(--online-head); }
+.legend { padding: 1px 8px; border-radius: 4px; color: var(--text); }
 tr[data-sbase="abweichung"] td:first-child { box-shadow: inset 3px 0 0 var(--blocked); }
 </style>
 </head>
@@ -1355,6 +1364,11 @@ def cert_class(cert):
     return ""
 
 
+def td(content, cls=""):
+    cls = cls.strip()
+    return f'<td class="{cls}">{content}</td>' if cls else f"<td>{content}</td>"
+
+
 def write_html(path, results, list_file, with_categories, with_log, started,
                s_base_file=None):
     esc = html.escape
@@ -1392,48 +1406,57 @@ def write_html(path, results, list_file, with_categories, with_log, started,
             + "\n</div>"
         )
 
-    columns = ["Eingabe", "Ergebnis"]
+    # (Spaltenname, Herkunft): src-online = Seitenaufruf, src-api = Cisco API
+    columns = [("Eingabe", ""), ("Ergebnis", "")]
     if s_base_file:
-        columns += ["S-Base", "Vergleich"]
-    columns += ["HTTP", "Aufgerufene URL", "Finale URL",
-                "IP", "Zertifikat", "Seitentitel"]
+        columns += [("S-Base", ""), ("Vergleich", "")]
+    columns += [(c, "src-online") for c in ("HTTP", "Aufgerufene URL", "Finale URL",
+                                            "IP", "Zertifikat", "Seitentitel")]
     if with_categories:
-        columns += ["Kategorie", "Domain-Status"]
+        columns += [("Kategorie", "src-api"), ("Domain-Status", "src-api")]
     if with_log:
-        columns.append("Cisco-Log")
-    columns.append("Grund / Detail")
+        columns.append(("Cisco-Log", "src-api"))
+    columns.append(("Grund / Detail", ""))
 
-    headers = "".join(f"<th>{esc(c)}</th>" for c in columns)
+    headers = "".join(
+        f'<th class="{src}">{esc(c)}</th>' if src else f"<th>{esc(c)}</th>"
+        for c, src in columns
+    )
+
+    legend = '<span class="legend src-online">Online-Abfrage</span>'
+    if with_categories or with_log:
+        legend += ' <span class="legend src-api">Cisco API</span>'
+    meta += f" &middot; {legend}"
 
     rows = []
     for r in results:
         cells = [
-            f"<td>{esc(r['input'])}</td>",
-            f'<td><span class="badge s-{r["status"]}">{r["status"]}</span></td>',
+            td(esc(r["input"])),
+            td(f'<span class="badge s-{r["status"]}">{r["status"]}</span>'),
         ]
         if s_base_file:
             cells += [
-                f"<td>{esc(r['sbase'])}</td>",
-                f'<td><span class="badge c-{r["sbase_cmp"]}">'
-                f'{CMP_LABELS[r["sbase_cmp"]]}</span></td>',
+                td(esc(r["sbase"])),
+                td(f'<span class="badge c-{r["sbase_cmp"]}">'
+                   f'{CMP_LABELS[r["sbase_cmp"]]}</span>'),
             ]
         cells += [
-            f"<td>{esc(str(r['http']))}</td>",
-            f'<td class="url">{esc(r["url"])}</td>',
-            f'<td class="url">{esc(r["final_url"])}</td>',
-            f"<td>{esc(', '.join(r['ips']))}</td>",
-            f'<td class="{cert_class(r["cert"])}">{esc(r["cert"])}</td>',
-            f"<td>{esc(r['title'])}</td>",
+            td(esc(str(r["http"])), "src-online"),
+            td(esc(r["url"]), "url src-online"),
+            td(esc(r["final_url"]), "url src-online"),
+            td(esc(", ".join(r["ips"])), "src-online"),
+            td(esc(r["cert"]), f"{cert_class(r['cert'])} src-online"),
+            td(esc(r["title"]), "src-online"),
         ]
         if with_categories:
             cells += [
-                f"<td>{esc(r['category'])}</td>",
-                f"<td>{esc(r['domain_status'])}</td>",
+                td(esc(r["category"]), "src-api"),
+                td(esc(r["domain_status"]), "src-api"),
             ]
         if with_log:
             log = " · ".join(v for v in (r["log_action"], r["log_rule"], r["log_time"]) if v)
-            cells.append(f"<td>{esc(log)}</td>")
-        cells.append(f'<td class="reason">{esc(r["reason"])}</td>')
+            cells.append(td(esc(log), "src-api"))
+        cells.append(td(esc(r["reason"]), "reason"))
 
         rows.append(
             f'<tr data-status="{r["status"]}" data-sbase="{r["sbase_cmp"]}">'
