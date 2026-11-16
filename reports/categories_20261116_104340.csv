@@ -1,0 +1,819 @@
+﻿fqdn,kategorie,action,regel,letzter_zugriff
+internetbadguys.com,Computer Security; Phishing,geblockt,Block due to security setting,16.11.2026 10:43:49
+examplemalwaredomain.com,Computer Security; Malware,geblockt,Block due to security setting,16.11.2026 10:43:49
+ogads-pa.clients6.google.com,Search Engines; Search Engines and Portals,zugelassen,ID 2832734,16.11.2026 10:46:18
+www.ris.bka.gv.at,Government; Government and Law,zugelassen,Kein User verify notwendig (ID 2832730),16.11.2026 10:43:49
+content-autofill.googleapis.com,Search Engines; Search Engines and Portals,zugelassen,ID 2832730,16.11.2026 10:46:18
+ep1.adtrafficquality.google,Advertisements,zugelassen,All Internet access (ID 2816285),16.11.2026 10:43:49
+beachfront-match.dotomi.com,Business Services; Business and Industry,zugelassen,All Internet access (ID 2816285),16.11.2026 10:43:49
+merino.services.mozilla.com,Software/Technology; Computers and Internet,zugelassen,ID 2816285,16.11.2026 10:45:25
+push.services.mozilla.com,Software/Technology; Computers and Internet,zugelassen,ID 2816285,16.11.2026 10:45:52
+update.googleapis.com,Software/Technology; Computers and Internet,zugelassen,Kein User verify notwendig (ID 2832730),16.11.2026 10:43:49
+ep2.adtrafficquality.google,Advertisements,zugelassen,ID 2816285,16.11.2026 10:43:50
+mozilla-ohttp.fastly-edge.com,Infrastructure,zugelassen,ID 2816285,16.11.2026 10:46:35
+stats.manz.at,Business Services; Business and Industry,zugelassen,No-SSL-Intercept (ID 2832734),16.11.2026 10:43:49
+3e3378af7cd0.a62927d9.eu-west-1.token.awswaf.com,Infrastructure,zugelassen,ID 2816285,16.11.2026 10:43:50
+detectportal.firefox.com,Infrastructure,zugelassen,ID 2818260,16.11.2026 10:46:35
+matomo.oiat.at,Business Services; Business and Industry,zugelassen,ID 2816285,16.11.2026 10:43:50
+play.google.com,Software/Technology; Computers and Internet,zugelassen,ID 2832734,16.11.2026 10:46:18
+content-signature-2.cdn.mozilla.net,Software/Technology; Computers and Internet,zugelassen,ID 2816285,16.11.2026 10:52:49
+s.yieldmrm.com,Business Services; Business and Industry,zugelassen,ID 2816285,16.11.2026 10:43:50
+www.googletagmanager.com,Software/Technology; Computers and Internet,zugelassen,ID 2833026,16.11.2026 10:44:46
+webtools.europa.eu,Government; Government and Law,zugelassen,ID 2924432,16.11.2026 10:43:51
+safebrowsing.googleapis.com,Search Engines; Search Engines and Portals,zugelassen,ID 2818260,16.11.2026 10:45:28
+www.watchlist-internet.at,Forums/Message boards; Online Communities,zugelassen,All Internet access (ID 2816285),16.11.2026 10:43:50
+www.googleadservices.com,Advertisements,zugelassen,ID 2833026,16.11.2026 10:44:46
+unpkg.com,Software/Technology; Computers and Internet,zugelassen,All Internet access (ID 2816285),16.11.2026 10:43:50
+dl.google.com,Software Updates,zugelassen,ID 2832734,16.11.2026 10:45:32
+ads.mozilla.org,Software/Technology; Computers and Internet,zugelassen,ID 2832734,16.11.2026 10:49:24
+aus5.mozilla.org,Software/Technology; Computers and Internet,zugelassen,No-SSL-Intercept (ID 2832734),16.11.2026 10:43:50
+ciscobinary.openh264.org,Software/Technology; Computers and Internet,zugelassen,ID 2816285,16.11.2026 10:43:51
+android.clients.google.com,Search Engines; Search Engines and Portals,zugelassen,No-SSL-Intercept (ID 2832734),16.11.2026 10:43:50
+wetter.orf.at,Research/Reference; Reference,zugelassen,ID 2816285,16.11.2026 10:43:51
+imagesrv.adition.com,Business Services; Business and Industry,zugelassen,ID 2833026,16.11.2026 10:45:19
+clients2.googleusercontent.com,Infrastructure,zugelassen,ID 2816285,16.11.2026 10:43:52
+soph-assets.orf.at,News/Media; News,zugelassen,ID 2816285,16.11.2026 10:43:52
+challenges.cloudflare.com,Software/Technology; Computers and Internet,zugelassen,Whitelist_A6_Alle_Traeger (ID 2833026),16.11.2026 10:43:51
+track.celtra.com,Business Services; Business and Industry,zugelassen,ID 2816285,16.11.2026 10:43:52
+collector.orf.at,News/Media; News,zugelassen,ID 2816285,16.11.2026 10:43:53
+location.services.mozilla.com,Software/Technology; Computers and Internet,zugelassen,ID 2816285,16.11.2026 10:43:52
+prod.ohttp-gateway.prod.webservices.mozgcp.net,Infrastructure,zugelassen,ID 2816285,16.11.2026 10:46:34
+classify-client.services.mozilla.com,Software/Technology; Computers and Internet,zugelassen,ID 2816285,16.11.2026 10:43:52
+normandy.cdn.mozilla.net,Software/Technology; Computers and Internet,zugelassen,ID 2816285,16.11.2026 10:43:52
+firefox.settings.services.mozilla.com,Software/Technology; Computers and Internet,zugelassen,ID 2816285,16.11.2026 10:53:11
+firefox-settings-attachments.cdn.mozilla.net,Software/Technology; Computers and Internet,zugelassen,ID 2816285,16.11.2026 10:46:35
+assets.ad4m.at,Advertisements,zugelassen,All Internet access (ID 2816285),16.11.2026 10:43:52
+www.google.com,Search Engines; Search Engines and Portals,zugelassen,No-SSL-Intercept (ID 2832734),16.11.2026 10:52:28
+clientservices.googleapis.com,Search Engines; Search Engines and Portals,zugelassen,Kein User verify notwendig (ID 2832730),16.11.2026 10:45:37
+rs.ad4m.at,Advertisements,zugelassen,ID 2816285,16.11.2026 10:43:53
+www.flashscore.at,Sports; Sports and Recreation,zugelassen,ID 2816285,16.11.2026 10:43:53
+spdt.vol.at,News/Media; News,zugelassen,All Internet access (ID 2816285),16.11.2026 10:43:52
+us-u.openx.net,Advertisements,zugelassen,All Internet access (ID 2816285),16.11.2026 10:43:52
+s.seedtag.com,Business Services; Business and Industry,zugelassen,All Internet access (ID 2816285),16.11.2026 10:43:52
+mtalk.google.com,Chat; Chat and Instant Messaging,zugelassen,ID 2832734,16.11.2026 10:44:08
+jsconfig.adsafeprotected.com,Advertisements,zugelassen,ID 2816285,16.11.2026 10:45:48
+clients2.google.com,Search Engines; Search Engines and Portals,zugelassen,ID 2832734,16.11.2026 10:43:53
+as.ad4m.at,Advertisements,zugelassen,ID 2816285,16.11.2026 10:43:53
+encrypted-tbn1.gstatic.com,Infrastructure,zugelassen,No-SSL-Intercept (ID 2832734),16.11.2026 10:43:53
+accounts.google.com,Search Engines; Search Engines and Portals,zugelassen,No-SSL-Intercept (ID 2832734),16.11.2026 10:50:49
+gum.criteo.com,Business Services; Business and Industry,zugelassen,All Internet access (ID 2816285),16.11.2026 10:43:53
+google-bidout-d.openx.net,Advertisements,zugelassen,All Internet access (ID 2816285),16.11.2026 10:43:54
+encrypted-tbn2.gstatic.com,Infrastructure,zugelassen,No-SSL-Intercept (ID 2832734),16.11.2026 10:43:53
+ad4m.at,Advertisements,zugelassen,All Internet access (ID 2816285),16.11.2026 10:43:53
+sslwidget.criteo.com,Business Services; Business and Industry,zugelassen,All Internet access (ID 2816285),16.11.2026 10:43:53
+2e094599-243a-47a1-9c8c-d318a0dec54a.edge.permutive.app,Infrastructure,zugelassen,All Internet access (ID 2816285),16.11.2026 10:43:53
+id5-sync.com,Infrastructure,zugelassen,All Internet access (ID 2816285),16.11.2026 10:43:54
+fw.adsafeprotected.com,Advertisements,zugelassen,All Internet access (ID 2816285),16.11.2026 10:43:54
+chatgpt.com,Generative AI,zugelassen,All Internet access (ID 2816285),16.11.2026 10:43:54
+api.sparkasse.at,Financial Institutions; Finance,zugelassen,No-SSL-Intercept (ID 2832734),16.11.2026 10:43:54
+sync.bidmatic.io,SaaS and B2B,zugelassen,All Internet access (ID 2816285),16.11.2026 10:43:54
+mv.outbrainimg.com,Infrastructure,zugelassen,ID 2816285,16.11.2026 10:43:54
+api.permutive.app,Infrastructure,zugelassen,All Internet access (ID 2816285),16.11.2026 10:43:54
+api.permutive.com,Business Services; Business and Industry,zugelassen,ID 2816285,16.11.2026 10:43:54
+cdn.jsdelivr.net,Infrastructure,zugelassen,All Internet access (ID 2816285),16.11.2026 10:43:54
+audioapi.orf.at,News/Media; News,zugelassen,All Internet access (ID 2816285),16.11.2026 10:43:54
+dt.adsafeprotected.com,Advertisements,zugelassen,ID 2816285,16.11.2026 10:45:48
+static.cleverpush.com,Software/Technology; Computers and Internet,zugelassen,All Internet access (ID 2816285),16.11.2026 10:43:55
+oa.openxcdn.net,Business Services; Business and Industry,zugelassen,All Internet access (ID 2816285),16.11.2026 10:43:55
+radiobilder.orf.at,News/Media; News,zugelassen,ID 2816285,16.11.2026 10:46:28
+28.flashscore.ninja,Advertisements,zugelassen,ID 2816285,16.11.2026 10:43:56
+cdn.id5-sync.com,Infrastructure,zugelassen,All Internet access (ID 2816285),16.11.2026 10:43:55
+pub.doubleverify.com,Business Services; Business and Industry,zugelassen,All Internet access (ID 2816285),16.11.2026 10:43:55
+image6.pubmatic.com,Business Services; Business and Industry,zugelassen,ID 2816285,16.11.2026 10:43:55
+cdn.permutive.app,Infrastructure,zugelassen,ID 2816285,16.11.2026 10:43:55
+vtrk.dv.tech,Software/Technology; Computers and Internet,zugelassen,All Internet access (ID 2816285),16.11.2026 10:43:55
+client-side-metrics.fr3.eu.criteo.net,Business Services; Business and Industry,zugelassen,ID 2816285,16.11.2026 10:43:56
+rtb.openx.net,Advertisements,zugelassen,All Internet access (ID 2816285),16.11.2026 10:43:55
+api.id5-sync.com,Infrastructure,zugelassen,All Internet access (ID 2816285),16.11.2026 10:43:55
+match.adsrvr.org,Advertisements,zugelassen,ID 2816285,16.11.2026 10:43:56
+media0.giphy.com,Visual Search Engines; Photo Search and Images,zugelassen,ID 2816285,16.11.2026 10:44:39
+europe.cp.wd.microsoft.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:52:19
+winatp-gw-weu3.microsoft.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:54:31
+teams.public.onecdn.static.microsoft,Infrastructure,zugelassen,ID 2832792,16.11.2026 10:46:50
+api.flightproxy.teams.microsoft.com,Online Meetings,zugelassen,ID 2832792,16.11.2026 10:49:02
+europe.smartscreen.microsoft.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:54:40
+storecatalogrevocation.storequality.microsoft.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:43:57
+teams.microsoft.com,Online Meetings,zugelassen,ID 2832792,16.11.2026 10:51:19
+login.live.com,Search Engines; Search Engines and Portals,zugelassen,ID 2818260,16.11.2026 10:51:11
+tas02.sls.update.microsoft.com,Software Updates,zugelassen,ID 2832730,16.11.2026 10:44:02
+ecs.office.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:53:23
+go.trouter.teams.microsoft.com,Online Meetings,zugelassen,ID 2832792,16.11.2026 10:47:20
+config.teams.microsoft.com,Online Meetings,zugelassen,ID 2832792,16.11.2026 10:49:00
+graph.microsoft.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:53:49
+login.microsoftonline.com,SaaS and B2B,zugelassen,ID 2818260,16.11.2026 10:54:01
+spo.nel.measure.office.net,SaaS and B2B,zugelassen,ID 2832792,16.11.2026 10:44:54
+westus2-0.in.applicationinsights.azure.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:43:58
+teams.cloud.microsoft,Online Meetings,zugelassen,ID 2832792,16.11.2026 10:49:06
+officeclient.microsoft.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:51:45
+tas01.cwsapp.update.microsoft.com,Software Updates,zugelassen,ID 2832792,16.11.2026 10:44:02
+oneocsp.microsoft.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:52:07
+licensing.mp.microsoft.com,Software/Technology; Computers and Internet,zugelassen,Microsoft (ID 2832792),16.11.2026 10:43:57
+displaycatalog.mp.microsoft.com,Software/Technology; Computers and Internet,zugelassen,ID 2832730,16.11.2026 10:43:59
+clients.config.office.net,SaaS and B2B,zugelassen,ID 2832792,16.11.2026 10:48:31
+eu-prod.asyncgw.teams.microsoft.com,Online Meetings,zugelassen,ID 2832792,16.11.2026 10:46:50
+teams.nel.measure.office.net,SaaS and B2B,zugelassen,ID 2832792,16.11.2026 10:46:56
+go-eu.trouter.teams.microsoft.com,Online Meetings,zugelassen,ID 2832792,16.11.2026 10:47:20
+substrate.office.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:48:16
+augloop.office.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:47:19
+ctldl.windowsupdate.com,Software Updates,zugelassen,ID 2832734,16.11.2026 10:52:12
+upload.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:47:53
+loki.delve.office.com,Software/Technology; Computers and Internet,zugelassen,Microsoft (ID 2832792),16.11.2026 10:43:58
+pub-ent-sece-08-t.trouter.teams.microsoft.com,Online Meetings,zugelassen,Microsoft (ID 2832792),16.11.2026 10:43:58
+identity.nel.measure.office.net,SaaS and B2B,zugelassen,Microsoft (ID 2832792),16.11.2026 10:43:58
+dc.services.visualstudio.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:50:40
+disc801.prod.do.dsp.mp.microsoft.com,Software Updates,zugelassen,ID 2832792,16.11.2026 10:43:59
+cp801.prod.do.dsp.mp.microsoft.com,Software Updates,zugelassen,ID 2832792,16.11.2026 10:43:59
+geover.prod.do.dsp.mp.microsoft.com,Software Updates,zugelassen,ID 2832792,16.11.2026 10:43:59
+kv801.prod.do.dsp.mp.microsoft.com,Software Updates,zugelassen,ID 2832792,16.11.2026 10:43:59
+vortex.data.microsoft.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:48:35
+exo.nel.measure.office.net,SaaS and B2B,zugelassen,ID 2832792,16.11.2026 10:49:19
+array513.prod.do.dsp.mp.microsoft.com,Software Updates,zugelassen,ID 2832792,16.11.2026 10:44:02
+array514.prod.do.dsp.mp.microsoft.com,Software Updates,zugelassen,ID 2832792,16.11.2026 10:44:02
+g.live.com,Search Engines; Search Engines and Portals,zugelassen,ID 2832792,16.11.2026 10:48:03
+m365cdn.nel.measure.office.net,SaaS and B2B,zugelassen,Microsoft (ID 2832792),16.11.2026 10:43:59
+pub-ent-dewc-01-t.trouter.teams.microsoft.com,Online Meetings,zugelassen,Microsoft (ID 2832792),16.11.2026 10:43:59
+pub-ent-dewc-13-t.trouter.teams.microsoft.com,Online Meetings,zugelassen,ID 2832792,16.11.2026 10:45:07
+pub-ent-sece-06-t.trouter.teams.microsoft.com,Online Meetings,zugelassen,ID 2832792,16.11.2026 10:45:07
+pub-ent-frce-07-t.trouter.teams.microsoft.com,Online Meetings,zugelassen,Microsoft (ID 2832792),16.11.2026 10:43:59
+mrodevicemgr.officeapps.live.com,Search Engines; Software/Technology; Computers and Internet; Search Engines and Portals,zugelassen,ID 2832792,16.11.2026 10:44:00
+f.c2r.ts.cdn.office.net,Software Updates,zugelassen,Microsoft (ID 2832792),16.11.2026 10:43:59
+officecdn.microsoft.com,Software/Technology; Computers and Internet,zugelassen,Kein User verify notwendig (ID 2832730),16.11.2026 10:43:59
+res.cdn.office.net,SaaS and B2B,zugelassen,Microsoft (ID 2832792),16.11.2026 10:43:59
+b.c2r.ts.cdn.office.net,Software Updates,zugelassen,Microsoft (ID 2832792),16.11.2026 10:43:59
+pub-ent-euwe-09-t.trouter.teams.microsoft.com,Online Meetings,zugelassen,Microsoft (ID 2832792),16.11.2026 10:43:59
+statics.teams.cdn.office.net,Infrastructure,zugelassen,ID 2832792,16.11.2026 10:50:21
+msedge.api.cdp.microsoft.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:44:02
+api-emea.flightproxy.teams.microsoft.com,Online Meetings,zugelassen,ID 2832792,16.11.2026 10:49:03
+settings-win.data.microsoft.com,Software/Technology; Computers and Internet,zugelassen,Microsoft (ID 2832792),16.11.2026 10:48:44
+incidents.diagnostics-eudb.office.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:47:30
+odc-eu.officeapps.live.com,Search Engines; Software/Technology; Computers and Internet; Search Engines and Portals,zugelassen,ID 2832792,16.11.2026 10:48:28
+webshell.suite.office.com,Software/Technology; Computers and Internet,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:00
+support.content.office.net,SaaS and B2B,zugelassen,ID 2832792,16.11.2026 10:46:45
+odc.officeapps.live.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:45:28
+messaging.engagement.office.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:44:01
+titles.prod.mos.microsoft.com,Software/Technology; Computers and Internet,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:00
+entitlement.diagnostics-eudb.office.com,Software/Technology; Computers and Internet,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:00
+api.diagnostics-eudb.office.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:44:01
+disc501.prod.do.dsp.mp.microsoft.com,Software Updates,zugelassen,ID 2832792,16.11.2026 10:44:01
+kv501.prod.do.dsp.mp.microsoft.com,Software Updates,zugelassen,Kein User verify notwendig (ID 2832730),16.11.2026 10:44:01
+cp501.prod.do.dsp.mp.microsoft.com,Software Updates,zugelassen,Kein User verify notwendig (ID 2832730),16.11.2026 10:44:01
+api.bap.microsoft.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:49:55
+edge.microsoft.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:54:13
+browser.pipe.aria.microsoft.com,Software/Technology; Computers and Internet,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:01
+msedge.b.tlu.dl.delivery.mp.microsoft.com,Software Updates,zugelassen,Kein User verify notwendig (ID 2832730),16.11.2026 10:45:54
+armmf.adobe.com,Software/Technology; Computers and Internet,zugelassen,Kein User verify notwendig (ID 2832730),16.11.2026 10:44:01
+admin.microsoft.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:44:02
+at-prod.asyncgw.teams.microsoft.com,Online Meetings,zugelassen,ID 2832792,16.11.2026 10:54:10
+pub-ent-plce-12-t.trouter.teams.microsoft.com,Online Meetings,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:01
+aadcdn.msauth.net,Infrastructure,zugelassen,ID 2818260,16.11.2026 10:44:02
+geo.prod.do.dsp.mp.microsoft.com,Software Updates,zugelassen,ID 2832792,16.11.2026 10:44:02
+turbo.microsoft.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:49:48
+mss.office.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:54:13
+m365.cloud.microsoft,Software/Technology; Computers and Internet; Generative AI,zugelassen,Microsoft (ID 2832792),16.11.2026 10:45:04
+ecs.nel.measure.office.net,SaaS and B2B,zugelassen,ID 2832792,16.11.2026 10:50:51
+download.windowsupdate.com,Software Updates,zugelassen,ID 2832734,16.11.2026 10:44:02
+array803.prod.do.dsp.mp.microsoft.com,Software Updates,zugelassen,ID 2832792,16.11.2026 10:44:16
+array808.prod.do.dsp.mp.microsoft.com,Software Updates,zugelassen,ID 2832792,16.11.2026 10:44:16
+aepxlg.adobe.com,Software/Technology; Computers and Internet,zugelassen,Kein User verify notwendig (ID 2832730),16.11.2026 10:44:02
+definitionupdates.microsoft.com,Software Updates,zugelassen,Kein User verify notwendig (ID 2832730),16.11.2026 10:44:02
+dl.delivery.mp.microsoft.com,Software Updates,zugelassen,ID 2832792,16.11.2026 10:44:42
+array503.prod.do.dsp.mp.microsoft.com,Software Updates,zugelassen,ID 2832792,16.11.2026 10:44:16
+pub-ent-sece-02-t.trouter.teams.microsoft.com,Online Meetings,zugelassen,ID 2832792,16.11.2026 10:44:03
+tr-eop-fs.office.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:44:03
+9ba3bb9838634a82e541e3386dc3be62.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:44:03
+fpc.msedge.net,Infrastructure,zugelassen,ID 2832792,16.11.2026 10:50:21
+tr-tmc-fs.office.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:50:20
+tr-tmc-afd.office.com,Software/Technology; Computers and Internet,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:03
+sb.teams.static.microsoft,Infrastructure,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:03
+storeedgefd.dsx.mp.microsoft.com,Software/Technology; Computers and Internet,zugelassen,Kein User verify notwendig (ID 2832730),16.11.2026 10:44:03
+config.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:03
+tr-teamsforlife-afdonly.office.com,Software/Technology; Computers and Internet,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:03
+res-1.cdn.office.net,SaaS and B2B,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:03
+r4.res.office365.com,Online Document Sharing and Collaboration,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:03
+js.monitor.azure.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:49:27
+amcdn.msftauth.net,Software/Technology; Computers and Internet,zugelassen,ID 2818260,16.11.2026 10:44:04
+array507.prod.do.dsp.mp.microsoft.com,Software Updates,zugelassen,ID 2832792,16.11.2026 10:44:16
+array506.prod.do.dsp.mp.microsoft.com,Software Updates,zugelassen,ID 2832792,16.11.2026 10:44:06
+skydrive.wns.windows.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:45:07
+pub-ent-sece-09-t.trouter.teams.microsoft.com,Online Meetings,zugelassen,ID 2832792,16.11.2026 10:44:04
+pub-ent-plce-08-t.trouter.teams.microsoft.com,Online Meetings,zugelassen,ID 2832792,16.11.2026 10:44:04
+catalog.s.download.windowsupdate.com,Software Updates,zugelassen,ID 2832734,16.11.2026 10:44:04
+agps.location.live.net,Search Engines; Search Engines and Portals,zugelassen,ID 2832792,16.11.2026 10:49:41
+stm-keyid-fb17d70d734870e919c4e8e603975e664e0e43de.microsoftaik.azure.net,Software/Technology; Computers and Internet,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:04
+pub-ent-euwe-11-t.trouter.teams.microsoft.com,Online Meetings,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:04
+stm-keyid-fb17d70d734870e919c4e8e603975e664e0e43de-v2.microsoftaik.azure.net,Software/Technology; Computers and Internet,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:04
+fa000000124.resources.office.net,SaaS and B2B,zugelassen,ID 2832792,16.11.2026 10:44:05
+fa000000175.resources.office.net,SaaS and B2B,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:04
+fa000000125.resources.office.net,SaaS and B2B,zugelassen,ID 2832792,16.11.2026 10:44:05
+fa000000195.resources.office.net,SaaS and B2B,zugelassen,ID 2832792,16.11.2026 10:44:05
+fa000000156.resources.office.net,SaaS and B2B,zugelassen,ID 2832792,16.11.2026 10:44:05
+fa000000167.resources.office.net,SaaS and B2B,zugelassen,ID 2832792,16.11.2026 10:44:05
+fa000000129.resources.office.net,SaaS and B2B,zugelassen,ID 2832792,16.11.2026 10:44:05
+fa000000128.resources.office.net,SaaS and B2B,zugelassen,ID 2832792,16.11.2026 10:44:05
+fa000000210.resources.office.net,SaaS and B2B,zugelassen,ID 2832792,16.11.2026 10:44:05
+fa000000203.resources.office.net,SaaS and B2B,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:05
+services.autopatch.microsoft.com,Software/Technology; Computers and Internet,zugelassen,Kein User verify notwendig (ID 2832730),16.11.2026 10:44:05
+eur.loki.delve.office.com,Software/Technology; Computers and Internet,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:05
+catalog.sf.dl.delivery.mp.microsoft.com,Software Updates,zugelassen,ID 2832792,16.11.2026 10:44:07
+ntc-keyid-e4a8666f8f4c6d9c3932a948847780a6810c4213.microsoftaik.azure.net,Software/Technology; Computers and Internet,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:05
+reflector.defender.microsoft.com,Software/Technology; Computers and Internet,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:05
+ntc-keyid-e4a8666f8f4c6d9c3932a948847780a6810c4213-v2.microsoftaik.azure.net,Software/Technology; Computers and Internet,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:05
+vscode.download.prss.microsoft.com,Software Updates,zugelassen,Kein User verify notwendig (ID 2832730),16.11.2026 10:44:05
+rna-resource.acrobat.com,Software/Technology; Computers and Internet,zugelassen,ID 2862765,16.11.2026 10:44:42
+geo2.adobe.com,Software/Technology; Computers and Internet,zugelassen,Kein User verify notwendig (ID 2832730),16.11.2026 10:44:05
+acroipm2.adobe.com,Software/Technology; Computers and Internet,zugelassen,Kein User verify notwendig (ID 2832730),16.11.2026 10:44:05
+pafeblobprodam.blob.core.windows.net,Infrastructure,zugelassen,ID 2832792,16.11.2026 10:48:34
+bf.smartscreen.microsoft.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:46:18
+storeedge.microsoft.com,Software/Technology; Computers and Internet,zugelassen,Kein User verify notwendig (ID 2832730),16.11.2026 10:44:05
+pub-ent-dewc-02-t.trouter.teams.microsoft.com,Online Meetings,zugelassen,ID 2832792,16.11.2026 10:45:07
+use.typekit.net,Software/Technology; Computers and Internet,zugelassen,ID 2862765,16.11.2026 10:44:06
+p.typekit.net,Software/Technology; Computers and Internet,zugelassen,ID 2862765,16.11.2026 10:44:07
+nav-edge.smartscreen.microsoft.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:44:06
+ardownload3.adobe.com,Software Updates,zugelassen,ID 2832730,16.11.2026 10:44:06
+pkgs.dev.azure.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:44:06
+sstats.adobe.com,Software/Technology; Computers and Internet,zugelassen,ID 2862765,16.11.2026 10:53:20
+crs.cr.adobe.com,Software/Technology; Computers and Internet,zugelassen,ID 2832730,16.11.2026 10:52:37
+pub-ent-dewc-05-t.trouter.teams.microsoft.com,Online Meetings,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:06
+pub-ent-euwe-01-t.trouter.teams.microsoft.com,Online Meetings,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:06
+pub-ent-plce-13-t.trouter.teams.microsoft.com,Online Meetings,zugelassen,ID 2832792,16.11.2026 10:45:07
+pub-ent-euno-13-t.trouter.teams.microsoft.com,Online Meetings,zugelassen,ID 2832792,16.11.2026 10:45:07
+pub-ent-sece-01-t.trouter.teams.microsoft.com,Online Meetings,zugelassen,ID 2832792,16.11.2026 10:44:07
+pfr1-collabhubrtc.officeapps.live.com,Search Engines; Software/Technology; Computers and Internet; Search Engines and Portals,zugelassen,ID 2832792,16.11.2026 10:50:20
+api-fd.scheduler.teams.microsoft.com,Online Meetings,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:07
+officehub.nel.measure.office.net,SaaS and B2B,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:07
+westeurope-pd02.augloop.office.com,Software/Technology; Computers and Internet,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:07
+westeurope-pa01.augloop.office.com,Software/Technology; Computers and Internet,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:07
+tas02.cwsapp.update.microsoft.com,Software Updates,zugelassen,ID 2832792,16.11.2026 10:44:16
+devicelistenerprod.eudb.microsoft.com,Software/Technology; Computers and Internet,zugelassen,Kein User verify notwendig (ID 2832730),16.11.2026 10:44:07
+ntc-keyid-23f4e22ad3be374a449772954aa283aed752572e.microsoftaik.azure.net,Software/Technology; Computers and Internet,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:07
+ntc-keyid-23f4e22ad3be374a449772954aa283aed752572e-v2.microsoftaik.azure.net,Software/Technology; Computers and Internet,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:07
+3a068ef61453030c0f94e8cce331e06a.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:07
+2b80ee158c25bc82b6c01ea1538e7c2c.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:44:08
+tr-ecs-acdc.office.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:44:08
+insights.microsoft.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:44:08
+wcpstatic.microsoft.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:44:08
+learn.microsoft.com,Software/Technology; Computers and Internet,zugelassen,Kein User verify notwendig (ID 2832730),16.11.2026 10:44:08
+msedge.sf.dl.delivery.mp.microsoft.com,Software Updates,zugelassen,ID 2832792,16.11.2026 10:44:09
+kv601.prod.do.dsp.mp.microsoft.com,Software Updates,zugelassen,Kein User verify notwendig (ID 2832730),16.11.2026 10:44:08
+fd.prod.api.personalization.ideas.microsoft.com,Software/Technology; Computers and Internet,zugelassen,Kein User verify notwendig (ID 2832730),16.11.2026 10:44:08
+web.powerva.microsoft.com,Software/Technology; Computers and Internet,zugelassen,Kein User verify notwendig (ID 2832730),16.11.2026 10:44:08
+array519.prod.do.dsp.mp.microsoft.com,Software Updates,zugelassen,ID 2832792,16.11.2026 10:45:37
+shellprod.msocdn.com,Infrastructure,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:08
+s-ring.msedge.net,Infrastructure,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:08
+tr-tmc-afdmira.office.com,Software/Technology; Computers and Internet,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:08
+binaries.templates.cdn.office.net,SaaS and B2B,zugelassen,ID 2832792,16.11.2026 10:53:49
+metadata.templates.cdn.office.net,SaaS and B2B,zugelassen,ID 2832792,16.11.2026 10:44:09
+fd.api.iris.microsoft.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:54:13
+euc-collabrtc.officeapps.live.com,Search Engines; Software/Technology; Computers and Internet; Search Engines and Portals,zugelassen,ID 2832792,16.11.2026 10:53:34
+csp.microsoft.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:44:09
+go.microsoft.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:46:27
+download.microsoft.com,Software Updates,zugelassen,ID 2832792,16.11.2026 10:46:28
+app.powerbi.com,SaaS and B2B,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:09
+pbivisuals.powerbi.com,SaaS and B2B,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:09
+appsforoffice.microsoft.com,Software/Technology; Computers and Internet,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:09
+aadcdn.msftauth.net,Software/Technology; Computers and Internet,zugelassen,keine SAML-Authentication fuer den Browser-Start (ID 2818260),16.11.2026 10:44:09
+tr-tmc-mira.office.com,Software/Technology; Computers and Internet,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:09
+array512.prod.do.dsp.mp.microsoft.com,Software Updates,zugelassen,ID 2832792,16.11.2026 10:44:16
+array515.prod.do.dsp.mp.microsoft.com,Software Updates,zugelassen,ID 2832792,16.11.2026 10:44:16
+pub-ent-euno-05-t.trouter.teams.microsoft.com,Online Meetings,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:09
+tlu.dl.delivery.mp.microsoft.com,Software Updates,zugelassen,Kein User verify notwendig (ID 2832730),16.11.2026 10:44:09
+1d.tlu.dl.delivery.mp.microsoft.com,Software Updates,zugelassen,Kein User verify notwendig (ID 2832730),16.11.2026 10:44:09
+test.teamsopsplane.teams.internal.office.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:44:10
+collections.mp.microsoft.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:44:10
+purchase.mp.microsoft.com,Software/Technology; Computers and Internet,zugelassen,Kein User verify notwendig (ID 2832730),16.11.2026 10:44:10
+pub-ent-frce-02-t.trouter.teams.microsoft.com,Online Meetings,zugelassen,ID 2832792,16.11.2026 10:45:07
+pub-ent-plce-14-t.trouter.teams.microsoft.com,Online Meetings,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:10
+main.vscode-cdn.net,Infrastructure,zugelassen,Microsoft (ID 2832792),16.11.2026 10:56:54
+nf.smartscreen.microsoft.com,Software/Technology; Computers and Internet,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:10
+upload2.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:44:11
+atm-fp-direct.office.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:44:11
+ow1.res.office365.com,Online Document Sharing and Collaboration,zugelassen,ID 2832792,16.11.2026 10:44:11
+2ee79c6514484eb3a17d7b157ef6b5a3.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:44:11
+pub-ent-frce-05-t.trouter.teams.microsoft.com,Online Meetings,zugelassen,ID 2832792,16.11.2026 10:44:11
+pub-ent-dewc-11-t.trouter.teams.microsoft.com,Online Meetings,zugelassen,ID 2832792,16.11.2026 10:45:17
+northeurope-2.in.applicationinsights.azure.com,Software/Technology; Computers and Internet,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:11
+westus-0.in.applicationinsights.azure.com,Software/Technology; Computers and Internet,zugelassen,Microsoft (ID 2832792),16.11.2026 10:47:57
+array504.prod.do.dsp.mp.microsoft.com,Software Updates,zugelassen,ID 2832792,16.11.2026 10:44:16
+northeurope1-4.pushnp.svc.ms,Infrastructure,zugelassen,ID 2832792,16.11.2026 10:44:12
+euc-excel-telemetry.officeapps.live.com,Search Engines; Software/Technology; Computers and Internet; Search Engines and Portals,zugelassen,ID 2832792,16.11.2026 10:44:13
+westeurope-pd01.augloop.office.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:44:12
+puk2-collabhubrtc.officeapps.live.com,Search Engines; Software/Technology; Computers and Internet; Search Engines and Portals,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:11
+euc-common.online.office.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:49:51
+euc-excel.officeapps.live.com,Search Engines; Software/Technology; Computers and Internet; Search Engines and Portals,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:11
+array806.prod.do.dsp.mp.microsoft.com,Software Updates,zugelassen,ID 2832792,16.11.2026 10:44:16
+excelonline.nel.measure.office.net,SaaS and B2B,zugelassen,ID 2832792,16.11.2026 10:44:13
+common.online.office.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:47:54
+array520.prod.do.dsp.mp.microsoft.com,Software Updates,zugelassen,ID 2832792,16.11.2026 10:44:16
+4cbd3e60a6ea41eb8e4d53be36f63c08.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:12
+02d2b89d3225477e9d460ba0e77749bd.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:44:14
+pub-ent-sece-12-t.trouter.teams.microsoft.com,Online Meetings,zugelassen,ID 2832792,16.11.2026 10:45:07
+pub-ent-euwe-08-t.trouter.teams.microsoft.com,Online Meetings,zugelassen,ID 2832792,16.11.2026 10:45:17
+ps.azurewaf.microsoft.com,Software/Technology; Computers and Internet,zugelassen,Kein User verify notwendig (ID 2832730),16.11.2026 10:44:13
+pub-ent-euno-04-t.trouter.teams.microsoft.com,Online Meetings,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:13
+pub-ent-euwe-04-t.trouter.teams.microsoft.com,Online Meetings,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:13
+tr-tmc-geo.office.com,Software/Technology; Computers and Internet,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:13
+europe-api.fp.wd.microsoft.com,Software/Technology; Computers and Internet,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:13
+pub-ent-dewc-03-t.trouter.teams.microsoft.com,Online Meetings,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:13
+spo-ring.msedge.net,Infrastructure,zugelassen,ID 2832792,16.11.2026 10:44:14
+dual-s-ring-fallback.msedge.net,Infrastructure,zugelassen,ID 2832792,16.11.2026 10:44:14
+copilot.cloud.microsoft,Generative AI,zugelassen,ID 2832792,16.11.2026 10:44:14
+tr-ssc-mira.office.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:44:14
+teams-ring.msedge.net,Infrastructure,zugelassen,ID 2832792,16.11.2026 10:44:14
+ipv4probe.office.com,Software/Technology; Computers and Internet,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:14
+wac-ring.msedge.net,Infrastructure,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:14
+graph-next.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:44:16
+wac-ring-fallback.msedge.net,Infrastructure,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:14
+dual-s-ring.msedge.net,Infrastructure,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:14
+a-ring.msedge.net,Infrastructure,zugelassen,ID 2832792,16.11.2026 10:44:15
+1f071752747c438989b2377c691c8eb0.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:44:15
+acdc-direct.office.com,Software/Technology; Computers and Internet,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:14
+westeurope-pd04.augloop.office.com,Software/Technology; Computers and Internet,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:14
+peu3-collabhubrtc.officeapps.live.com,Search Engines; Software/Technology; Computers and Internet; Search Engines and Portals,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:14
+euc-powerpoint-telemetry.officeapps.live.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:44:15
+pub-ent-dewc-06-t.trouter.teams.microsoft.com,Online Meetings,zugelassen,ID 2832792,16.11.2026 10:44:15
+pub-ent-sece-05-t.trouter.teams.microsoft.com,Online Meetings,zugelassen,ID 2832792,16.11.2026 10:45:07
+pub-ent-euno-09-t.trouter.teams.microsoft.com,Online Meetings,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:15
+pub-ent-euwe-03-t.trouter.teams.microsoft.com,Online Meetings,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:15
+pub-ent-frce-13-t.trouter.teams.microsoft.com,Online Meetings,zugelassen,ID 2832792,16.11.2026 10:45:07
+security.microsoft.com,Software/Technology; Computers and Internet,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:15
+waconatm.officeapps.live.com,Search Engines; Software/Technology; Computers and Internet; Search Engines and Portals,zugelassen,ID 2832792,16.11.2026 10:44:52
+0cb46ec48ef94268aad197bb156caf70.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:44:16
+teams-ring-fallback.msedge.net,Infrastructure,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:15
+spov-ring-fallback.msedge.net,Infrastructure,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:15
+euc-powerpoint.officeapps.live.com,Search Engines; Software/Technology; Computers and Internet; Search Engines and Portals,zugelassen,ID 2832792,16.11.2026 10:44:16
+powerpointonline.nel.measure.office.net,SaaS and B2B,zugelassen,ID 2832792,16.11.2026 10:44:16
+oauth.officeapps.live.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:44:17
+ccc15c299b8a45f086470f3bdf938f12.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:44:16
+waconafd.officeapps.live.com,Search Engines; Software/Technology; Computers and Internet; Search Engines and Portals,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:16
+0538ad1d79a64d86a91e8e33ad7ce987.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:16
+array820.prod.do.dsp.mp.microsoft.com,Software Updates,zugelassen,ID 2832792,16.11.2026 10:44:19
+array815.prod.do.dsp.mp.microsoft.com,Software Updates,zugelassen,ID 2832792,16.11.2026 10:44:19
+886014aa37d14420b628009011453ec0.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:16
+pub-ent-plce-10-t.trouter.teams.microsoft.com,Online Meetings,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:16
+presence.teams.microsoft.com,Online Meetings,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:17
+pub-ent-euno-01-t.trouter.teams.microsoft.com,Online Meetings,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:17
+pub-ent-frce-04-t.trouter.teams.microsoft.com,Online Meetings,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:17
+weu-region.present.officeapps.live.com,Search Engines; Software/Technology; Computers and Internet; Search Engines and Portals,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:17
+f5ea6955cfe24e3199fcc589e506d352.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:17
+pub-ent-sece-14-t.trouter.teams.microsoft.com,Online Meetings,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:17
+northeurope1-3.pushnp.svc.ms,Infrastructure,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:17
+c14f87321cefbb70b0880c0eca77e421.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:44:18
+tr-officehomemcm-cafe.office.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:44:18
+c747c99fb47f5aacae74b69276222791.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:44:18
+outlook.live.com,Webmail; Organization Email; Web-based Email,zugelassen,ID 2832792,16.11.2026 10:44:18
+db2f0cb1b5ab88d57d39217db002cddb.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:18
+shell.cdn.office.net,SaaS and B2B,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:18
+tr-ecs-atm.office.com,Software/Technology; Computers and Internet,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:18
+tr-tmc-atm.office.com,Software/Technology; Computers and Internet,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:18
+tr-ooc-atm.office.com,Software/Technology; Computers and Internet,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:18
+d9f93feb751b4dc092ab8a74bff05f08.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:44:19
+2a3f81e6865d4a9c92bfd8b4fd8f4b6c.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:44:19
+ocws.officeapps.live.com,Search Engines; Software/Technology; Computers and Internet; Search Engines and Portals,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:18
+westeurope-pa00.augloop.office.com,Software/Technology; Computers and Internet,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:18
+pub-ent-frce-11-t.trouter.teams.microsoft.com,Online Meetings,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:18
+1c8e81df927746d3b23b5788aa80017e.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:44:20
+pfr2-collabhubrtc.officeapps.live.com,Search Engines; Software/Technology; Computers and Internet; Search Engines and Portals,zugelassen,ID 2832792,16.11.2026 10:44:19
+5094dd2985cd4527a2e12c3d96e33566.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:19
+content.lifecycle.office.net,SaaS and B2B,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:19
+a5a87fe1507d4f2d9d6bea2b55298e32.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:44:20
+pub-ent-sece-10-t.trouter.teams.microsoft.com,Online Meetings,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:19
+eu4-powerpoint-collab.officeapps.live.com,Search Engines; Software/Technology; Computers and Internet; Search Engines and Portals,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:19
+c3a45e56d82146358cfe374644fc1476.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:44:20
+westeurope-pd05.augloop.office.com,Software/Technology; Computers and Internet,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:19
+7bb74789ccfa408388569b688be04ad8.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:19
+5a4abcc42e324aacb234b1d989ea6546.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:44:21
+6153fd4c684dce6776781545b542e583.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:44:20
+pub-ent-euno-06-t.trouter.teams.microsoft.com,Online Meetings,zugelassen,ID 2832792,16.11.2026 10:44:20
+c6d3daaa4bf04443b8770a80a30a61d6.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:44:21
+pub-ent-frce-09-t.trouter.teams.microsoft.com,Online Meetings,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:20
+tr-eop-acdc.office.com,Software/Technology; Computers and Internet,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:20
+res-3.cdn.office.net,SaaS and B2B,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:20
+switzerlandnorth-pa00.augloop.office.com,Software/Technology; Computers and Internet,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:20
+c15f20556bb5c6bf435d9993cd9f6357.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:44:21
+tr-ooc-acdc.office.com,Software/Technology; Computers and Internet,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:20
+1e4bff5680d0f5b656bc2d37ebf9c41f.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:44:21
+2a416cbc4c9c31bbeb7bf7e19ec9e01a.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:44:21
+fe3cr.eu-db.delivery.mp.microsoft.com,Software Updates,zugelassen,ID 2832792,16.11.2026 10:44:22
+fe2cr.update.microsoft.com,Software Updates,zugelassen,ID 2832730,16.11.2026 10:44:40
+northeurope1-1.pushnp.svc.ms,Infrastructure,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:21
+tr-ooc-fs.office.com,Software/Technology; Computers and Internet,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:21
+1bf8232874db809a70de8a39c06e72c3.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:21
+6ea7561860d8672d8f511f2c62e50e3d.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:44:22
+cf312d9e8b63c148809e91613aab7d66.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:44:22
+bd0e39f4b32c62965cd4bc41a17fecb2.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:44:22
+5bae3d779470e7b1a7a99a21d6de9756.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:44:22
+573a2fded13a404d124d6fa01536dc6d.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:44:22
+dde14322dc28ff23b654419060d30ff1.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:44:23
+39b1d406ba493a2a4eea36cdf1631a0a.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:44:24
+a048d1b7cb28adea8118b33cf3c9ff26.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:44:23
+45f79a3904b94eb1b7be9b5c39a12f3a.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:22
+euc-powerpoint-collab.officeapps.live.com,Search Engines; Software/Technology; Computers and Internet; Search Engines and Portals,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:22
+a7f305f1b8433f85c41db9f231ad0fa4.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:44:23
+rna-v2-resource.acrobat.com,Software/Technology; Computers and Internet,zugelassen,ID 2862765,16.11.2026 10:44:59
+b78d575d7d361d87389251fc272af2a6.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:44:24
+pub-ent-plce-07-t.trouter.teams.microsoft.com,Online Meetings,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:23
+euc.pptsgs.officeapps.live.com,Search Engines; Software/Technology; Computers and Internet; Search Engines and Portals,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:23
+17453aaa2c752f65dd0aa0ecaf7dc2e4.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:44:24
+tr-officehomeccm-afd.office.com,Software/Technology; Computers and Internet,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:23
+2e5adb6bd1713b91b7bd61e62e939700.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:44:24
+pub-ent-euno-07-t.trouter.teams.microsoft.com,Online Meetings,zugelassen,ID 2832792,16.11.2026 10:45:17
+appsource.powerbi.com,SaaS and B2B,zugelassen,ID 2832792,16.11.2026 10:44:24
+api.powerbi.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:44:25
+f865e5d69d8f4685a35ec98dcc62035b.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:24
+array508.prod.do.dsp.mp.microsoft.com,Software Updates,zugelassen,ID 2832792,16.11.2026 10:44:40
+54baaa7973614b0ca40662d2a7ea4ec9.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:44:25
+pub-ent-sece-07-t.trouter.teams.microsoft.com,Online Meetings,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:24
+login.microsoft.com,Software/Technology; Computers and Internet,zugelassen,ID 2818260,16.11.2026 10:44:25
+pub-ent-frce-12-t.trouter.teams.microsoft.com,Online Meetings,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:24
+gateway-eu.az.relay.teams.cloud.microsoft,Online Meetings,zugelassen,ID 2832792,16.11.2026 10:44:40
+pub-ent-plce-04-t.trouter.teams.microsoft.com,Online Meetings,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:25
+pub-ent-sece-03-t.trouter.teams.microsoft.com,Online Meetings,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:25
+pub-ent-euno-08-t.trouter.teams.microsoft.com,Online Meetings,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:25
+pub-ent-dewc-14-t.trouter.teams.microsoft.com,Online Meetings,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:25
+crl2.microsoft.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:44:26
+flw.teams.cloud.microsoft,Online Meetings,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:25
+array802.prod.do.dsp.mp.microsoft.com,Software Updates,zugelassen,ID 2832792,16.11.2026 10:44:27
+media.akamai.odsp.cdn.office.net,SaaS and B2B,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:25
+tr-ooc-atmv6.office.com,Software/Technology; Computers and Internet,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:25
+cdd351f152cfe00c0f932804a13ea269.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:44:27
+pub-ent-euno-12-t.trouter.teams.microsoft.com,Online Meetings,zugelassen,ID 2832792,16.11.2026 10:44:26
+api.interfaces.records.teams.microsoft.com,Online Meetings,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:26
+pub-ent-dewc-12-t.trouter.teams.microsoft.com,Online Meetings,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:26
+francecentral-pb01.augloop.office.com,Software/Technology; Computers and Internet,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:26
+eudb.ris.api.iris.microsoft.com,Software/Technology; Computers and Internet,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:26
+pub-ent-euno-11-t.trouter.teams.microsoft.com,Online Meetings,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:26
+pub-ent-plce-01-t.trouter.teams.microsoft.com,Online Meetings,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:26
+whiteboard.microsoft.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:44:40
+pub-ent-dewc-09-t.trouter.teams.microsoft.com,Online Meetings,zugelassen,ID 2832792,16.11.2026 10:44:27
+prod.appsuggestions.teams.cloud.microsoft,Online Meetings,zugelassen,ID 2832792,16.11.2026 10:44:27
+pub-ent-euno-10-t.trouter.teams.microsoft.com,Online Meetings,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:27
+northeurope0-0.pushfp.svc.ms,Infrastructure,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:27
+da.xboxservices.com,Infrastructure,zugelassen,All Internet access (ID 2816285),16.11.2026 10:44:27
+cxcs.cdn.office.net,SaaS and B2B,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:27
+e77af2a3ad2b4163a372a71d4047e207.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:44:29
+pub-ent-euno-03-t.trouter.teams.microsoft.com,Online Meetings,zugelassen,ID 2832792,16.11.2026 10:44:28
+5797095ae8e64689ac3d1be9c02c053b.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:44:28
+pub-ent-euwe-14-t.trouter.teams.microsoft.com,Online Meetings,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:28
+sync-tm.everesttech.net,Advertisements,zugelassen,ApplikationsRules (ID 2862765),16.11.2026 10:44:28
+array812.prod.do.dsp.mp.microsoft.com,Software Updates,zugelassen,ID 2832792,16.11.2026 10:44:40
+francecentral-pb05-pub.augloop.office.com,Software/Technology; Computers and Internet,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:28
+pub-ent-euwe-07-t.trouter.teams.microsoft.com,Online Meetings,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:28
+4e504aa096cc4666b93f782d28c3405d.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:28
+pub-ent-euwe-12-t.trouter.teams.microsoft.com,Online Meetings,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:28
+pub-ent-frce-08-t.trouter.teams.microsoft.com,Online Meetings,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:28
+eu2a-powerpoint-collab.officeapps.live.com,Search Engines; Software/Technology; Computers and Internet; Search Engines and Portals,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:29
+dc93ae727c39455d964a708581ce341d.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:44:30
+c554bcb0eb173eade6e8bfd109ba367e.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:29
+marketplace.visualstudio.com,Software/Technology; Computers and Internet,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:29
+pub-ent-dewc-08-t.trouter.teams.microsoft.com,Online Meetings,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:29
+pub-ent-euwe-13-t.trouter.teams.microsoft.com,Online Meetings,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:29
+pub-ent-plce-02-t.trouter.teams.microsoft.com,Online Meetings,zugelassen,ID 2832792,16.11.2026 10:44:30
+8f74ee10ae9a42649cf72ad93bc5eb22.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:44:30
+northeurope1-2.pushnp.svc.ms,Infrastructure,zugelassen,ID 2832792,16.11.2026 10:44:30
+userlike-cdn-widgets.s3-eu-west-1.amazonaws.com,Cloud and Data Centers,geblockt,Webfilter_SVS (ID 2838182),16.11.2026 10:44:30
+d6c7844712a048ecbdc06b845c1ca6b4.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:30
+eda4bed4916c472ab38409a21069566a.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:44:31
+97cdb41f8246a2cc6a93539864dd953f.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:44:31
+tr-eop-atm.office.com,Software/Technology; Computers and Internet,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:30
+d9fe0821866f3154e2c96e2de96b4b9f.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:44:32
+eu2s-powerpoint-collab.officeapps.live.com,Search Engines; Software/Technology; Computers and Internet; Search Engines and Portals,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:30
+0c3e57d3c6461704d0018dc4c23422e6.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:44:33
+array819.prod.do.dsp.mp.microsoft.com,Software Updates,zugelassen,ID 2832792,16.11.2026 10:44:33
+array811.prod.do.dsp.mp.microsoft.com,Software Updates,zugelassen,ID 2832792,16.11.2026 10:44:33
+d4c84876bde446d6878e8a0a4d3df7dd.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:31
+ddcba1f68dd545fcadef45b555c50aa1.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:44:32
+teams.live.com,Online Meetings,zugelassen,ID 2832792,16.11.2026 10:44:32
+pptservicescast.officeapps.live.com,Search Engines; Software/Technology; Computers and Internet; Search Engines and Portals,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:32
+fcb23f36e09d4c2b966f126559bbca05.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:44:33
+fa000000002.resources.office.net,SaaS and B2B,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:32
+cdn.aiinfrastructure.teams.microsoft.com,Online Meetings,zugelassen,ID 2832792,16.11.2026 10:44:33
+cdn.hubblecontent.osi.office.net,SaaS and B2B,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:32
+uo8nzh7b32.execute-api.eu-central-1.amazonaws.com,Cloud and Data Centers,geblockt,Webfilter_SVS (ID 2838182),16.11.2026 10:44:33
+api.addins.omex.office.net,SaaS and B2B,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:33
+fa000000136.resources.office.net,SaaS and B2B,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:33
+bec0b01f60b042baabbdcd908e59de52.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:44:34
+bat.bing.com,Advertisements,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:33
+75f73a34d007493e90c652dd8af62e8e.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:33
+e618eea7e5a541c9beadfe8b296b80d0.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:44:34
+support.office.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:44:34
+e9d334b81fad446aa7a4b6a9e66f1e9b.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:44:34
+uhf.microsoft.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:44:37
+mem.gfx.ms,Infrastructure,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:34
+logincdn.msauth.net,Business Services; Business and Industry,zugelassen,ID 2818260,16.11.2026 10:44:35
+support.microsoft.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:44:34
+pub-ent-dewc-07-t.trouter.teams.microsoft.com,Online Meetings,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:34
+roaming.officeapps.live.com,Search Engines; Software/Technology; Computers and Internet; Search Engines and Portals,zugelassen,ID 2832792,16.11.2026 10:44:35
+collections.md.mp.microsoft.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:44:35
+messaging.lifecycle.office.com,Software/Technology; Computers and Internet,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:35
+logging.diagnostics.office.com,Software/Technology; Computers and Internet,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:35
+cjs.diagnostics.office.com,Software/Technology; Computers and Internet,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:35
+autodiscover.svdgmbhat.mail.onmicrosoft.com,Organization Email,zugelassen,ID 2832792,16.11.2026 10:44:36
+trustlist.adobe.com,Software/Technology; Computers and Internet,zugelassen,ID 2832730,16.11.2026 10:44:36
+dpm.demdex.net,Business Services; Business and Industry,geblockt,Webfilter_SVS (ID 2838182),16.11.2026 10:44:36
+fa000000005.resources.office.net,SaaS and B2B,zugelassen,ID 2832792,16.11.2026 10:44:36
+09e3cead49bd4069bb8f2bfd7685b8ca.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:44:37
+51b3d8fc0e324f87bf803c1681d28149.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:36
+westeurope-pa00-pub.augloop.office.com,Software/Technology; Computers and Internet,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:36
+westeurope-pd03-pub.augloop.office.com,Software/Technology; Computers and Internet,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:36
+9de30e709bf2428fabbc32d6a2f0e787.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:36
+portal.azure.com,Cloud and Data Centers,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:36
+bcae0ddbb6124d02a2cc2b0633d4ff12.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:44:37
+pub-ent-euwe-05-t.trouter.teams.microsoft.com,Online Meetings,zugelassen,ID 2832792,16.11.2026 10:44:37
+wdcp.microsoft.com,Software Updates,zugelassen,ID 2832792,16.11.2026 10:44:40
+025b137aa7484682b9d8be34e36903b1.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:44:37
+northeurope-pc03-pub.augloop.office.com,Software/Technology; Computers and Internet,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:37
+pub-ent-sece-11-t.trouter.teams.microsoft.com,Online Meetings,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:37
+30da55d474104441836921ff91c76f23.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:37
+006953ee2ef0419292a7883deeb62f84.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:44:38
+b9c1ff2df7134f1981d6e8d8a63c133b.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:37
+c02c4361e3be48bf9b4db5181a2f6694.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:44:38
+pub-ent-plce-03-t.trouter.teams.microsoft.com,Online Meetings,zugelassen,ID 2832792,16.11.2026 10:44:38
+ae0dd70a013e4ed7908677cbf0a84231.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:44:38
+cdn-dynmedia-1.microsoft.com,Software/Technology; Computers and Internet,zugelassen,Kein User verify notwendig (ID 2832730),16.11.2026 10:44:38
+catalogapi.azure.com,Software/Technology; Computers and Internet,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:38
+d889a3c0c70c4625a3393c688f7789d3.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:38
+pub-ent-euno-14-t.trouter.teams.microsoft.com,Online Meetings,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:38
+48368a4449574c8d828016af28bbc377.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:44:39
+gateway-eu.msit.az.relay.teams.cloud.microsoft,Online Meetings,zugelassen,ID 2832792,16.11.2026 10:44:53
+aa39e37b574442efadd82711a80e07ab.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:44:39
+westeurope-pd01-pub.augloop.office.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:44:39
+statics.teams.cdn.live.net,Infrastructure,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:38
+7e4d67eee6dc4957bd8532ce384c4c30.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:44:40
+pub-ent-frce-01-t.trouter.teams.microsoft.com,Online Meetings,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:39
+msedgeextensions.sf.tlu.dl.delivery.mp.microsoft.com,Software Updates,zugelassen,Kein User verify notwendig (ID 2832730),16.11.2026 10:44:39
+centralus-2.in.applicationinsights.azure.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:44:40
+rt.services.visualstudio.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:44:40
+fa000000110.resources.office.net,SaaS and B2B,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:39
+218042a62db7491a89afd8c53eeca99c.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:39
+tasks.teams.microsoft.com,Online Meetings,zugelassen,ID 2832792,16.11.2026 10:44:40
+tasks.office.com,Software/Technology; Computers and Internet,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:40
+ff418ca1cd7213609428bea09735aef6.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:44:41
+5166e780fce24665af9305a4c6173a62.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:40
+ee32915773934c16bc1d1b84a5d78d29.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:44:41
+b833a4a878b74733bc40e888f9de09a7.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:44:41
+array509.prod.do.dsp.mp.microsoft.com,Software Updates,zugelassen,ID 2832792,16.11.2026 10:44:42
+array501.prod.do.dsp.mp.microsoft.com,Software Updates,zugelassen,ID 2832792,16.11.2026 10:44:42
+array510.prod.do.dsp.mp.microsoft.com,Software Updates,zugelassen,ID 2832792,16.11.2026 10:44:42
+pub-ent-frce-10-t.trouter.teams.microsoft.com,Online Meetings,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:41
+northeurope1-mediap.svc.ms,Infrastructure,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:41
+fa000000193.resources.office.net,SaaS and B2B,zugelassen,ID 2832792,16.11.2026 10:44:42
+puk1-collabhubrtc.officeapps.live.com,Search Engines; Software/Technology; Computers and Internet; Search Engines and Portals,zugelassen,ID 2832792,16.11.2026 10:47:05
+8b452b829b1a4152826c7f218d32d46e.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:44:42
+sqm.telemetry.microsoft.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:45:17
+a5f5630c37e643cd9a4e18c9ffd543bf.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:44:43
+installer.teams.static.microsoft,Infrastructure,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:42
+114c3399448d4071badc448b24c4473c.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:44:43
+msedgedevtools.microsoft.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:44:43
+westeurope-pa01-pub.augloop.office.com,Software/Technology; Computers and Internet,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:42
+adobedc.demdex.net,Software/Technology; Computers and Internet,zugelassen,ID 2816285,16.11.2026 10:44:44
+logs.appsource.microsoft.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:44:43
+marketplace.microsoft.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:44:44
+main.prod.marketplacereviews.azure.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:44:44
+peu2-collabhubrtc.officeapps.live.com,Search Engines; Software/Technology; Computers and Internet; Search Engines and Portals,zugelassen,ID 2832792,16.11.2026 10:44:44
+euc-word-telemetry.officeapps.live.com,Search Engines; Software/Technology; Computers and Internet; Search Engines and Portals,zugelassen,ID 2832792,16.11.2026 10:49:51
+euc-word-edit.officeapps.live.com,Search Engines; Software/Technology; Computers and Internet; Search Engines and Portals,zugelassen,ID 2832792,16.11.2026 10:47:28
+pub-ent-dewc-10-t.trouter.teams.microsoft.com,Online Meetings,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:44
+stwlciptstruct828prod.blob.core.windows.net,Infrastructure,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:44
+northeurope1-0.pushnp.svc.ms,Infrastructure,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:44
+7df0629f247a4cd4a5e69e8090e9a6b6.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:44:45
+pub-ent-frce-03-t.trouter.teams.microsoft.com,Online Meetings,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:44
+ams-pageview-public.s3.amazonaws.com,Cloud and Data Centers,geblockt,Webfilter_SVS (ID 2838182),16.11.2026 10:44:45
+f8964151d59349b985972245d7db7938.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:44:46
+8e9b38751477478e3d629af13135fa3e.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:44:45
+app-edge.smartscreen.microsoft.com,Software/Technology; Computers and Internet,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:45
+929f32b262474dacb5bd4bdbccf6d5f6.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:44:46
+pub-ent-plce-11-t.trouter.teams.microsoft.com,Online Meetings,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:45
+e81b94ee6fc46de9f6e586612f2debf7.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:45
+62e5477263f633c49c80d82ca370f1bc.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:44:47
+9c1517f58f425120cb99773e54c78210.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:44:46
+tr-ofc-afdwac.office.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:44:46
+axelspringerse.demdex.net,Software/Technology; Computers and Internet,geblockt,Webfilter_SVS (ID 2838182),16.11.2026 10:44:46
+cm.everesttech.net,Advertisements,zugelassen,All Internet access (ID 2816285),16.11.2026 10:44:46
+aadcdn.msftauthimages.net,Infrastructure,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:46
+forms.office.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:44:47
+6746b84dbebd4d4d9fd1abb068c3dc85.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:46
+74f26a95ea2646f392a98ef90144c385.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:44:47
+5ab8d7d37de74bf0a3b88b7a21d71fb1.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:44:47
+7039158b33c34f9896733861ecb12fc9.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:44:47
+943c771eb84c4ad498ab3c57606c3ea1.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:44:48
+522227545bfcc0cb31efdfdde71827c2.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:47
+coop.msauth.net,Business Services; Business and Industry,zugelassen,ID 2818260,16.11.2026 10:44:48
+e9549c9d84044aeb99c06896be8dcca0.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:47
+da2267334f3e49bb8b7645a4b71bd980.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:44:48
+eu1a-word-collab.officeapps.live.com,Search Engines; Software/Technology; Computers and Internet; Search Engines and Portals,zugelassen,ID 2832792,16.11.2026 10:44:48
+21e62c9f8472fd575930b1a84ca85b18.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:44:48
+playtime.tubemogul.com,Streaming Video,zugelassen,ID 2862765,16.11.2026 10:44:49
+statsf-tm.everesttech.net,Advertisements,zugelassen,ApplikationsRules (ID 2862765),16.11.2026 10:44:48
+rtb-lb-event-adcloud-prod-eu-west-1-tm.everesttech.net,Advertisements,zugelassen,ApplikationsRules (ID 2862765),16.11.2026 10:44:48
+displayf-tm.everesttech.net,Advertisements,zugelassen,ApplikationsRules (ID 2862765),16.11.2026 10:44:48
+affaaf467fa0448c8d05ba512017e8d8.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:44:49
+wordonline.nel.measure.office.net,SaaS and B2B,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:48
+e-tec-2025-eu-central.s3.eu-central-1.amazonaws.com,Cloud and Data Centers,geblockt,Webfilter_SVS (ID 2838182),16.11.2026 10:44:49
+payments-eu.amazon.com,Ecommerce/Shopping; Shopping,zugelassen,ID 2816285,16.11.2026 10:44:49
+5996e1cf543f4d85889ccfdd0c4b01fb.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:44:49
+0d701509ba6343b7a2b1918a7b272def.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:44:49
+msedge.f.tlu.dl.delivery.mp.microsoft.com,Software Updates,zugelassen,Kein User verify notwendig (ID 2832730),16.11.2026 10:44:49
+ch-prod.asyncgw.teams.microsoft.com,Online Meetings,zugelassen,Kein User verify notwendig (ID 2832730),16.11.2026 10:44:49
+euc-word-collab.officeapps.live.com,Search Engines; Software/Technology; Computers and Internet; Search Engines and Portals,zugelassen,ID 2832792,16.11.2026 10:53:36
+e42df82339a270ca48416b431fbfe6d7.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:44:50
+shared.officeapps.live.com,Search Engines; Software/Technology; Computers and Internet; Search Engines and Portals,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:49
+fa000000006.resources.office.net,SaaS and B2B,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:49
+euc-word-view.officeapps.live.com,Search Engines; Software/Technology; Computers and Internet; Search Engines and Portals,zugelassen,ID 2832792,16.11.2026 10:44:50
+wise-m.public.cdn.office.net,SaaS and B2B,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:49
+wise.public.cdn.office.net,SaaS and B2B,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:49
+cb275beccb2d44c5bb1668490f5127ed.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:44:51
+5bb95c863cc94de5968702fe228380ee.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:44:51
+0d8051be35ca46669de465ac35dd2141.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:44:50
+automatedirstrprdweu3.blob.core.windows.net,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:44:50
+359d09cef0377b5ad9d9bcd03226e0de.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:50
+48ea193a26df41a3ab88774446016f27.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:44:51
+fs.microsoft.com,Software/Technology; Computers and Internet,zugelassen,Kein User verify notwendig (ID 2832730),16.11.2026 10:44:50
+139cf27c59824115bf63e7815c944cd3.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:44:51
+fa000000116.resources.office.net,SaaS and B2B,zugelassen,ID 2832792,16.11.2026 10:44:51
+5736a5bdad564bbfbe8bd92d7993a6f6.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:44:52
+data-edge.smartscreen.microsoft.com,Software/Technology; Computers and Internet,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:51
+189001e44fcf603a3f3d3b35beefe97e.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:44:52
+8f3e330f52cb7ba73b558c92a4d0a1e6.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:51
+westeurope-pd02-pub.augloop.office.com,Software/Technology; Computers and Internet,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:51
+158d0055f3424bb257cbf3e14aa9c320.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:51
+28b6dfa06fce380e0cff9600fdaac7b4.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:44:53
+nav.smartscreen.microsoft.com,Software/Technology; Computers and Internet,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:51
+c1.microsoft.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:44:55
+target.microsoft.com,Software/Technology; Computers and Internet,zugelassen,Kein User verify notwendig (ID 2832730),16.11.2026 10:44:52
+s3.amazonaws.com,Cloud and Data Centers,geblockt,Webfilter_SVS (ID 2838182),16.11.2026 10:44:52
+westeurope-pd04-pub.augloop.office.com,Software/Technology; Computers and Internet,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:52
+a485ba1a0a4c4817bca1146c9091b2d9.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:44:53
+sdo-prod-templates.s3-eu-west-1.amazonaws.com,Software/Technology; Computers and Internet,geblockt,Webfilter_SVS (ID 2838182),16.11.2026 10:44:52
+pub-ent-euno-02-t.trouter.teams.microsoft.com,Online Meetings,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:52
+dl-edge.smartscreen.microsoft.com,Software/Technology; Computers and Internet,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:52
+61e7b42cec344ef5ac012dc1b0726189.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:44:53
+9926057553784a3d9bf2f174c3797107.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:44:53
+purview.microsoft.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:44:53
+19843772c9784398b0f2728b7980fd52.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:53
+s3.eu-central-1.amazonaws.com,Cloud and Data Centers,geblockt,Webfilter_SVS (ID 2838182),16.11.2026 10:44:54
+401c4b58bbd34cfea501827bcb9125ad.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:53
+b3c5fa24e5054f3693652aa168bdec8a.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:53
+view.officeapps.live.com,Search Engines; Software/Technology; Computers and Internet; Search Engines and Portals,zugelassen,ID 2832792,16.11.2026 10:44:54
+storage.live.com,File Storage; Online Storage and Backup,zugelassen,ID 2832792,16.11.2026 10:44:54
+js.live.net,Search Engines; Search Engines and Portals,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:53
+euro03.azure-devices.net,Internet of Things,zugelassen,ID 2832792,16.11.2026 10:44:54
+array813.prod.do.dsp.mp.microsoft.com,Software Updates,zugelassen,ID 2832792,16.11.2026 10:44:55
+pub-ent-plce-09-t.trouter.teams.microsoft.com,Online Meetings,zugelassen,ID 2832792,16.11.2026 10:44:54
+config.office.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:44:54
+res-h3.public.cdn.office.net,SaaS and B2B,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:54
+array606.prod.do.dsp.mp.microsoft.com,Software Updates,zugelassen,ID 2832792,16.11.2026 10:44:55
+array612.prod.do.dsp.mp.microsoft.com,Software Updates,zugelassen,ID 2832792,16.11.2026 10:44:55
+array616.prod.do.dsp.mp.microsoft.com,Software Updates,zugelassen,ID 2832792,16.11.2026 10:44:55
+58c15e85155a4c6f96097ad21d5fffda.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:54
+ae818928cf6d49b1b7b6098e64a69e7c.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:44:55
+sdoreports.s3.eu-central-1.amazonaws.com,Cloud and Data Centers,geblockt,Webfilter_SVS (ID 2838182),16.11.2026 10:44:56
+rtd-tm.everesttech.net,Advertisements,zugelassen,ID 2816285,16.11.2026 10:44:55
+36051b490df79582f66639037fb17a0b.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:44:55
+a557f846afb3177e2f6e418aa01a2d2a.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:44:56
+2ac626a12bce417ebf6f43cc5de7ac48.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:55
+disc601.prod.do.dsp.mp.microsoft.com,Software Updates,zugelassen,Kein User verify notwendig (ID 2832730),16.11.2026 10:44:55
+francecentral-pb01-pub.augloop.office.com,Software/Technology; Computers and Internet,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:55
+c2c90a0334094db6963f5e1cdf498847.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:44:56
+1ca1de1167ae41ea9a46cdb428ce10cc.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:44:56
+mastercard.demdex.net,Software/Technology; Computers and Internet,geblockt,Webfilter_SVS (ID 2838182),16.11.2026 10:44:55
+da7d7d8ff4f64e3dbc1a586733039b00.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:44:56
+ff1-collabrtc.officeapps.live.com,Search Engines; Software/Technology; Computers and Internet; Search Engines and Portals,zugelassen,ID 2832792,16.11.2026 10:44:56
+cba1620f0db4428aadc43bc545839951.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:44:57
+04cc91db697d43f2a5940fcb5260de75.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:56
+0cdf8a8987e34e06b1d6aed3d9894c36.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:44:57
+be65310342dc4704b1f26c31fdcfb850.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:56
+7c0a945db55b4d0aa1ac368c9442e022.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:44:57
+e508efb24298402eae1725de40823b38.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:56
+b8dce84afd84445bbf4d391b0c7a01cf.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:44:57
+westeurope-pd05-pub.augloop.office.com,Software/Technology; Computers and Internet,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:56
+chat.svc.m365.cloud.microsoft,Software/Technology; Computers and Internet; Generative AI,zugelassen,ID 2832792,16.11.2026 10:44:57
+www.microsoft365.com,Software/Technology; Computers and Internet,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:57
+59788750e73f4aec9d4d12bfd27629ae.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:57
+17d49ce5689d4cbbb25dcf2d8d8def49.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:57
+2289dfc0c9124e52a9796d9fac16ed2f.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:57
+northeurope-pc04-pub.augloop.office.com,Software/Technology; Computers and Internet,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:57
+868bc97d29614bee967d243a1b072f4f.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:44:58
+d429762055a1a0b36270b3cfd85e5cfa.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:44:58
+18582170cafa42cba0fbdc0cc5f2f302.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:57
+management.azure.com,Software/Technology; Computers and Internet,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:57
+api.purview-service.microsoft.com,Software/Technology; Computers and Internet,zugelassen,Kein User verify notwendig (ID 2832730),16.11.2026 10:44:57
+cdn.prod.ext.web.purview.azure.com,Software/Technology; Computers and Internet,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:57
+manifest.prod.ext.web.purview.azure.com,Software/Technology; Computers and Internet,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:57
+8ec534cb8869422893e1867fe82dc1f9.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:44:58
+9574f23195e34a7682a24bcc09ea4dfb.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:44:58
+829e16263fa141d3938e1e710c4087fc.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:44:58
+40400fe0aeb543fcaa6d13412c76bc34.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:44:58
+0e678600bc824f54a16f251cd26edf7a.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:58
+51a0f90422fd4a80bc5b8fbdbb6a6337.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:58
+e4333d48ea394b3880783aa9e0208ec3.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:44:59
+5b1f478a724e47daaaf4fda6f69989f5.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:44:59
+pub-ent-frce-14-t.trouter.teams.microsoft.com,Online Meetings,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:58
+dd47767975804628a21532bfe333e61a.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:44:59
+eb7d76ffab044db6868d3975f0a25cfd.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:45:00
+fdf5f1885dca48998e0f9cbd945f8fcb.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:45:00
+pub-ent-sece-04-t.trouter.teams.microsoft.com,Online Meetings,zugelassen,ID 2832792,16.11.2026 10:44:59
+array518.prod.do.dsp.mp.microsoft.com,Software Updates,zugelassen,ID 2832792,16.11.2026 10:47:03
+63c13637d5b2486da4428a8af55117a7.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:59
+3ba8eecab6e0467fb62b5606eb9b238a.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:59
+entra.microsoft.com,Software/Technology; Computers and Internet,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:59
+main.iam.ad.ext.azure.com,Software/Technology; Computers and Internet,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:59
+support.iam.ad.azure.com,Software/Technology; Computers and Internet,zugelassen,Microsoft (ID 2832792),16.11.2026 10:44:59
+hosting.portal.azure.net,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:45:00
+reactblade.portal.azure.net,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:45:00
+sandbox-2.reactblade.portal.azure.net,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:45:00
+api.securitycopilot.microsoft.com,Software/Technology; Computers and Internet,zugelassen,Kein User verify notwendig (ID 2832730),16.11.2026 10:45:00
+sandbox-1.reactblade.portal.azure.net,Software/Technology; Computers and Internet,zugelassen,Microsoft (ID 2832792),16.11.2026 10:45:00
+e5bd143fb2af44b6b39f65fc1c2b60f5.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:45:01
+eeefbf19d0e9433baccfef547f93eb15.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,Microsoft (ID 2832792),16.11.2026 10:45:00
+francecentral-pa02-pub.augloop.office.com,Software/Technology; Computers and Internet,zugelassen,Microsoft (ID 2832792),16.11.2026 10:45:00
+294955ba30a74909855fc29d3b387a2f.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,Microsoft (ID 2832792),16.11.2026 10:45:00
+3d295f5db9403370d2f8d55f3a1c2b3c.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,Microsoft (ID 2832792),16.11.2026 10:45:00
+3928cabb45044825ba773fb6208a7b20.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,Microsoft (ID 2832792),16.11.2026 10:45:00
+17de7e7f4e474b2a9eff91eab03efeee.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:45:01
+edc772444d3940beaa2c14be5ec28ff1.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:45:02
+d5b9c1c23a0243e9b3c0186b6b80ca96.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:45:01
+266697445eee8d5415db507bd9a7697e.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:45:02
+747e86e5cebd403481bd0b938257ad6e.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,Microsoft (ID 2832792),16.11.2026 10:45:00
+ef68fc89bda1cd1b67fb41b3d705a657.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,Microsoft (ID 2832792),16.11.2026 10:45:00
+6b9a5fb49e3a4c04a608ff668c5b4784.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:45:01
+21f025f6dded41dbaba8aa158b6c472a.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:45:01
+12c6a5b4ff765ba2c48e2f5f0a781a67.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:45:01
+d19cc1b8cd184d568c6f1ef850904c0d.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:45:01
+5f4340ee531e406c842ae0d667329929.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,Microsoft (ID 2832792),16.11.2026 10:45:01
+409c671841834fca9a314448f8fc27c8.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:45:02
+b8c3e0fef4cb4152bfb7c00ea3186a1b.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,Microsoft (ID 2832792),16.11.2026 10:45:01
+6c5f9b5dcafb4304baa2017ca3f944d1.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:45:03
+ef55ef5962564ad58a3954b7d4eb6ced.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:45:02
+9afa9f75039146cf9173e35f95b12643.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,Microsoft (ID 2832792),16.11.2026 10:45:01
+francecentral-pa04-pub.augloop.office.com,Software/Technology; Computers and Internet,zugelassen,Microsoft (ID 2832792),16.11.2026 10:45:01
+s3-eu-west-1.amazonaws.com,Cloud and Data Centers,geblockt,Webfilter_SVS (ID 2838182),16.11.2026 10:45:02
+020c0d8a2db64da8ad944f0b466991c7.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:45:05
+edge.adobedc.net,Software/Technology; Computers and Internet,zugelassen,All Internet access (ID 2816285),16.11.2026 10:45:02
+ogb.demdex.net,Software/Technology; Computers and Internet,geblockt,Webfilter_SVS (ID 2838182),16.11.2026 10:45:02
+2c415d0a0dea474482f8e4d5c443da54.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:45:03
+11bb264713d201a5c00bc70af437dc0c.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:45:03
+pub-ent-euwe-10-t.trouter.teams.microsoft.com,Online Meetings,zugelassen,Microsoft (ID 2832792),16.11.2026 10:45:02
+5153ace882144d21bf242ecf266d686f.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:45:03
+api.diagnostics.office.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:45:03
+4c2c563a7c364622bcb8384f60be5fbb.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:45:03
+92e441754c77e2a013e5201464fccbb1.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:45:04
+francecentral-pb04-pub.augloop.office.com,Software/Technology; Computers and Internet,zugelassen,Microsoft (ID 2832792),16.11.2026 10:45:03
+fe3cr.delivery.mp.microsoft.com,Software Updates,zugelassen,ID 2832730,16.11.2026 10:47:16
+efed61799854c4dac4bf259dc1a7ccde.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,Microsoft (ID 2832792),16.11.2026 10:45:03
+504bd2b7505b2ff582c52b1b0f797ea2.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:45:04
+780ca051348246be92889b5be278596e.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:45:04
+fd80be800b364948afe7d3cf465e5e3a.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:45:04
+r3-api.flightproxy.teams.microsoft.com,Online Meetings,zugelassen,Microsoft (ID 2832792),16.11.2026 10:45:03
+pods.officeapps.live.com,Search Engines; Software/Technology; Computers and Internet; Search Engines and Portals,zugelassen,ID 2832792,16.11.2026 10:45:04
+uks-region.present.officeapps.live.com,Search Engines; Software/Technology; Computers and Internet; Search Engines and Portals,zugelassen,Microsoft (ID 2832792),16.11.2026 10:45:04
+uks-dc.pods.officeapps.live.com,Search Engines; Software/Technology; Computers and Internet; Search Engines and Portals,zugelassen,Microsoft (ID 2832792),16.11.2026 10:45:04
+fa000000196.resources.office.net,SaaS and B2B,zugelassen,Microsoft (ID 2832792),16.11.2026 10:45:04
+04cf82487c13403894becbc2009552b9.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,Microsoft (ID 2832792),16.11.2026 10:45:04
+ddd0663a2e564f54af9458dcddb74a68.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:45:05
+1f2fc6a174e8445cb28388948adb8eec.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:45:06
+outlook-1.cdn.office.net,SaaS and B2B,zugelassen,Microsoft (ID 2832792),16.11.2026 10:45:04
+carbonify-prod-tc-asset-uploads.s3-eu-central-1.amazonaws.com,Cloud and Data Centers,zugelassen,No-SSL-Intercept (ID 2832734),16.11.2026 10:45:04
+carbonify-prod-tc-asset-uploads.s3.amazonaws.com,Cloud and Data Centers,geblockt,Webfilter_SVS (ID 2838182),16.11.2026 10:45:05
+kurier-static.s3.eu-central-1.amazonaws.com,Business Services; Business and Industry,geblockt,Webfilter_SVS (ID 2838182),16.11.2026 10:45:05
+db7a35086a87444cbea8ed6924019564.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:45:05
+5eb33c1dc7ba4baaa78ec4a5f21c9cf8.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:45:05
+workstationfiles.blob.core.windows.net,Infrastructure,zugelassen,ID 2832792,16.11.2026 10:45:05
+63ab3bfd2622d6a0c331a68081392e8e.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:45:06
+tr-ofc-mira.office.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:48:27
+tr-officehomeccm-cafe.office.com,Software/Technology; Computers and Internet,zugelassen,Microsoft (ID 2832792),16.11.2026 10:45:05
+3d169f01aeeb7c36bf5257ba9cee4019.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:45:06
+d123cd5e36e530951f5d15b2cd2558f8.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,Microsoft (ID 2832792),16.11.2026 10:45:05
+9d99e69863e54dd9b2ea446699891a56.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:45:06
+c5ad52a87fadd436e726a4489391061e.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:45:06
+2841b8e3f22188996ed67a07655203d4.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:45:06
+5790c63a84b24ff794af217874cd02b6.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:45:06
+f4f4de07de024026842fba5f61ad6ff6.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:45:07
+c7f6cb71ddce492c9c6fdf7b8d027439.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:45:07
+dd67f3b6de4644e3b101936309d43707.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,Microsoft (ID 2832792),16.11.2026 10:45:06
+2a316d63cc1f45d08f0facdd441834d3.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:45:07
+b6628ccf81ae4c0aa33b31ec8d6102d2.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:45:07
+francecentral-pa03-pub.augloop.office.com,Software/Technology; Computers and Internet,zugelassen,Microsoft (ID 2832792),16.11.2026 10:45:06
+5d8c38157ff643cb953128484d9a7d3d.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:45:07
+francecentral-pa01-pub.augloop.office.com,Software/Technology; Computers and Internet,zugelassen,Microsoft (ID 2832792),16.11.2026 10:45:06
+11deb5c60c086e1cbd5719903e8eabe1.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:45:07
+590e1f4d13467ae79e8919f97feb4b01.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:45:07
+c50135d8bab3323057e54a44c8505196.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:45:07
+79d0275c57b24f7c875b0a1066ebf68f.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:45:08
+6c533f3e1d164040fbe0031a327e9698.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,Microsoft (ID 2832792),16.11.2026 10:45:07
+4e8456801ff04fdca8f5e1b7b1a55a28.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:45:08
+af72a2a702124489b9bf960820a02acb.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,Microsoft (ID 2832792),16.11.2026 10:45:07
+7b59434f96484f8689c51e353fe0e391.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:45:09
+francecentral-pa00-pub.augloop.office.com,Software/Technology; Computers and Internet,zugelassen,Microsoft (ID 2832792),16.11.2026 10:45:07
+7188e66bf1d14a34b19e7d4b43912314.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:45:09
+13531488dafc4357bee34eeba2dad3a3.fp.measure.office.com,Software/Technology; Computers and Internet,zugelassen,ID 2832792,16.11.2026 10:45:09
+fa000000059.resources.office.net,SaaS and B2B,zugelassen,ID 2832792,16.11.2026 10:45:08
+fa000000112.resources.office.net,SaaS and B2B,zugelassen,Microsoft (ID 2832792),16.11.2026 10:45:08
+fa000000118.resources.office.net,SaaS and B2B,zugelassen,Microsoft (ID 2832792),16.11.2026 10:45:08
+fa000000132.resources.office.net,SaaS and B2B,zugelassen,Microsoft (ID 2832792),16.11.2026 10:45:08
+fa000000142.resources.office.net,SaaS and B2B,zugelassen,Microsoft (ID 2832792),16.11.2026 10:45:08
+fa000000117.resources.office.net,SaaS and B2B,zugelassen,Microsoft (ID 2832792),16.11.2026 10:45:08
+fa000000174.resources.office.net,SaaS and B2B,zugelassen,Microsoft (ID 2832792),16.11.2026 10:45:08
+fa000000051.resources.office.net,SaaS and B2B,zugelassen,Microsoft (ID 2832792),16.11.2026 10:45:08
+fa000000145.resources.office.net,SaaS and B2B,zugelassen,Microsoft (ID 2832792),16.11.2026 10:45:08
+fa000000137.resources.office.net,SaaS and B2B,zugelassen,Microsoft (ID 2832792),16.11.2026 10:45:08
+fa000000113.resources.office.net,SaaS and B2B,zugelassen,Microsoft (ID 2832792),16.11.2026 10:45:08
