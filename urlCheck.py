@@ -11,6 +11,10 @@ ausgegeben.
 Mit --s-base wird das Ergebnis je Adresse mit der Action aus einem
 S-Base-Export (TSV) verglichen; Abweichungen sind im Report filterbar.
 
+Zeilen der Quellliste im Format "action;adresse" (z. B. "blocked;example.com",
+"accept;www.example.org") geben eine Vorgabe vor: das Ergebnis wird mit
+dieser Action verglichen (gleich/abweichend), ebenfalls im Report filterbar.
+
 API:   https://api.sse.cisco.com/investigate/v2/domains/categorization/{domain}
 Scope: investigate.investigate:read
 """
@@ -139,6 +143,13 @@ CMP_LABELS = {
     CMP_MISSING: "Nicht in S-Base",
 }
 
+# Vergleich Ergebnis <-> Vorgabe aus der Quellliste ("action;adresse")
+EXPECTED_LABELS = dict(CMP_LABELS, **{CMP_MISSING: "Keine Vorgabe"})
+
+# Zeile mit Vorgabe: "action;adresse" (Action ohne Punkt/Slash, damit
+# eine Adresse mit ';' im Pfad nicht als Vorgabe gilt)
+EXPECTED_LINE = re.compile(r"^([A-Za-z][\w-]*)\s*;\s*(\S.*)$")
+
 CERT_VALID = "gültig"
 CERT_INVALID = "ungültig"
 CERT_UNCHECKED = "nicht geprüft"
@@ -186,11 +197,17 @@ CACHE_TTL_HOURS = 4
 
 def load_entries(path):
     """
-    Adressen aus der Datei lesen: FQDN, IP-Adresse oder vollständige URL.
+    Adressen aus der Datei lesen: FQDN, IP-Adresse oder vollständige URL,
+    optional mit vorangestellter Action ("blocked;example.com").
     Leerzeilen und #-Kommentare werden ignoriert, Duplikate entfernt.
+
+    Liefert (entries, expected); expected hat dasselbe Format wie
+    load_s_base: {host: {"actions": {action: anzahl}, "appcats": []}}.
+    Kommt eine Adresse mit verschiedenen Actions vor, zählen alle.
     """
 
     entries = []
+    expected = {}
     seen = set()
 
     with open(path, encoding="utf-8-sig") as handle:
@@ -200,13 +217,20 @@ def load_entries(path):
             if not entry:
                 continue
 
+            match = EXPECTED_LINE.match(entry)
+            if match:
+                action, entry = match.group(1).lower(), match.group(2).strip()
+                host = parse_entry(entry)[0]
+                ref = expected.setdefault(host, {"actions": {}, "appcats": []})
+                ref["actions"][action] = ref["actions"].get(action, 0) + 1
+
             key = entry.lower().rstrip("/")
 
             if key not in seen:
                 seen.add(key)
                 entries.append(entry)
 
-    return entries
+    return entries, expected
 
 
 def parse_entry(entry):
@@ -687,6 +711,8 @@ def new_result(entry):
         "log_time": "",
         "sbase": "",
         "sbase_cmp": "",
+        "expected": "",
+        "expected_cmp": "",
     }
 
 
@@ -1127,13 +1153,15 @@ def s_base_verdict(actions):
     return ""
 
 
-def compare_s_base(results, s_base):
+def compare_reference(results, reference, field, cmp_field):
     """
-    Felder 'sbase' (Text für den Report) und 'sbase_cmp' (CMP_*) setzen.
+    Ergebnis mit einer Referenz (S-Base-Export oder Vorgabe aus der
+    Quellliste) vergleichen: Felder 'field' (Text für den Report) und
+    'cmp_field' (CMP_*) setzen.
 
     OK entspricht zugelassen, BLOCKIERT und WARNUNG entsprechen geblockt.
     FEHLER (Ziel nicht erreicht) ist nicht vergleichbar. Kommt eine Adresse
-    in S-Base sowohl zugelassen als auch geblockt vor, gilt das als
+    in der Referenz sowohl zugelassen als auch geblockt vor, gilt das als
     Abweichung.
     """
 
@@ -1144,11 +1172,11 @@ def compare_s_base(results, s_base):
     }
 
     for result in results:
-        entry = s_base.get(result["host"])
+        entry = reference.get(result["host"])
 
         if not entry:
-            result["sbase"] = ""
-            result["sbase_cmp"] = CMP_MISSING
+            result[field] = ""
+            result[cmp_field] = CMP_MISSING
             continue
 
         actions = sorted(entry["actions"].items(), key=lambda item: -item[1])
@@ -1158,14 +1186,30 @@ def compare_s_base(results, s_base):
             text += " · " + ", ".join(entry["appcats"])
 
         verdict = s_base_verdict(entry["actions"])
-        result["sbase"] = text
+        result[field] = text
 
         if not verdict or result["status"] not in expected:
-            result["sbase_cmp"] = CMP_NA
+            result[cmp_field] = CMP_NA
         elif verdict == expected[result["status"]]:
-            result["sbase_cmp"] = CMP_EQUAL
+            result[cmp_field] = CMP_EQUAL
         else:
-            result["sbase_cmp"] = CMP_DIFF
+            result[cmp_field] = CMP_DIFF
+
+
+def print_comparison(results, cmp_field, field, labels, name):
+    """Abweichungen und Zählung eines Vergleichs auf der Konsole ausgeben."""
+
+    for r in results:
+        if r[cmp_field] == CMP_DIFF:
+            print(ts.color(
+                f"  {labels[CMP_DIFF]}: {r['input']}  "
+                f"{r['status']} <> {name} {r[field]}", ts.YELLOW
+            ))
+
+    print("  " + "  ".join(
+        f"{label}: {sum(1 for r in results if r[cmp_field] == c)}"
+        for c, label in labels.items()
+    ))
 
 
 # ------------------------------------------------------------------
@@ -1188,18 +1232,23 @@ def print_result(result):
     print(ts.color(line, STATUS_COLORS[result["status"]]))
 
 
-def write_csv(path, results, with_s_base=False):
+def write_csv(path, results, with_s_base=False, with_expected=False):
     """
     CSV mit den Spalten fqdn,kategorie,action,regel,letzter_zugriff
     (je Host eine Zeile; action aus dem Cisco-Log). Mit S-Base-Vergleich
-    zusätzlich ergebnis,s_base,vergleich.
+    bzw. Vorgabe zusätzlich ergebnis und s_base,vergleich bzw.
+    vorgabe,vergleich_vorgabe.
     """
 
     seen = set()
     header = ["fqdn", "kategorie", "action", "regel", "letzter_zugriff"]
 
+    if with_s_base or with_expected:
+        header.append("ergebnis")
     if with_s_base:
-        header += ["ergebnis", "s_base", "vergleich"]
+        header += ["s_base", "vergleich"]
+    if with_expected:
+        header += ["vorgabe", "vergleich_vorgabe"]
 
     # utf-8-sig: Excel erkennt die Kodierung (Umlaute)
     with open(path, "w", encoding="utf-8-sig", newline="") as handle:
@@ -1216,10 +1265,13 @@ def write_csv(path, results, with_s_base=False):
                 result["log_rule"], result["log_time"],
             ]
 
+            if with_s_base or with_expected:
+                row.append(result["status"])
             if with_s_base:
+                row += [result["sbase"], CMP_LABELS[result["sbase_cmp"]]]
+            if with_expected:
                 row += [
-                    result["status"], result["sbase"],
-                    CMP_LABELS[result["sbase_cmp"]],
+                    result["expected"], EXPECTED_LABELS[result["expected_cmp"]]
                 ]
 
             writer.writerow(row)
@@ -1296,7 +1348,8 @@ th.src-api { background: var(--api-head); }
 td.src-online, .legend.src-online { background: var(--online-bg); }
 th.src-online { background: var(--online-head); }
 .legend { padding: 1px 8px; border-radius: 4px; color: var(--text); }
-tr[data-sbase="abweichung"] td:first-child { box-shadow: inset 3px 0 0 var(--blocked); }
+tr[data-sbase="abweichung"] td:first-child,
+tr[data-expected="abweichung"] td:first-child { box-shadow: inset 3px 0 0 var(--blocked); }
 </style>
 </head>
 <body>
@@ -1305,6 +1358,7 @@ tr[data-sbase="abweichung"] td:first-child { box-shadow: inset 3px 0 0 var(--blo
 <div class="cards">
 {cards}
 </div>
+{expected_cards}
 {sbase_cards}
 <div class="wrap">
 <table id="results">
@@ -1369,8 +1423,26 @@ def td(content, cls=""):
     return f'<td class="{cls}">{content}</td>' if cls else f"<td>{content}</td>"
 
 
+def compare_cards(results, group, cmp_field, labels, title):
+    """Kartenreihe (Filter) für einen Vergleich, z. B. mit S-Base."""
+
+    counts = {c: sum(1 for r in results if r.get(cmp_field) == c) for c in labels}
+
+    return (
+        f'<div class="cards-title">{title}</div>\n'
+        '<div class="cards">\n'
+        + "\n".join(
+            f'<div class="card" data-filter="{group}" data-value="{c}">'
+            f'<div class="num m-{c}">{counts[c]}</div>'
+            f'<div class="lbl">{label}</div></div>'
+            for c, label in labels.items()
+        )
+        + "\n</div>"
+    )
+
+
 def write_html(path, results, list_file, with_categories, with_log, started,
-               s_base_file=None):
+               s_base_file=None, with_expected=False):
     esc = html.escape
     counts = {s: sum(1 for r in results if r["status"] == s) for s in STATUSES}
 
@@ -1389,25 +1461,22 @@ def write_html(path, results, list_file, with_categories, with_log, started,
         for s in STATUSES
     )
 
-    sbase_cards = ""
+    sbase_cards = expected_cards = ""
     if s_base_file:
-        cmp_counts = {
-            c: sum(1 for r in results if r["sbase_cmp"] == c) for c in CMP_LABELS
-        }
-        sbase_cards = (
-            '<div class="cards-title">Vergleich Ergebnis &harr; S-Base</div>\n'
-            '<div class="cards">\n'
-            + "\n".join(
-                f'<div class="card" data-filter="sbase" data-value="{c}">'
-                f'<div class="num m-{c}">{cmp_counts[c]}</div>'
-                f'<div class="lbl">{label}</div></div>'
-                for c, label in CMP_LABELS.items()
-            )
-            + "\n</div>"
+        sbase_cards = compare_cards(
+            results, "sbase", "sbase_cmp", CMP_LABELS,
+            "Vergleich Ergebnis &harr; S-Base",
+        )
+    if with_expected:
+        expected_cards = compare_cards(
+            results, "expected", "expected_cmp", EXPECTED_LABELS,
+            "Vergleich Ergebnis &harr; Vorgabe (Quellliste)",
         )
 
     # (Spaltenname, Herkunft): src-online = Seitenaufruf, src-api = Cisco API
     columns = [("Eingabe", ""), ("Ergebnis", "")]
+    if with_expected:
+        columns += [("Vorgabe", ""), ("Vergleich Vorgabe", "")]
     if s_base_file:
         columns += [("S-Base", ""), ("Vergleich", "")]
     columns += [(c, "src-online") for c in ("HTTP", "Aufgerufene URL", "Finale URL",
@@ -1434,6 +1503,12 @@ def write_html(path, results, list_file, with_categories, with_log, started,
             td(esc(r["input"])),
             td(f'<span class="badge s-{r["status"]}">{r["status"]}</span>'),
         ]
+        if with_expected:
+            cells += [
+                td(esc(r["expected"])),
+                td(f'<span class="badge c-{r["expected_cmp"]}">'
+                   f'{EXPECTED_LABELS[r["expected_cmp"]]}</span>'),
+            ]
         if s_base_file:
             cells += [
                 td(esc(r["sbase"])),
@@ -1459,7 +1534,8 @@ def write_html(path, results, list_file, with_categories, with_log, started,
         cells.append(td(esc(r["reason"]), "reason"))
 
         rows.append(
-            f'<tr data-status="{r["status"]}" data-sbase="{r["sbase_cmp"]}">'
+            f'<tr data-status="{r["status"]}" data-sbase="{r.get("sbase_cmp", "")}" '
+            f'data-expected="{r.get("expected_cmp", "")}">'
             f'{"".join(cells)}</tr>'
         )
 
@@ -1468,6 +1544,7 @@ def write_html(path, results, list_file, with_categories, with_log, started,
         .replace("{meta}", meta)
         .replace("{cards}", cards)
         .replace("{sbase_cards}", sbase_cards)
+        .replace("{expected_cards}", expected_cards)
         .replace("{headers}", headers)
         .replace("{rows}", "\n".join(rows))
     )
@@ -1593,7 +1670,7 @@ def main():
         print(ts.color(f"Fehler: {args.s_base} nicht gefunden.", ts.RED))
         sys.exit(1)
 
-    entries = load_entries(args.file)
+    entries, expected = load_entries(args.file)
 
     if not entries:
         print(ts.color(f"Fehler: {args.file} enthält keine Einträge.", ts.RED))
@@ -1606,7 +1683,7 @@ def main():
     journal = Journal(args.out_dir, args.file, args.resume)
 
     try:
-        run(args, entries, journal, started, stamp)
+        run(args, entries, expected, journal, started, stamp)
     finally:
         journal.close()
 
@@ -1644,7 +1721,7 @@ def check_all(entries, args, journal):
     return results
 
 
-def run(args, entries, journal, started, stamp):
+def run(args, entries, expected, journal, started, stamp):
     if args.categories_only:
         # Nur API-Abfragen, keine Seitenaufrufe
         results = [new_result(entry) for entry in entries]
@@ -1685,21 +1762,24 @@ def run(args, entries, journal, started, stamp):
                     "mit --categories-only --no-cache wiederholen.", ts.GREY
                 ))
 
+    with_expected = bool(expected) and not args.categories_only
+
+    if expected and args.categories_only:
+        print(ts.color(
+            "\nVorgaben (action;adresse) in der Quellliste werden mit "
+            "--categories-only nicht verglichen (keine Seitenaufrufe).", ts.GREY
+        ))
+
+    if with_expected:
+        print("\nVergleich mit der Vorgabe aus der Quellliste...")
+        compare_reference(results, expected, "expected", "expected_cmp")
+        print_comparison(results, "expected_cmp", "expected",
+                         EXPECTED_LABELS, "Vorgabe")
+
     if args.s_base:
         print(f"\nVergleich mit S-Base ({os.path.basename(args.s_base)})...")
-        compare_s_base(results, load_s_base(args.s_base))
-
-        for r in results:
-            if r["sbase_cmp"] == CMP_DIFF:
-                print(ts.color(
-                    f"  {CMP_LABELS[CMP_DIFF]}: {r['input']}  "
-                    f"{r['status']} <> {r['sbase']}", ts.YELLOW
-                ))
-
-        print("  " + "  ".join(
-            f"{label}: {sum(1 for r in results if r['sbase_cmp'] == c)}"
-            for c, label in CMP_LABELS.items()
-        ))
+        compare_reference(results, load_s_base(args.s_base), "sbase", "sbase_cmp")
+        print_comparison(results, "sbase_cmp", "sbase", CMP_LABELS, "S-Base")
 
     print()
 
@@ -1713,12 +1793,12 @@ def run(args, entries, journal, started, stamp):
 
         html_path = os.path.join(args.out_dir, f"urlCheck_{stamp}.html")
         write_html(html_path, results, args.file, with_categories, with_log,
-                   started, args.s_base)
+                   started, args.s_base, with_expected)
         print(f"HTML-Report: {html_path}")
 
     if not args.no_categories:
         csv_path = os.path.join(args.out_dir, f"categories_{stamp}.csv")
-        write_csv(csv_path, results, bool(args.s_base))
+        write_csv(csv_path, results, bool(args.s_base), with_expected)
         print(f"CSV:         {csv_path}")
 
     failed = sum(

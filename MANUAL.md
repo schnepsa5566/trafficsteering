@@ -295,6 +295,9 @@ erreichbar, steht in der betroffenen Spalte `nicht verfügbar` bzw.
   oder vollständige URL (`https://host/pfad`). Auch `host/pfad` ist erlaubt.
 - Leerzeilen und `#`-Kommentare werden ignoriert, Duplikate entfernt.
 - Ohne Schema wird zuerst `https://`, bei Fehler `http://` aufgerufen.
+- Optional mit Vorgabe: `action;adresse`, z. B. `blocked;ads.example.com`
+  oder `accept;www.example.org` – siehe *Vergleich mit Vorgabe* unten.
+  Zeilen mit und ohne Vorgabe dürfen gemischt werden.
 
 ### Aufruf
 
@@ -417,6 +420,29 @@ Zählerreihe; ein Klick auf z. B. *Abweichung* filtert die Tabelle. Der Filter
 wirkt zusammen mit dem Ergebnis-Filter (z. B. *Blockiert* + *Abweichung*).
 Die CSV enthält zusätzlich die Spalten `ergebnis,s_base,vergleich`.
 `--s-base` braucht die Seitenaufrufe und geht nicht mit `--categories-only`.
+
+### Vergleich mit Vorgabe in der Quellliste (action;adresse)
+
+Steht vor einer Adresse eine Action, getrennt durch `;`, wird die Adresse wie
+gewohnt geprüft und das Ergebnis mit dieser Vorgabe verglichen:
+
+```
+blocked;dogads-pa.clients6.google.com
+accept;www.ris.bka.gv.at
+passthrough;beachfront-match.dotomi.com
+```
+
+- Die Actions werden wie beim S-Base-Vergleich gewertet
+  (`SBASE_ALLOW_ACTIONS`, z. B. `accept`, `passthrough`; `SBASE_BLOCK_ACTIONS`,
+  z. B. `blocked`, `deny`). Unbekannte Actions → *Nicht vergleichbar*.
+- Gleiche Adresse mehrfach mit unterschiedlicher Action → *Abweichung*.
+- Ergebnis: *Gleich*, *Abweichung*, *Nicht vergleichbar* oder *Keine Vorgabe*
+  (Zeile ohne Action).
+- Konsole: Abweichungen gelb plus Zählung. HTML-Report: Spalten *Vorgabe* und
+  *Vergleich Vorgabe* und eine eigene Zählerreihe zum Filtern (kombinierbar
+  mit Ergebnis- und S-Base-Filter). CSV: Spalten `ergebnis,vorgabe,vergleich_vorgabe`.
+- Funktioniert zusammen mit `--s-base`; mit `--categories-only` wird nicht
+  verglichen (keine Seitenaufrufe).
 
 ### Parameter
 
